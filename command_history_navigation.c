@@ -7,7 +7,7 @@
 #include <stdio.h>
 
 /*
-** The use of static:
+** The use of static char	*term_buffer:
 ** termcap records its address internally for use when you later interrogate
 ** the description, so you must make sure that its contents remain unchanged
 ** for as long as you still plan to interrogate the description.

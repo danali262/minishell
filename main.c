@@ -9,6 +9,8 @@ int main(int argc, char **argv)
     {
 
     }
+    // set_input_mode ();
+    
     extern char **environ;
     int i = 0;
     while (environ[i] != NULL)
