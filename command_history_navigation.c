@@ -16,12 +16,13 @@
 //TODO:
 // add the flag -ltermcap to the Makefile to be able to compile with the termcap library
 
-int	init_terminal_data()
+int	init_terminal_data(void)
 {
 	char		*term_type;
-	static char	term_buffer[2048];
+	static char	*term_buffer;
 	int			result;
 
+	term_buffer = malloc(2048);
 	term_type = getenv("TERM");
 	if (term_type == NULL)
 	{
@@ -42,5 +43,9 @@ int	init_terminal_data()
 	printf("term_buffer: %s\n", term_buffer); //remove
 	printf("term_type: %s\n", term_type); //remove
 	printf("result: %d\n", result); //remove
+	char *temp = tgetstr ("ku", &term_buffer);
+	char *temp1 = tgetstr ("kd", &term_buffer);
+	printf("ku: %s\n", temp); //remove
+	printf("kd: %s\n", temp1); //remove
 	return (1);
 }
