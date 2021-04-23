@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:02:02 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/22 18:09:18 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/23 13:08:31 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@
 //   tcsetattr (STDIN_FILENO, TCSANOW, origin_attr);
 // }
 
-void
-set_input_mode (void)
+int    set_input_mode (void)
 {
   struct termios origin_attr;
   struct termios term_attr;
@@ -48,14 +47,19 @@ set_input_mode (void)
 // and the user's input (which you echoed manually because you turned off ECHO).
 //  Since you printed everything on these lines, you know their contents.
 
-  tcgetattr (STDIN_FILENO, &term_attr);
+
+  // Call tcgetattr to fill a struct termios 
+  //with the current settings of file descriptor 0 (if it is a tty).
+  tcgetattr(STDIN_FILENO, &term_attr);
   term_attr.c_lflag &= ~(ICANON|ECHO);
   term_attr.c_cc[VMIN] = 1;
   term_attr.c_cc[VTIME] = 0;
-  tcsetattr (STDIN_FILENO, TCSAFLUSH, &term_attr);
+  //calling set will install the updated structure
+  tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_attr);
 
-//   do I need to reset the original attributes if anything fails and when I exit the program?
+//  I need to reset the original attributes if anything fails and when I exit the program
 // reset_input_mode (struct termios *origin_attr);
+    return (1);
 }
 
 int

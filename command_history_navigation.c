@@ -45,7 +45,12 @@ int	init_terminal_data(void)
 	printf("result: %d\n", result); //remove
 	char *temp = tgetstr ("ku", &term_buffer);
 	char *temp1 = tgetstr ("kd", &term_buffer);
+	char *delete = tgetstr ("kb", &term_buffer);
+	char *left = tgetstr ("kl", &term_buffer);
 	printf("ku: %s\n", temp); //remove
 	printf("kd: %s\n", temp1); //remove
+	printf("delete: %s\n", delete); //remove
+	printf("left: %s\n", left); //remove
+
 	return (1);
 }
