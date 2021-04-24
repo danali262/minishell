@@ -73,16 +73,12 @@ void	strip_quotes(char *src, char *dest)
 int		lexer_build(char *input, size_t size, t_lexer *lexerbuf)
 {
     t_token     *token;
-	// t_token		*saved;	
     size_t      i;
 	int			j;
 	int			ntemptok;
 	char		c;
 	int			state;
 	int			chtype;
-	// int			k;
-	// glob_t		globbuf;
-	// char		*stripped;
 
     if (lexerbuf == NULL)
         return(-1);
@@ -183,45 +179,5 @@ int		lexer_build(char *input, size_t size, t_lexer *lexerbuf)
 		}
 		i++;
 	}
-	// token = lexerbuf->tokens_list;
-	// k = 0;
-	// while (token != NULL)
-	// {
-	// 	if (token->type == TOKEN)	/* the only time that is not TOKEN for token operators that are also delimiters */
-	// 	{
-	// 		glob(token->data, GLOB_TILDE, NULL, &globbuf);	/*  */
-	// 		if (globbuf.gl_pathc > 0)
-	// 		{
-	// 			k += globbuf.gl_pathc;
-	// 			saved = token->next;	/* save the next token so we can attach it later */
-	// 			free(token->data);		/* replace the current token with the first one */
-	// 			token->data = malloc(ft_strlen(globbuf.gl_pathv[0]) + 1);
-	// 			ft_strlcpy(token->data, globbuf.gl_pathv[0], ft_strlen(globbuf.gl_pathv[0] + 1));
-
-	// 			i = 1;
-	// 			while (i < globbuf.gl_pathc)
-	// 			{
-	// 				token->next = malloc(sizeof(t_token));
-	// 				tok_init(token->next, ft_strlen(globbuf.gl_pathv[i]));
-	// 				token = token->next;
-	// 				token->type = TOKEN;
-	// 				ft_strlcpy(token->data, globbuf.gl_pathv[i], ft_strlen(globbuf.gl_pathv[i]));
-	// 				i++;
-	// 			}
-	// 			token->next = saved;
-	// 		}
-	// 		else	/* token from the user might be inside quotation  to escape special characters, hence strip the quotation symbol */
-	// 		{
-	// 			stripped = malloc(ft_strlen(token->data) + 1);
-	// 			strip_quotes(token->data, stripped);
-	// 			free(token->data);
-	// 			token->data = stripped;
-	// 			k++;
-	// 		}
-	// 	}
-	// 	token = token->next;
-	// }
-	// lexerbuf->tokens_nbr = k;
-	// return (k);
 	return (0);
 }

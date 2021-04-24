@@ -58,7 +58,7 @@ int		main(void)
     }
     prompt.cmd = get_command(prompt.buf);
     len = ft_strlen(prompt.cmd) + 1;
-    printf("len is %zu\n", len);
+    // printf("len is %zu\n", len);
     lexer_build(prompt.cmd, len, &lexerbuf);
     print_tokens(&lexerbuf);
     return (0);
