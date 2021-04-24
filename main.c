@@ -30,9 +30,9 @@ void    print_tokens(t_lexer *lexerbuf)
 
     head = lexerbuf->tokens_list;
     while (head != NULL)
-    // while (head->next != NULL)
     {
         printf("%s\n", head->data);
+        // printf("token type is %d\n", head->type);
         head = head->next;
     }
 }
@@ -57,7 +57,8 @@ int		main(void)
 	   		break;
     }
     prompt.cmd = get_command(prompt.buf);
-    len = ft_strlen(prompt.cmd);        /* without '/0' */
+    len = ft_strlen(prompt.cmd) + 1;
+    printf("len is %zu\n", len);
     lexer_build(prompt.cmd, len, &lexerbuf);
     print_tokens(&lexerbuf);
     return (0);
