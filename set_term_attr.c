@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:02:02 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/23 13:08:31 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/25 15:15:09 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <termios.h>
+#include <sys/errno.h>
 
 /* origin_attr is used to remember original terminal attributes. */
 
-// void    reset_input_mode (struct termios *origin_attr)
-// {
-//   tcsetattr (STDIN_FILENO, TCSANOW, origin_attr);
-// }
+int	reset_input_mode (struct termios *origin_attr, int error_code)
+{
+	if (error_code == 0)
+	{
+		tcsetattr(STDIN_FILENO, TCSANOW, origin_attr);
+		return (1);
+	}
+	else
+	{
+		tcsetattr(STDIN_FILENO, TCSANOW, origin_attr);
+      	errno = error_code;
+		return (0);
+	}	
+}
 
 int    set_input_mode (void)
 {
@@ -32,7 +43,7 @@ int    set_input_mode (void)
 */
   if (!isatty (STDIN_FILENO) || tcgetattr(STDIN_FILENO, &origin_attr) < 0)
     {
-        printf("Error.Not a terminal.\n");
+        errno = ENOTTY;
         return(0);
     }
 
@@ -48,18 +59,33 @@ int    set_input_mode (void)
 //  Since you printed everything on these lines, you know their contents.
 
 
-  // Call tcgetattr to fill a struct termios 
-  //with the current settings of file descriptor 0 (if it is a tty).
-  tcgetattr(STDIN_FILENO, &term_attr);
-  term_attr.c_lflag &= ~(ICANON|ECHO);
-  term_attr.c_cc[VMIN] = 1;
-  term_attr.c_cc[VTIME] = 0;
+  term_attr = origin_attr;
+  term_attr.c_lflag &= ~(ICANON | ECHO);
+  term_attr.c_cc[VMIN] = 1; // 1 byte at a time
+  term_attr.c_cc[VTIME] = 0; // no timer
   //calling set will install the updated structure
-  tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_attr);
-
-//  I need to reset the original attributes if anything fails and when I exit the program
-// reset_input_mode (struct termios *origin_attr);
-    return (1);
+  if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_attr) < 0)
+  {
+  		printf("Error. Unable to set one or more terminal attributes.\n");
+        return(0);
+  }
+    //  This function returns OK if it was able to perform any of the requested actions,
+//  even if it couldn't perform all the requested actions. If the function returns OK,
+//  it is our responsibility to see whether all the requested actions were performed.
+  //This means that after we call tcsetattr to set the desired attributes, 
+  //we need to call tcgetattr and compare the actual terminal's attributes to the desired attributes
+  //to detect any differences.
+  	if (tcgetattr(STDIN_FILENO, &term_attr) < 0)
+  	{
+		return(reset_input_mode(&origin_attr, EBADF));
+	}
+  	if ((term_attr.c_lflag & (ECHO | ICANON)) || term_attr.c_cc[VMIN] != 1 ||
+	  term_attr.c_cc[VTIME] != 0)
+	{
+		return(reset_input_mode(&origin_attr, EINVAL));
+	}
+  //  I need to reset the original attributes if anything fails and when I exit the program
+	return (1);
 }
 
 int
