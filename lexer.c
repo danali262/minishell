@@ -1,15 +1,14 @@
 #include "minishell.h"
-#include <glob.h>
 
-void    tok_init(t_token *tok, int datasize)
+static int	get_char_type_2(char c)
 {
-    tok->data = malloc(datasize);	/* doesn't that leak memory? we allocate more than we need sometimes..  */
-    tok->data[0] = 0;
-    tok->type = CHAR_NULL;
-    tok->next = NULL;
+	if (c == '0')
+		return (CHAR_NULL);
+	else
+		return (CHAR_GENERAL);
 }
 
-int		get_char_type(char c)
+static int	get_char_type(char c)
 {
 	if (c == '\'')
 		return (CHAR_QUOTE);
@@ -33,151 +32,50 @@ int		get_char_type(char c)
 		return (CHAR_GREATER);
 	else if (c == '<')
 		return (CHAR_LESSER);
-	else if (c == '0')
-		return (CHAR_NULL);
 	else
-		return (CHAR_GENERAL);
+		return (get_char_type_2(c));
 }
 
-void	strip_quotes(char *src, char *dest)
+static t_token	*loop(t_shell *prompt, t_token *token)
 {
-	int		n;
-	int		i;
-	char	lastquote;
-	int		j;
-	char	c;
-
-	n = ft_strlen(src);
-	if (n <= 1)
-	{
-		ft_strlcpy(dest, src, ft_strlen(src));
-		return ;
-	}
-	lastquote = 0;
-	j = 0;
-	i = 0;
-	while (i < n)
-	{
-		c = src[i];
-		if ((c == '\'' || c == '\"') && lastquote == 0)
-			lastquote = c;
-		else if (c == lastquote)
-			lastquote = 0;
-		else
-			dest[j++] = c;
-		i++;
-	}
-	dest[j] = 0;
-}
-
-int		lexer_build(char *input, size_t size, t_lexer *lexerbuf)
-{
-    t_token     *token;
-    size_t      i;
-	int			j;
-	int			ntemptok;
+	t_counters	count;
 	char		c;
-	int			state;
-	int			chtype;
 
-    if (lexerbuf == NULL)
-        return(-1);
-    if (size == 0)
-    {
-        lexerbuf->tokens_nbr = 0;
-        return (0);
-    }
-    lexerbuf->tokens_list = malloc(sizeof(t_token));
-
-    token = lexerbuf->tokens_list;  /* allocate the first token */
-    tok_init(token, size);
-
-	i = 0;
-	j = 0;
-	ntemptok = 0;
-	state = STATE_GENERAL;
-	c = input[i];	/* what happens if input is c == '\0' */
-	while (c != '\0')	/* need to make sure that this is executed at least once */
+	count.i = 0;
+	count.j = 0;
+	c = prompt->cmd[count.i];
+	while (c != '\0')
 	{
-		c = input[i];
-		chtype = get_char_type(c);
-		if (state == STATE_GENERAL)
-		{
-			if (chtype == CHAR_QUOTE)
-			{
-				state = STATE_IN_QUOTE;
-				token->data[j++] = CHAR_QUOTE;
-				token->type = TOKEN;
-			}
-			else if (chtype == CHAR_DQUOTE)
-			{
-				state = STATE_IN_DQUOTE;
-				token->data[j++] = CHAR_DQUOTE;
-				token->type = TOKEN;
-			}
-			else if (chtype == CHAR_ESCAPESEQUENCE)
-			{
-				token->data[j++] = input[++i];
-				token->type = TOKEN;
-			}
-			else if (chtype == CHAR_GENERAL)
-			{
-				// printf("j before is %d\n", j);
-				token->data[j++] = c;
-				// printf("j after is %d\n", j);
-				token->type = TOKEN;
-			}
-			else if (chtype == CHAR_WHITESPACE)
-			{
-				if (j > 0)
-				{
-					token->data[j] = 0;	/* does that null terminate the token? */
-					token->next = malloc(sizeof(t_token)); /* because it means that another token is coming up? */
-					token = token->next;
-					tok_init(token, size - i);
-					j = 0;
-				}
-			}
-			else if(CHAR_SEMICOLON | CHAR_GREATER | CHAR_LESSER | CHAR_AMPERSAND | CHAR_PIPE)
-			{
-				if (j > 0)	/* end the token that was being read before */
-				{
-					token->data[j] = 0;
-					token->next = malloc(sizeof(t_token));
-					token = token->next;
-					tok_init(token, size - i);
-					j = 0;
-				}
-				token->data[0] = chtype;
-				token->data[1] = 0;
-				token->type = chtype;
-				token->next = malloc(sizeof(t_token));
-				token = token->next;
-				tok_init(token, size - i);
-			}
-		}
-		else if (state == STATE_IN_DQUOTE)
-		{
-			token->data[j++] = c;
-			if (chtype == CHAR_DQUOTE)
-				state = STATE_GENERAL;
-		}
-		else if (state == STATE_IN_QUOTE)
-		{
-			token->data[j++] = c;
-			if (chtype == CHAR_QUOTE)
-				state = STATE_GENERAL;
-		}
-		if (chtype == CHAR_NULL)		/* try to understand the use of this one */
-		{
-			if (j > 0)
-			{
-				token->data[j] = 0;
-				ntemptok++;		/* what is this for? */
-				j = 0;
-			}
-		}
-		i++;
+		c = prompt->cmd[count.i];
+		prompt->chtype = get_char_type(prompt->cmd[count.i]);
+		if (prompt->state == STATE_GENERAL)
+			token = process_general_state(prompt, token, &count, c);
+		else if (prompt->state == STATE_IN_DQUOTE)
+			token = process_dquote_state(prompt, token, &count);
+		else if (prompt->state == STATE_IN_QUOTE)
+			token = process_quote_state(prompt, token, &count);
+		count.i++;
 	}
+	return (token);
+}
+
+int	lexer_build(t_shell *prompt, t_lexer *lexerbuf)
+{
+	t_token	*token;
+
+	if (lexerbuf == NULL)
+		return (-1);
+	if (prompt->size == 0)
+	{
+		lexerbuf->tokens_nbr = 0;
+		return (0);
+	}
+	lexerbuf->tokens_list = malloc(sizeof(t_token));
+	token = lexerbuf->tokens_list;
+	tok_init(token, prompt->size);
+	prompt->state = STATE_GENERAL;
+	token = loop(prompt, token);
+	token = lexerbuf->tokens_list;
+	print_tokens(lexerbuf);
 	return (0);
 }

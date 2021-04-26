@@ -42,7 +42,6 @@ int		main(void)
 {
 	t_shell     prompt;
 	int         i;
-    size_t		len;
     t_lexer		lexerbuf;
 
 	prompt.buf = ft_strdup("");
@@ -57,9 +56,10 @@ int		main(void)
 	   		break;
     }
     prompt.cmd = get_command(prompt.buf);
-    len = ft_strlen(prompt.cmd) + 1;
-    // printf("len is %zu\n", len);
-    lexer_build(prompt.cmd, len, &lexerbuf);
-    print_tokens(&lexerbuf);
+    prompt.size = ft_strlen(prompt.cmd) + 1;
+    // printf("len is %zu\n", prompt.size);
+    lexer_build(&prompt, &lexerbuf);
+    // lexer_build(prompt.cmd, prompt.size, &lexerbuf);
+    // print_tokens(&lexerbuf);
     return (0);
 }

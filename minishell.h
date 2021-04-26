@@ -9,7 +9,16 @@ typedef struct  s_shell
 {
     char	*buf;
     char    *cmd;
+    int     state;
+    int     size;
+    int     chtype;
 }               t_shell;
+
+typedef struct  s_counters
+{
+    int i;
+    int j;
+}               t_counters;
 
 enum    e_tokentype
 {
@@ -58,6 +67,14 @@ char	**ft_split(char const *s, char c);
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 
-int		lexer_build(char *input, size_t size, t_lexer *lexerbuf);
+// int		lexer_build(char *input, size_t size, t_lexer *lexerbuf);
+int		lexer_build(t_shell *prompt, t_lexer *lexerbuf);
+void	tok_init(t_token *tok, int datasize);
+void    print_tokens(t_lexer *lexerbuf);
+t_token	*process_general_state(t_shell *prompt, t_token *token, t_counters *count, char c);
+t_token	*process_others(t_shell *prompt, t_token *token, t_counters *count);
+t_token	*new_token(t_shell *prompt, t_token *token, t_counters *count);
+t_token	*process_dquote_state(t_shell *prompt, t_token *token, t_counters *count);
+t_token	*process_quote_state(t_shell *prompt, t_token *token, t_counters *count);
 
 #endif
