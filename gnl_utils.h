@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   line_state.h                                       :+:    :+:            */
+/*   gnl_utils.h                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/04/26 13:36:57 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 15:09:52 by osamara       ########   odam.nl         */
+/*   Created: 2021/04/26 14:08:32 by osamara       #+#    #+#                 */
+/*   Updated: 2021/04/26 15:35:28 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LINE_STATE_H
-# define LINE_STATE_H
+#ifndef GNL_UTILS_H
+# define GNL_UTILS_H
 
-# include <stddef.h>
-# include <limits.h>
+#include "line_state.h"
 
-# define BUF_SIZE ARG_MAX
+int	read_command_line(int fd, t_line *line_state);
 
-
-typedef struct s_line
-{
-	char	*buf;
-	int		eol;
-	size_t	line_len;
-	size_t	history_index;
-}				t_line;
 
 #endif

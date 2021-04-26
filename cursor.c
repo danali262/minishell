@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/25 16:57:30 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 10:18:05 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/26 12:59:05 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	parse_cursor_pos(char *str_start, t_cursor *cursor)
 	return (1);
 }
 
-int get_cursor_pos()
+int get_cursor_pos(void)
 {
 	t_cursor	cursor;
 	char		buf[32];
@@ -61,12 +61,9 @@ int get_cursor_pos()
 		return (0);
 	}
 	i = 0;
-	while (i < sizeof(buf) - 1)
+	while (buf[i] != 'R')
 	{
-		if (read(STDIN_FILENO, buf + i, 1) != 1)
-			break;
-		if (buf[i] == 'R')
-			break;
+		read(STDIN_FILENO, buf, 1);
 		i++;
     }
     buf[i] = '\0';
