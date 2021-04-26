@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/25 16:57:30 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 12:59:05 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/26 19:46:35 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,14 @@ int get_cursor_pos(void)
 		return (0);
 	}
 	i = 0;
-	while (buf[i] != 'R')
+	while (i < sizeof(buf) - 1)
 	{
-		read(STDIN_FILENO, buf, 1);
+		if (read(STDIN_FILENO, buf + i, 1) != 1)
+		{
+			return (0);
+		}
+        if (buf[i] == 'R')
+            break ;
 		i++;
     }
     buf[i] = '\0';
