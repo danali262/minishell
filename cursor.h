@@ -5,8 +5,9 @@
 
 //  ANSI escape sequences, which extend the functions available with the control
 // codes:
-# define ESC '\033'
-# define REQUEST_CUR_POS "\033[6n"
+# define ESC '\x1b'
+# define CARRIAGE_RETURN '\x0d'
+# define REQUEST_CUR_POS "\x1b[6n"
 /*
 ** \033[6n DSR(device status report)-Request cursor position
 */
@@ -17,5 +18,5 @@ typedef struct s_cursor
 	size_t	row;
 }				t_cursor;
 
-int get_cursor_pos();
+int get_cursor_pos(void);
 #endif

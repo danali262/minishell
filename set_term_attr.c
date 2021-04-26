@@ -6,11 +6,16 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:02:02 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 10:21:42 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/26 15:59:44 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "set_term_attr.h"
 #include "cursor.h"
+#include "gnl_utils.h"
+
+
+#include "libft.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -48,7 +53,6 @@ int    set_input_mode (void)
         errno = ENOTTY;
         return(0);
     }
-
 /*
 ** We have to turn off ICANON and ECHO
 ** and interpret the escape sequences from the arrow keys on our own.
@@ -86,29 +90,57 @@ if ((term_attr.c_lflag & (ECHO | ICANON)) || term_attr.c_cc[VMIN] != 1 ||
 {
 	return(reset_input_mode(&origin_attr, EINVAL));
 }
-if (!get_cursor_pos())
-{
-	return(reset_input_mode(&origin_attr, EINVAL));
-}
-//  I need to reset the original attributes if anything fails and when I exit the program
+// if (!get_cursor_pos()) // set it back when the bug with the cursor is solved
+// {
+// 	return(reset_input_mode(&origin_attr, EINVAL));
+// }
 	return (1);
 }
 
-int
-main (void)
+int	initialize_line(t_line *line_state, int i)
 {
-  char c;
+	line_state->buf = malloc(sizeof(ARG_MAX) + 1); //allocating here or in read_command_line? 
+	if (line_state->buf == NULL)
+		return (0);
+	line_state->eol = 0;
+	line_state->history_index = i;
+	line_state->line_len = 0;
+	return (1);
+}
 
-  set_input_mode ();
+void	free_history(t_history *history)
+{
+	int i;
 
-  while (1)
-    {
-      read (STDIN_FILENO, &c, 1);
-      if (c == '\004')          /* Ctrl d */
-        break;
-      else
-        putchar (c); //or start parsing and executing
-    }
+	i = 0;
+	while (i < MAX_HISTORY)
+	{
+		free(history->line_state[i].buf);
+		i++;
+	}
+	free(history->line_state);
+}
 
-  return EXIT_SUCCESS;
+int	main (void)
+{
+	int			i;
+	t_history	history;
+
+	set_input_mode ();
+	i = 0;
+	while (1)
+	{
+		if (!initialize_line(&history.line_state[i], i))
+			return (1); //will be returning 0;
+		while (history.line_state[i].eol != 1)
+		{
+			if (!read_command_line(STDIN_FILENO, &history.line_state[i]))
+			{
+				free_history(&history);
+				return (1); //will be returning - 1
+			}
+		}
+		//start parsing and executing
+	}
+	return (0);
 }
