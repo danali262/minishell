@@ -21,6 +21,7 @@
 typedef struct s_history
 {
 	t_line	line_state[MAX_HISTORY];
+	size_t	num_lines_filled;
 }				t_history;
 
 #endif
