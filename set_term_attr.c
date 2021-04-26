@@ -6,9 +6,11 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:02:02 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/25 15:15:09 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/26 10:21:42 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "cursor.h"
 
 #include <unistd.h>
 #include <stdio.h>
@@ -75,16 +77,20 @@ int    set_input_mode (void)
   //This means that after we call tcsetattr to set the desired attributes, 
   //we need to call tcgetattr and compare the actual terminal's attributes to the desired attributes
   //to detect any differences.
-  	if (tcgetattr(STDIN_FILENO, &term_attr) < 0)
-  	{
-		return(reset_input_mode(&origin_attr, EBADF));
-	}
-  	if ((term_attr.c_lflag & (ECHO | ICANON)) || term_attr.c_cc[VMIN] != 1 ||
-	  term_attr.c_cc[VTIME] != 0)
-	{
-		return(reset_input_mode(&origin_attr, EINVAL));
-	}
-  //  I need to reset the original attributes if anything fails and when I exit the program
+if (tcgetattr(STDIN_FILENO, &term_attr) < 0)
+{
+	return(reset_input_mode(&origin_attr, EBADF));
+}
+if ((term_attr.c_lflag & (ECHO | ICANON)) || term_attr.c_cc[VMIN] != 1 ||
+	term_attr.c_cc[VTIME] != 0)
+{
+	return(reset_input_mode(&origin_attr, EINVAL));
+}
+if (!get_cursor_pos())
+{
+	return(reset_input_mode(&origin_attr, EINVAL));
+}
+//  I need to reset the original attributes if anything fails and when I exit the program
 	return (1);
 }
 
