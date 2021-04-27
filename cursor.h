@@ -10,8 +10,8 @@
 # define CARRIAGE_RETURN '\x0d'
 # define REQUEST_CUR_POS "\x1b[6n"
 
-# define K_UP "ku"
-# define K_DOWN "kd"
+# define ARROW_UP "ku"
+# define ARROW_DOWN "kd"
 /*
 ** \033[6n DSR(device status report)-Request cursor position
 */

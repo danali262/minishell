@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/26 13:36:57 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 15:09:52 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/26 21:27:43 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <limits.h>
 
 # define BUF_SIZE ARG_MAX
-
 
 typedef struct s_line
 {
