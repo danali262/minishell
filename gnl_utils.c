@@ -6,12 +6,14 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/26 14:05:53 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 16:49:25 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/27 07:25:02 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gnl_utils.h"
 #include "cursor.h"
+
+#include "libft.h"
 
 #include <unistd.h>
 
@@ -41,26 +43,26 @@
 // }
 
 
-
-
 int	read_command_line(int fd, t_line *line_state)
 {
 	ssize_t	bytes_read;
-//	char	ch;
+	char	ch;
 
-//	ch = line_state->buf[line_state->line_len];
-	bytes_read = read(fd, &line_state->buf[line_state->line_len], 1);
+	ch = 0;
+	bytes_read = read(fd, &ch, 1);
 	if (bytes_read == -1)
 	{
 		return (0);
 	}
-	if (line_state->buf[line_state->line_len] == CARRIAGE_RETURN) //or to \n?
+	if (ft_isprint(ch))
+	{
+		write(STDOUT_FILENO, &ch, 1);
+		line_state->buf[line_state->line_len] = ch;
+		line_state->line_len++;
+	}
+	else if (ch == NEWLINE)
 	{
 		line_state->eol = 1;
 	}
-	else
-		line_state->line_len++;
 	return (1);
 }
-
-
