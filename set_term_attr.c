@@ -6,15 +6,16 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:02:02 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 23:02:20 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/28 16:33:31 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "set_term_attr.h"
 #include "cursor.h"
 #include "gnl_utils.h"
-#include "command_history_navigation.h"
-
+#include "command_history.h"
+#include "line_state.h"
+#include "termcap.h"
 
 #include "libft.h"
 
@@ -59,12 +60,6 @@ int    set_input_mode (void)
 ** and interpret the escape sequences from the arrow keys on our own.
 */
 
-// TODO: You have to keep your own “actual” buffer of what's on the screen and where the cursor is.
-// You also need a “desired” buffer of what you want on the screen and where you want the cursor.
-// These buffers don't cover the whole screen, just the lines containing your prompt
-// and the user's input (which you echoed manually because you turned off ECHO).
-//  Since you printed everything on these lines, you know their contents.
-
   term_attr = origin_attr;
   term_attr.c_lflag &= ~(ICANON | ECHO); 
   term_attr.c_cc[VMIN] = 1; // 1 byte at a time
@@ -97,51 +92,33 @@ if (!get_cursor_pos()) // do I need it for the mandatory part?
 	return (1);
 }
 
-int	initialize_line(t_line *line_state)
-{
-	line_state->buf = malloc(sizeof(BUF_SIZE) + 1);
-	if (line_state->buf == NULL)
-		return (0);
-	line_state->eol = 0;
-	line_state->line_len = 0;
-	return (1);
-}
 
-void	free_history(t_history *history)
-{
-	size_t i;
-
-	i = 0;
-	while (i < history->num_lines_filled)
-	{
-		free(history->line_state[i].buf);
-		i++;
-	}
-}
 
 int	main (void)
 {
-	int			i;
 	t_history	history;
+	t_line		line_state;
 
 	set_input_mode();
-    init_terminal_data();
-	i = 0;
+	init_terminal_data();
+	if (!init_buffer(&line_state))
+		return (1);
 	while (1)
 	{
-		if (!initialize_line(&history.line_state[i]))
-			return (1); //will be returning 0;
-		while (history.line_state[i].eol != 1)
+		reset_line_state(&line_state);
+		while (line_state.eol != 1)
 		{
-			if (!read_command_line(STDIN_FILENO, &history.line_state[i]))
+			if (!read_command_line(STDIN_FILENO, &history, &line_state))
 			{
+				free_buffer(&line_state);
 				free_history(&history);
 				return (1); //will be returning - 1
 			}
 		}
-		i++;
-		history.num_lines_filled = i;
 		//start parsing and executing
+		//print execution result
+		// print promt
+		printf("%s", line_state.buf); //remove it, need for debugging
 	}
 	return (0);
 }
