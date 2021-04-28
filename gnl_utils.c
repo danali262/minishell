@@ -6,47 +6,23 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/26 14:05:53 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/27 07:25:02 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/28 15:30:48 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "gnl_utils.h"
-#include "cursor.h"
+#include "keys.h"
 
 #include "libft.h"
 
 #include <unistd.h>
 
-// int			handle_newline(char **line, t_vector *b)
-// {
-// 	ssize_t		newline_len;
-
-// 	newline_len = count_newline_len(b);
-// 	if (newline_len == NOT_FOUND)
-// 	{
-// 		if ((b->capacity - b->size) < BUFFER_SIZE)
-// 		{
-// 			if (!realloc_buffer(b, newline_len))
-// 				return (ERROR);
-// 		}
-// 		return (NOT_FOUND);
-// 	}
-// 	*line = copy_newline(b->container, newline_len - 1);
-// 	if (!*line)
-// 	{
-// 		free_memory(b);
-// 		return (ERROR);
-// 	}
-// 	if (!realloc_buffer(b, newline_len))
-// 		return (ERROR);
-// 	return (FOUND);
-// }
-
-
-int	read_command_line(int fd, t_line *line_state)
+int	read_command_line(int fd, t_history *history, t_line *line_state)
 {
 	ssize_t	bytes_read;
 	char	ch;
+	char	sequence[3];
+	char	keycode;
 
 	ch = 0;
 	bytes_read = read(fd, &ch, 1);
@@ -60,9 +36,18 @@ int	read_command_line(int fd, t_line *line_state)
 		line_state->buf[line_state->line_len] = ch;
 		line_state->line_len++;
 	}
-	else if (ch == NEWLINE)
+	else
 	{
-		line_state->eol = 1;
+		keycode = 0;
+		if (ch == ESC)
+		{
+			keycode = get_keycode(fd, sequence);
+			if (keycode != 0)
+			{
+				ch = keycode;
+			}
+		}
+		map_key_actions(history, line_state, ch);
 	}
 	return (1);
 }
