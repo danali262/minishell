@@ -5,10 +5,15 @@
 
 # include <stdlib.h>
 
+/*
+** num_lines == number of lines filled
+*/
+
 typedef struct s_history
 {
 	char	*lines[MAX_HISTORY];
-	int		last_line_index;
+	int		num_lines;
+	int		last_shown_line;
 }				t_history;
 
 void	init_history(t_history *history);

@@ -6,7 +6,8 @@
 void	init_history(t_history *history)
 {
 	ft_bzero(history->lines, MAX_HISTORY);
-	history->last_line_index = 0;
+	history->num_lines = 0;
+	history->last_shown_line = -1;
 }
 
 
@@ -15,10 +16,11 @@ void	free_history(t_history *history)
 	int i;
 
 	i = 0;
-	while (i <= history->last_line_index)
+	while (i <= history->last_shown_line)
 	{
 		free(history->lines[i]);
 		i++;
 	}
-		history->last_line_index = 0;
+	history->num_lines = 0;
+	history->last_shown_line = -1;
 }
