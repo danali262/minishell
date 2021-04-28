@@ -21,7 +21,7 @@
 typedef struct s_keycodes_map
 {
 	char	keycode;
-	void	(*action)(t_history *history, t_line *line_state);
+	int		(*action)(t_history *history, t_line *line_state);
 }				t_keycodes_map;
 
 char	get_keycode(int fd, char *sequence);
