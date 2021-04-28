@@ -103,6 +103,7 @@ int	main (void)
 	init_terminal_data();
 	if (!init_buffer(&line_state))
 		return (1);
+    init_history(&history);
 	while (1)
 	{
 		reset_line_state(&line_state);
