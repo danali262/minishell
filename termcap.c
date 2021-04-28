@@ -1,10 +1,19 @@
-
-#include "command_history_navigation.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   termcap.c                                          :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: osamara <osamara@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2021/04/28 15:31:47 by osamara       #+#    #+#                 */
+/*   Updated: 2021/04/28 15:33:02 by osamara       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <term.h>
 #include <curses.h>
-#include <stdlib.h>
 #include <stdio.h>
+# include <stdlib.h>
 
 /*
 ** The use of static char	*term_buffer:
@@ -40,17 +49,10 @@ int	init_terminal_data(void)
 		printf("The terminal type is not defined.");
 		return (0);
 	}
-	printf("term_buffer: %s\n", term_buffer); //remove
-	printf("term_type: %s\n", term_type); //remove
-	printf("result: %d\n", result); //remove
 	char *temp = tgetstr ("ku", &term_buffer);
 	char *temp1 = tgetstr ("kd", &term_buffer);
-	char *delete = tgetstr ("kb", &term_buffer);
-	char *left = tgetstr ("kl", &term_buffer);
 	printf("ku: %s\n", temp); //remove
 	printf("kd: %s\n", temp1); //remove
-	printf("delete: %s\n", delete); //remove
-	printf("left: %s\n", left); //remove
 
 	return (1);
 }
