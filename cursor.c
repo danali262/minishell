@@ -6,12 +6,13 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/25 16:57:30 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 19:46:35 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/27 10:40:31 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cursor.h"
 #include "parsing_utils.h"
+#include "keys.h"
 
 #include "libft.h"
 
