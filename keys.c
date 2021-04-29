@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/27 08:14:47 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/29 10:16:09 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/29 11:37:17 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,15 @@ void	map_key_actions(t_history *history, t_line *line_state, char keycode)
 char	get_keycode(int fd, char *sequence)
 {
 	if (read(fd, sequence, 1) == -1 || read(fd, sequence + 1, 1) == -1)
-	{
 		return (0);
-	}
 	if (sequence[0] == '[')
 	{
+		if (sequence[1] >= '0' && sequence[1] <= '9')
+		{
+			if (read(fd, sequence + 2, 1) == -1)
+				return (0);
+			return (sequence[2]);
+		}
 		return (sequence[1]);
 	}
 	return (0);
