@@ -15,7 +15,7 @@
 # define ESC '\x1b'
 # define NEWLINE '\x0a'
 # define CARRIAGE_RETURN '\x0d'
-# define BACKSPACE '\x08' // or DEL ? '\x7f' ????
+# define BACKSPACE '\x7f' // or '\x08' ????
 # define CTRL_D '\x04'
 
 typedef struct s_keycodes_map

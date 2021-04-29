@@ -55,11 +55,15 @@ int	handle_backspace(t_history *history, t_line *line_state)
 {
 	size_t i;
 
-	i = line_state->line_len;
+	i = line_state->line_len - 1;
 	line_state->buf[i] = '\b';
-	line_state->buf[i + 1] = ' ';
-	line_state->buf[i + 2] = '\b';
+    write(1, "\b", 1);
+	line_state->buf[i] = ' ';
+    write(1, " ", 1);
+	line_state->buf[i] = '\b';
+    write(1, "\b", 1);
 	line_state->line_len--;
+//    printf("%s",line_state->buf);
     return (1);
 }
 
