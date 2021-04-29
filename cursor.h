@@ -3,15 +3,8 @@
 
 # include <stddef.h>
 
-//  ANSI escape sequences, which extend the functions available with the control
-// codes:
-# define ESC '\x1b'
-# define NEWLINE '\x0a'
-# define CARRIAGE_RETURN '\x0d'
 # define REQUEST_CUR_POS "\x1b[6n"
 
-# define ARROW_UP "ku"
-# define ARROW_DOWN "kd"
 /*
 ** \033[6n DSR(device status report)-Request cursor position
 */
