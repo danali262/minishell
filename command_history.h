@@ -14,6 +14,7 @@ typedef struct s_history
 	char	*lines[MAX_HISTORY];
 	int		num_lines;
 	int		last_shown_line;
+	int		iter_mode;
 }				t_history;
 
 void	init_history(t_history *history);

@@ -8,6 +8,7 @@ void	init_history(t_history *history)
 	ft_bzero(history->lines, MAX_HISTORY);
 	history->num_lines = 0;
 	history->last_shown_line = -1;
+	history->iter_mode = 0;
 }
 
 
@@ -23,4 +24,5 @@ void	free_history(t_history *history)
 	}
 	history->num_lines = 0;
 	history->last_shown_line = -1;
+	history->iter_mode = 0;
 }
