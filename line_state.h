@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/26 13:36:57 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/28 16:34:32 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/29 14:41:00 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 typedef struct s_line
 {
 	char	*buf;
-	int		eol;
+	// int		eol;
 	size_t	line_len;
 }				t_line;
 

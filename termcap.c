@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 15:31:47 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/28 15:33:02 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/29 13:58:42 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ int	init_terminal_data(void)
 	}
 	char *temp = tgetstr ("ku", &term_buffer);
 	char *temp1 = tgetstr ("kd", &term_buffer);
-	printf("ku: %s\n", temp); //remove
-	printf("kd: %s\n", temp1); //remove
+	// printf("ku: %s\n", temp); //remove
+	// printf("kd: %s\n", temp1); //remove
 
 	return (1);
 }
