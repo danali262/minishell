@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/27 08:14:47 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/29 12:25:16 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/29 12:46:40 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	handle_newline(t_history *history, t_line *line_state)
 	reset_line_state(line_state);
 	// line_state->eol = 1; // do I need it now?
 	history->last_shown_line = history->num_lines - 1;
+	history->iter_mode = 0;
 	return (1);
 }
 
@@ -70,7 +71,7 @@ int	show_prev_history(t_history *history, t_line *line_state)
 {
 	if (history->num_lines != 0)
 	{
-		if (line_state->line_len != 0)
+		if (line_state->line_len != 0 && !history->iter_mode)
 		{
 			if (!add_history_line(history, line_state))
 				return (0);
@@ -82,6 +83,7 @@ int	show_prev_history(t_history *history, t_line *line_state)
 			line_state->buf = history->lines[history->last_shown_line - 1];
 			line_state->line_len = ft_strlen(line_state->buf);
 			history->last_shown_line--;
+			history->iter_mode = 1;
 			printf("%s", line_state->buf);
 		}
 	}
