@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/27 08:14:47 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/29 13:15:08 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/29 13:54:42 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	handle_newline(t_history *history, t_line *line_state)
 	// line_state->eol = 1; // do I need it now?
 	history->last_shown_line = history->num_lines - 1;
 	history->iter_mode = 0;
+	history->is_command_executed = 1;
 	return (1);
 }
 
@@ -77,6 +78,7 @@ int	show_prev_history(t_history *history, t_line *line_state)
 		{
 			if (!add_history_line(history, line_state))
 				return (0);
+			history->is_command_executed = 0;
 		}
 		if (history->last_shown_line != 0)
 		{
@@ -97,7 +99,36 @@ int	show_prev_history(t_history *history, t_line *line_state)
 
 int	show_next_history(t_history *history, t_line *line_state)
 {
-    return (1);
+    char	*next_line;
+
+	if (history->num_lines != 0)
+	{
+		if (line_state->line_len != 0 && !history->iter_mode)
+		{
+			if (!add_history_line(history, line_state))
+				return (0);
+			history->is_command_executed = 0;
+		}
+		if (history->last_shown_line != history->num_lines - 1)
+		{
+			while (line_state->line_len != 0)
+				handle_backspace(history, line_state);
+			next_line = history->lines[history->last_shown_line + 1];
+			line_state->line_len = ft_strlen(next_line);
+			line_state->buf = ft_memcpy(line_state->buf, next_line, line_state->line_len);
+			if (line_state->buf == NULL)
+				return (0);
+			history->last_shown_line++;
+			history->iter_mode = 1;
+			printf("%s", line_state->buf);
+		}
+		if (history->is_command_executed)
+		{
+			while (line_state->line_len != 0)
+				handle_backspace(history, line_state);
+		}
+	}
+	return (1);
 }
 
 
