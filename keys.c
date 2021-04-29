@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/27 08:14:47 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/28 22:51:41 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/29 10:16:09 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,18 @@ int	handle_newline(t_history *history, t_line *line_state)
 	return (1);
 }
 
+int	handle_backspace(t_history *history, t_line *line_state)
+{
+	size_t i;
+
+	i = line_state->line_len;
+	line_state->buf[i] = '\b';
+	line_state->buf[i + 1] = ' ';
+	line_state->buf[i + 2] = '\b';
+	line_state->line_len--;
+    return (1);
+}
+
 int	show_prev_history(t_history *history, t_line *line_state)
 {
 	if (history->num_lines != 0)
@@ -72,17 +84,6 @@ int	show_next_history(t_history *history, t_line *line_state)
     return (1);
 }
 
-int	handle_backspace(t_history *history, t_line *line_state)
-{
-	size_t i;
-
-	i = line_state->line_len;
-	line_state->buf[i] = '\b';
-	line_state->buf[i + 1] = ' ';
-	line_state->buf[i + 2] = '\b';
-	line_state->line_len--;
-    return (1);
-}
 
 int	handle_eot(t_history *history, t_line *line_state)
 {
