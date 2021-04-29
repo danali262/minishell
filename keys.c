@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/27 08:14:47 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/29 13:06:16 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/29 13:15:08 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	handle_backspace(t_history *history, t_line *line_state)
 
 int	show_prev_history(t_history *history, t_line *line_state)
 {
+	char	*prev_line;
+
 	if (history->num_lines != 0)
 	{
 		if (line_state->line_len != 0 && !history->iter_mode)
@@ -80,9 +82,11 @@ int	show_prev_history(t_history *history, t_line *line_state)
 		{
 			while (line_state->line_len != 0)
 				handle_backspace(history, line_state);
-			line_state->line_len = ft_strlen(history->lines[history->last_shown_line - 1]);
-			line_state->buf = ft_memcpy(line_state->buf, history->lines[history->last_shown_line - 1], line_state->line_len);
-			// line_state->buf = history->lines[history->last_shown_line - 1];
+			prev_line = history->lines[history->last_shown_line - 1];
+			line_state->line_len = ft_strlen(prev_line);
+			line_state->buf = ft_memcpy(line_state->buf, prev_line, line_state->line_len);
+			if (line_state->buf == NULL)
+				return (0);
 			history->last_shown_line--;
 			history->iter_mode = 1;
 			printf("%s", line_state->buf);
