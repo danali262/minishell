@@ -2,7 +2,7 @@
 # define KEYS_H
 
 # include "command_history.h"
-# include "line_state.h"
+# include "command_line_state.h"
 
 /*
 ** Terminal capabilities for keys:

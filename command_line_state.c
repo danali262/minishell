@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   line_state.c                                       :+:    :+:            */
+/*   command_line_state.c                               :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 15:23:35 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/29 14:41:46 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/30 10:10:14 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "line_state.h"
+#include "command_line_state.h"
 
 #include "libft.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-int	reset_line_state(t_line *line_state)
-{
-	ft_bzero(line_state->buf, BUF_SIZE);
-	// line_state->eol = 0;
-	line_state->line_len = 0;
-	return (1);
-}
-
-int	init_buffer(t_line *line_state)
+int	init_command_line(t_line *line_state)
 {
 	int i;
 
@@ -39,9 +31,15 @@ int	init_buffer(t_line *line_state)
 	return (1);
 }
 
-void	free_buffer(t_line *line_state)
+int	clear_command_line(t_line *line_state)
+{
+	line_state->buf[0] = '\0';
+	line_state->line_len = 0;
+	return (1);
+}
+
+void	free_command_line(t_line *line_state)
 {
 		free(line_state->buf);
-		// line_state->eol = 0;
 		line_state->line_len = 0;
 }

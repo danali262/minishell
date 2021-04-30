@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/22 17:02:02 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/29 17:17:02 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/30 09:42:00 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "cursor.h"
 #include "gnl_utils.h"
 #include "command_history.h"
-#include "line_state.h"
+#include "command_line_state.h"
 #include "termcap.h"
 
 #include "libft.h"
@@ -100,18 +100,18 @@ int	main (void)
 
 	set_input_mode();
 	init_terminal_data();
-	if (!init_buffer(&line_state))
+	if (!init_command_line(&line_state))
 		return (1);
     init_history(&history);
-	reset_line_state(&line_state);
+	clear_command_line(&line_state);
 	while (1)
 	{
-        printf("bash-3.2$ ");
+        write(STDOUT_FILENO, "bash-3.2$ ", 10);
 		while (history.is_command_executed != 1)
 		{
 			if (!read_command_line(STDIN_FILENO, &history, &line_state))
 			{
-				free_buffer(&line_state);
+				free_command_line(&line_state);
 				free_history(&history);
 				return (1); //will be returning - 1
 			}
