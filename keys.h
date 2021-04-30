@@ -2,7 +2,7 @@
 # define KEYS_H
 
 # include "command_history.h"
-# include "line_state.h"
+# include "command_line_state.h"
 
 /*
 ** Terminal capabilities for keys:
@@ -15,13 +15,13 @@
 # define ESC '\x1b'
 # define NEWLINE '\x0a'
 # define CARRIAGE_RETURN '\x0d'
-# define BACKSPACE '\x08' // or DEL ? '\x7f' ????
+# define BACKSPACE '\x7f' // or '\x08' ????
 # define CTRL_D '\x04'
 
 typedef struct s_keycodes_map
 {
 	char	keycode;
-	void	(*action)(t_history *history, t_line *line_state);
+	int		(*action)(t_history *history, t_line *line_state);
 }				t_keycodes_map;
 
 char	get_keycode(int fd, char *sequence);
