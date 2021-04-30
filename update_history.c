@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 16:53:12 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/29 17:27:34 by osamara       ########   odam.nl         */
+/*   Updated: 2021/04/30 10:14:05 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ int	handle_newline(t_history *history, t_line *line_state)
 	if (!add_history_line(history, line_state))
 		return (0);
 	printf("\n");
-	reset_line_state(line_state);
+	clear_command_line(line_state);
+	free(history->saved_temp_input[MAX_HISTORY]);
+	history->saved_temp_input[MAX_HISTORY] = NULL;
 	history->last_shown_line = history->num_lines - 1;
 	history->iter_mode = 0;
 	history->is_command_executed = 1;
@@ -59,7 +61,6 @@ int	show_prev_history(t_history *history, t_line *line_state)
 {
 	char	*prev_line;
 
-	// reset_line_state(line_state);
 	if (history->num_lines != 0)
 	{
 		if (line_state->line_len != 0 && !history->iter_mode)
@@ -68,7 +69,16 @@ int	show_prev_history(t_history *history, t_line *line_state)
 				return (0);
 			history->is_command_executed = 0;
 		}
-		if (history->last_shown_line != 0)
+		if (history->num_lines == 1 && line_state->line_len == 0) //dry!
+		{
+			line_state->line_len = ft_strlen(history->lines[0]);
+			line_state->buf = ft_memcpy(line_state->buf, history->lines[0], line_state->line_len);
+			if (line_state->buf == NULL)
+				return (0);
+			history->iter_mode = 1;
+			write(STDOUT_FILENO, line_state->buf, line_state->line_len);
+		}
+		else if (history->last_shown_line != 0)
 		{
 			while (line_state->line_len != 0)
 				handle_backspace(history, line_state);
@@ -79,7 +89,7 @@ int	show_prev_history(t_history *history, t_line *line_state)
 				return (0);
 			history->last_shown_line--;
 			history->iter_mode = 1;
-			printf("%s", line_state->buf);
+            write(STDOUT_FILENO, line_state->buf, line_state->line_len);
 		}
 	}
 	return (1);
@@ -89,7 +99,7 @@ int	show_next_history(t_history *history, t_line *line_state)
 {
     char	*next_line;
 
-	// reset_line_state(line_state);
+	// clear_command_line(line_state);
 	if (history->num_lines != 0)
 	{
 		if (line_state->line_len != 0 && !history->iter_mode)
@@ -109,14 +119,13 @@ int	show_next_history(t_history *history, t_line *line_state)
 				return (0);
 			history->last_shown_line++;
 			history->iter_mode = 1;
-			printf("%s", line_state->buf);
+            write(STDOUT_FILENO, line_state->buf, line_state->line_len);
 		}
-		if (history->is_command_executed)
-		{
-			while (line_state->line_len != 0)
-				handle_backspace(history, line_state);
-		}
+//		if (history->is_command_executed)
+//		{
+//			while (line_state->line_len != 0)
+//				handle_backspace(history, line_state);
+//		}
 	}
 	return (1);
 }
-
