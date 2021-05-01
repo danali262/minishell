@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 15:31:47 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/29 13:58:42 by osamara       ########   odam.nl         */
+/*   Updated: 2021/05/01 07:55:06 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 ** for as long as you still plan to interrogate the description.
 */
 
-//TODO:
-// add the flag -ltermcap to the Makefile to be able to compile with the termcap library
 
 int	init_terminal_data(void)
 {

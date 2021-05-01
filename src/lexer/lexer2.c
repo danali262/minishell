@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "lexer.h"
 
 static t_token	*process_quote(t_shell *prompt, t_token *token, t_counters
 *count)

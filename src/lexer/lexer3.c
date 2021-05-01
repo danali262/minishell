@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "lexer.h"
 
 t_token	*process_others(t_shell *prompt, t_token *token, t_counters *count)
 {

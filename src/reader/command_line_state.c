@@ -6,16 +6,18 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/28 15:23:35 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/30 10:10:14 by osamara       ########   odam.nl         */
+/*   Updated: 2021/05/01 20:10:18 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command_line_state.h"
+#include "read_command_line.h"
 
 #include "libft.h"
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 int	init_command_line(t_line *line_state)
 {
@@ -25,7 +27,7 @@ int	init_command_line(t_line *line_state)
 	line_state->buf = ft_calloc(BUF_SIZE + 1, 1);
 	if (line_state->buf == NULL)
 	{
-		printf("Error. Unable to allocate memory.\n");
+		ft_putstr_fd("Error. Unable to allocate memory.\n", STDOUT_FILENO);
 		return (0);
 	}
 	return (1);

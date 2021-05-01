@@ -1,9 +1,9 @@
-#ifndef MINISHELL_H
-#define MINISHELL_H
+#ifndef LEXER_H
+# define LEXER_H
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
+# include <stdlib.h>
 
 typedef struct  s_shell
 {

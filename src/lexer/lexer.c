@@ -1,4 +1,25 @@
-#include "minishell.h"
+#include "lexer.h"
+
+int	lexer_build(t_shell *prompt, t_lexer *lexerbuf)
+{
+	t_token	*token;
+
+	if (lexerbuf == NULL)
+		return (-1);
+	if (prompt->size == 0)
+	{
+		lexerbuf->tokens_nbr = 0;
+		return (0);
+	}
+	lexerbuf->tokens_list = malloc(sizeof(t_token));
+	token = lexerbuf->tokens_list;
+	tok_init(token, prompt->size);
+	prompt->state = STATE_GENERAL;
+	token = loop(prompt, token);
+	token = lexerbuf->tokens_list;
+	print_tokens(lexerbuf);
+	return (0);
+}
 
 static int	get_char_type_2(char c)
 {
@@ -57,25 +78,4 @@ static t_token	*loop(t_shell *prompt, t_token *token)
 		count.i++;
 	}
 	return (token);
-}
-
-int	lexer_build(t_shell *prompt, t_lexer *lexerbuf)
-{
-	t_token	*token;
-
-	if (lexerbuf == NULL)
-		return (-1);
-	if (prompt->size == 0)
-	{
-		lexerbuf->tokens_nbr = 0;
-		return (0);
-	}
-	lexerbuf->tokens_list = malloc(sizeof(t_token));
-	token = lexerbuf->tokens_list;
-	tok_init(token, prompt->size);
-	prompt->state = STATE_GENERAL;
-	token = loop(prompt, token);
-	token = lexerbuf->tokens_list;
-	print_tokens(lexerbuf);
-	return (0);
 }

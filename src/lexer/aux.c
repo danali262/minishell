@@ -1,4 +1,4 @@
-#include "minishell.h"
+#include "lexer.h"
 
 void	tok_init(t_token *tok, int datasize)
 {

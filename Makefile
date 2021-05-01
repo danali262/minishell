@@ -5,7 +5,7 @@ SRCS = utilities.c lexer.c lexer2.c lexer3.c lexer4.c aux.c main.c
 
 OBJS = $(SRCS:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -ltermcap
 
 CC = gcc
 

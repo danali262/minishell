@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-// 
 // static char *read_input(char *cmd)
 // {
 //     char *buf;
@@ -41,26 +40,25 @@ void    print_tokens(t_lexer *lexerbuf)
 int		main(void)
 // int     main(int ac, char **av, char **envp)
 {
-// 	t_shell     prompt;
-// 	int         i;
-//     size_t		len;
-//     t_lexer		lexerbuf;
-// 
-// 	prompt.buf = ft_strdup("");
-// 	i = 0;
-//     while (1)
-//     {
-// 		ft_putstr_fd("$ ", 1);		/* to be replaced with a more sophisticated command prompt */
-// 		prompt.buf = read_input(prompt.buf);
-// 		while (prompt.buf[i] != '\n')
-// 			i++;
-// 		if (prompt.buf[i] == '\n')
-// 	   		break;
-//     }
-//     prompt.cmd = get_command(prompt.buf);
-//     len = ft_strlen(prompt.cmd);        /* without '/0' */
+	t_shell     prompt;
+	int         i;
+    size_t		len;
+    t_lexer		lexerbuf;
 
-        read_input();
-
+	prompt.buf = ft_strdup("");
+	i = 0;
+    while (1)
+    {
+		ft_putstr_fd("$ ", 1);		/* to be replaced with a more sophisticated command prompt */
+		prompt.buf = read_input(prompt.buf);
+		while (prompt.buf[i] != '\n')
+			i++;
+		if (prompt.buf[i] == '\n')
+	   		break;
+    }
+    prompt.cmd = get_command(prompt.buf);
+    len = ft_strlen(prompt.cmd);        /* without '/0' */
+    lexer_build(prompt.cmd, &lexerbuf);
+    print_tokens(&lexerbuf);
     return (0);
 }

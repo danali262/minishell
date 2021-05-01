@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 17:00:02 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/30 09:54:52 by osamara       ########   odam.nl         */
+/*   Updated: 2021/05/01 19:59:59 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,10 @@ int	handle_backspace(t_history *history, t_line *line_state)
 
 int	handle_eot(t_history *history, t_line *line_state)
 {
-		printf("exit\n");
-		exit(0); 
+	//TODO: ^D while typing the command works as TAB
+	// only if ^D after the command is executed:
+	printf("exit\n");
+		exit(0);
 	return (1);
 }
 
