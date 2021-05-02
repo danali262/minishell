@@ -1,20 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   set_term_attr.c                                    :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: osamara <osamara@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/04/22 17:02:02 by osamara       #+#    #+#                 */
-/*   Updated: 2021/05/01 19:40:44 by osamara       ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "read_command_line.h"
 
 #include "command_line_state.h"
 #include "termcap.h"
-#include "command_history/command_history.h"
+#include "../command_history/command_history.h"
 
 #include "libft.h"
 
@@ -25,7 +13,7 @@
 
 /* origin_attr is used to remember original terminal attributes.
 **
-/* isatty makes sure stdin is a terminal.
+** isatty makes sure stdin is a terminal.
 **
 ** We have to turn off ICANON and ECHO
 ** and interpret the escape sequences from the arrow keys on our own.
@@ -44,7 +32,7 @@ int    set_input_mode (struct termios *origin_attr)
 {
   struct termios term_attr;
 
-  if (!isatty (STDIN_FILENO) || tcgetattr(STDIN_FILENO, &origin_attr) < 0)
+  if (!isatty (STDIN_FILENO) || tcgetattr(STDIN_FILENO, origin_attr) < 0)
     {
         errno = ENOTTY;
         return(0);
@@ -59,10 +47,10 @@ int    set_input_mode (struct termios *origin_attr)
         return(0);
   }
 if (tcgetattr(STDIN_FILENO, &term_attr) < 0)
-	return(reset_input_mode(&origin_attr, EBADF));
+	return(reset_input_mode(origin_attr, EBADF));
 if ((term_attr.c_lflag & (ECHO | ICANON)) || term_attr.c_cc[VMIN] != 1 ||
 	term_attr.c_cc[VTIME] != 0)
-		return(reset_input_mode(&origin_attr, EINVAL));
+		return(reset_input_mode(origin_attr, EINVAL));
 	return (1);
 }
 

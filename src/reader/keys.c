@@ -1,18 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   keys.c                                             :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: osamara <osamara@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/04/27 08:14:47 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/30 15:17:13 by osamara       ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "keys.h"
 #include "handle_keys.h"
-#include "command_history/command_history.h"
+#include "../command_history/command_history.h"
 
 #include "libft.h"
 
@@ -21,7 +9,7 @@
 #include <stdlib.h>
 
 
-void	map_key_actions(t_history *history, t_line *line_state, char keycode)
+void	map_key_actions(t_history *history, t_line *cmd_line, char keycode)
 {
 	int	i;
 	static t_keycodes_map	keycodes_map[] =
@@ -41,7 +29,7 @@ void	map_key_actions(t_history *history, t_line *line_state, char keycode)
 	{
 		if (keycode == keycodes_map[i].keycode)
         {
-			keycodes_map[i].action(history, line_state);
+			keycodes_map[i].action(history, cmd_line);
             break ;
         }
 		i++;

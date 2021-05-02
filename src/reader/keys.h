@@ -1,7 +1,8 @@
 #ifndef KEYS_H
 # define KEYS_H
 
-# include "command_history/command_history.h"
+# include "../command_history/command_history.h"
+# include "../command_history/history_state.h"
 # include "command_line_state.h"
 
 /*
@@ -21,10 +22,10 @@
 typedef struct s_keycodes_map
 {
 	char	keycode;
-	int		(*action)(t_history *history, t_line *line_state);
+	int		(*action)(t_history *history, t_line *cmd_line);
 }				t_keycodes_map;
 
 char	get_keycode(int fd, char *sequence);
-void	map_key_actions(t_history *history, t_line *line_state, char keycode);
+void	map_key_actions(t_history *history, t_line *cmd_line, char keycode);
 
 #endif
