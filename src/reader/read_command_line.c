@@ -38,7 +38,7 @@ int	read_input(void)
 		if (!parse_command_line(&cmd_line))
 			return (0);
 
-		printf("here is the execution result printed...\n");//remove
+		printf("execution result...\n");//remove
 		history.is_command_executed = 0;
 	}
 	return (1);

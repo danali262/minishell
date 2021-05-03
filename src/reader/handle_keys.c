@@ -11,7 +11,7 @@ int	handle_backspace(t_history *history, t_line *cmd_line)
 {
 	size_t i;
 
-	if (cmd_line->size != 0)
+	if (history->last_shown_line != -2) //quick hack, get rid of it
 	{
 		i = cmd_line->size - 1;
 		cmd_line->buf[i] = '\b';
