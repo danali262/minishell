@@ -1,8 +1,6 @@
 #include "lexer.h"
 #include "../../reader/read_command_line.h"
 
-
-
 static int	get_char_type_2(char c)
 {
 	if (c == '0')

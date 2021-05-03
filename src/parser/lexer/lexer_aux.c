@@ -7,3 +7,10 @@ void	tok_init(t_token *tok, int datasize)
 	tok->type = CHAR_NULL;
 	tok->next = NULL;
 }
+
+void	free_token(t_token *tok)
+{
+	if (tok->data)
+		free(tok->data);
+	free(tok);
+}

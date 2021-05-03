@@ -16,7 +16,10 @@ SRC = \
 	src/parser/lexer/lexer2.c \
 	src/parser/lexer/lexer3.c \
 	src/parser/lexer/lexer4.c \
-	src/parser/lexer/utilities.c 
+	src/parser/lexer/utilities.c\
+	src/parser/parser.c\
+	src/parser/parser_functions.c\
+	src/parser/astree.c 
 
 
 OBJS = $(SRC:.c=.o)

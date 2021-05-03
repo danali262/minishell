@@ -23,5 +23,7 @@ int	parse_command_line(t_line *cmd_line)
     if (lexer_build(&lex_state, &lexerbuf) == -1)
 		return (0);
 	print_tokens(&lexerbuf);
+    if (parse(&lexerbuf) == -1)
+        return (0);
 	return (1);
 }
