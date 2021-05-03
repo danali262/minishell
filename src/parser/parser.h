@@ -3,21 +3,11 @@
 
 #include "lexer/lexer.h"
 #include "../reader/command_line_state.h"
-
-// typedef struct	s_simplecommand
-// {
-// 	char	*command;
-// 	char	*arg;
-//     char    *last_element;      /* ought to be NULL, we will be using this array to provide input to execve */
-// 	char	*input;
-// 	char	*output;
-// 	char	*err;
-// }				t_simplecommand;
-// 
-// t_simplecommand	    *command_table;
+#include <stdbool.h>
 
 typedef struct  s_treenode
 {
+	t_token					*current_token;
     int						type;
     char					*data;
 	int						children;			/* number of children */
@@ -26,6 +16,11 @@ typedef struct  s_treenode
 	struct	s_treenode		*next_sibling;		/* useful because there may be more than two child nodes..? */
 	struct	s_treenode		*prev_sibling;
 }               t_treenode;
+
+typedef struct	s_curtok
+{
+	t_token	*current_token;
+}				t_curtok;
 
 typedef	enum
 {
@@ -42,12 +37,22 @@ typedef	enum
 
 
 int			parse_command_line(t_line *cmd_line);
-int			parse(t_lexer *lexerbuf);
-void		parser_functions(t_token *current_token);
+int			parser(t_lexer *lexerbuf, t_treenode *syntax_tree);
 
-t_treenode	*new_node(t_nodetype type);
-void		free_node_tree(t_treenode *node);
-void		set_node_val_str(t_treenode *node, char *val);
-void		add_child_node(t_treenode *parent, t_treenode *child);
+bool		term(int tokentype, char *buffer, t_token *current_token);
+t_treenode	*command_line(t_curtok *curtok);
+t_treenode	*command_line1(t_curtok *curtok);
+t_treenode	*command_line2(t_curtok *curtok);
+t_treenode	*command_line3(t_curtok *curtok);
+
+void		delete_node(t_treenode *node);
+void		set_node_type(t_treenode *node, t_nodetype nodetype);
+void		attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode *rightNode);
+
+
+// t_treenode	*new_node(t_nodetype type);
+// void		free_node_tree(t_treenode *node);
+// void		set_node_val_str(t_treenode *node, char *val);
+// void		add_child_node(t_treenode *parent, t_treenode *child);
 
 #endif
