@@ -11,14 +11,17 @@ int	handle_backspace(t_history *history, t_line *cmd_line)
 {
 	size_t i;
 
-	i = cmd_line->size - 1;
-	cmd_line->buf[i] = '\b';
-    write(1, "\b", 1);
-	cmd_line->buf[i] = ' ';
-    write(1, " ", 1);
-	cmd_line->buf[i] = '\b';
-    write(1, "\b", 1);
-	cmd_line->size--;
+	if (cmd_line->size != 0)
+	{
+		i = cmd_line->size - 1;
+		cmd_line->buf[i] = '\b';
+		write(1, "\b", 1);
+		cmd_line->buf[i] = ' ';
+		write(1, " ", 1);
+		cmd_line->buf[i] = '\b';
+		write(1, "\b", 1);
+		cmd_line->size--;
+	}
 	return (1);
 }
 
