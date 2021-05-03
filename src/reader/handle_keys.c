@@ -19,7 +19,6 @@ int	handle_backspace(t_history *history, t_line *cmd_line)
 	cmd_line->buf[i] = '\b';
     write(1, "\b", 1);
 	cmd_line->size--;
-	printf("history 1st line %s\n", history->lines[0]); //temp solution to use history, need a better one
 	return (1);
 }
 

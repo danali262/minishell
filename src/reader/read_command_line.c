@@ -19,8 +19,7 @@ int	read_input(void)
 	if (!init_command_line(&cmd_line))
 		return (0);
 	clear_command_line(&cmd_line);
-	if (!init_history(&history))
-		return (0);
+    init_history(&history);
 		while (1)
 	{
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);

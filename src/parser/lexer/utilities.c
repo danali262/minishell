@@ -103,7 +103,7 @@ static char	*ft_fill(char *src, char *append, char *dest)
 
 char	*ft_strcat(char *src, char *append)
 {
-	int		x;
+	size_t		x;
 	char	*dest;
 
 	x = ft_strlen(src) + ft_strlen(append);
