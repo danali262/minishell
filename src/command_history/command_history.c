@@ -12,21 +12,15 @@
 ** + 1 is needed to track the copy of the current command line if the command is typed but not executed yet
 */
 
-int	init_history(t_history *history)
+void	init_history(t_history *history)
 {
 	ft_bzero(history->lines, MAX_HISTORY);
 	ft_bzero(history->saved_temp_input, MAX_HISTORY + 1);
-	history->saved_temp_input[MAX_HISTORY] = ft_calloc(BUF_SIZE + 1, 1);
-	if (history->saved_temp_input[MAX_HISTORY] == NULL)
-	{
-		ft_putstr_fd("Error. Unable to allocate memory.\n", STDOUT_FILENO);
-		return (0);
-	}
+    history->saved_temp_input[MAX_HISTORY] = NULL;
 	history->num_lines = 0;
 	history->last_shown_line = -1;
 	history->is_command_executed = 0;
 	history->iter_mode = 0;
-	return (1);
 }
 
 void	free_history(t_history *history)

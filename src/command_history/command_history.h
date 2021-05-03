@@ -6,7 +6,7 @@
 # include "../reader/read_command_line.h"
 
 
-int	init_history(t_history *history);
+void	init_history(t_history *history);
 void	free_history(t_history *history);
 void	clear_history(t_history *history);
 int	add_history_line(t_history *history, t_line *cmd_line);

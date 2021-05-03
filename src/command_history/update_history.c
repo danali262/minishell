@@ -73,6 +73,12 @@ int	show_prev_history(t_history *history, t_line *cmd_line)
 		if (cmd_line->size != 0 && !history->iter_mode)
 		// if (cmd_line->size != 0) //iter mode won't be needed after refactoring
 		{
+            history->saved_temp_input[MAX_HISTORY] = ft_calloc(BUF_SIZE + 1, 1);
+            if (history->saved_temp_input[MAX_HISTORY] == NULL)
+            {
+                ft_putstr_fd("Error. Unable to allocate memory.\n", STDOUT_FILENO);
+                return (0);
+            }
 			history->saved_temp_input[MAX_HISTORY] = ft_strdup(cmd_line->buf);
 			history->is_command_executed = 0;
 		}
