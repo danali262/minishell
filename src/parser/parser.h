@@ -44,6 +44,9 @@ t_treenode	*command_line(t_curtok *curtok);
 t_treenode	*command_line1(t_curtok *curtok);
 t_treenode	*command_line2(t_curtok *curtok);
 t_treenode	*command_line3(t_curtok *curtok);
+t_treenode	*job(t_curtok *curtok);
+t_treenode	*job1(t_curtok *curtok);
+t_treenode	*job2(t_curtok *curtok);
 
 void		delete_node(t_treenode *node);
 void		set_node_type(t_treenode *node, t_nodetype nodetype);

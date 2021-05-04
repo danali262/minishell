@@ -18,7 +18,7 @@ t_treenode	*command_line1(t_curtok *curtok)		/* <job> ';' <command line> */
 {
 	t_treenode	*jobNode;
 	t_treenode	*cmdlineNode;
-	t_treenode	*result;	/* shouldn't the result be the parent of jobNode and cmdlineNode? */
+	t_treenode	*result;
 
 	jobNode = job(curtok);
 	if (jobNode == NULL)
@@ -40,7 +40,7 @@ t_treenode	*command_line1(t_curtok *curtok)		/* <job> ';' <command line> */
 	return (result);
 }
 
-t_treenode	*command_line2(t_curtok *curtok)
+t_treenode	*command_line2(t_curtok *curtok)	/* <job> ';' */
 {
 	t_treenode	*jobNode;
 	t_treenode	*result;
@@ -58,7 +58,7 @@ t_treenode	*command_line2(t_curtok *curtok)
 	attach_tree_branch(result, jobNode, NULL);
 }
 
-t_treenode	*command_line3(t_curtok *curtok)
+t_treenode	*command_line3(t_curtok *curtok)	/* <job> */
 {
 	return(job(curtok));
 }

@@ -1,24 +1,28 @@
 #include "lexer/lexer.h"
 #include "parser.h"
 
-t_treenode	*job(t_curtok *curtok)
+t_treenode	*cmd(t_curtok *curtok)
 {
 	t_treenode *node;
 
-	if ((node = job1(curtok)) != NULL)
+	if ((node = cmd1(curtok)) != NULL)
 		return (node);
-	if (node = job2(curtok) != NULL)
+	if (node = cmd2(curtok) != NULL)
+		return (node);
+	if (node = cmd3(curtok) != NULL)
+		return (node);
+	if (node = cmd4(curtok) != NULL)
 		return (node);
 	return (NULL);
 }
 
-t_treenode	*job1(t_curtok *curtok)		/* <command> '|' <job> */
+t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> <redirection list> */
 {
-	t_treenode	*cmdNode;
-	t_treenode	*jobNode;
+	t_treenode	*smplcmdNode;
+	t_treenode	*redirlistNode;
 	t_treenode	*result;
 
-	cmdNode = cmd(curtok);
+	smplcmdNode = cmd(curtok);
 	if (cmdNode == NULL)
 		return (NULL);
 	if (!term(CHAR_PIPE, NULL, curtok->current_token))
@@ -38,7 +42,7 @@ t_treenode	*job1(t_curtok *curtok)		/* <command> '|' <job> */
 	return (result);
 }
 
-t_treenode	*job2(t_curtok *curtok)		/*  <command> */
+t_treenode	*job2(t_curtok *curtok)
 {
 	return(cmd(curtok));
 }

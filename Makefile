@@ -17,16 +17,17 @@ SRC = \
 	src/parser/lexer/lexer3.c \
 	src/parser/lexer/lexer4.c \
 	src/parser/lexer/utilities.c\
-	src/parser/parser.c\
-	src/parser/parser2.c\
-	src/parser/parser3.c\
-	src/parser/parser_functions.c\
-	src/parser/astree.c 
+	# src/parser/parser.c\
+	# src/parser/parser2.c\
+	# src/parser/parser3.c\
+	# src/parser/parser_functions.c\
+	# src/parser/astree.c 
 
 
 OBJS = $(SRC:.c=.o)
 # remove the flafs for amd processor and debugging
-CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12 
+# CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12 
+CFLAGS = -Wall -Werror -Wextra 
 
 INCLUDES =	./libft
 
