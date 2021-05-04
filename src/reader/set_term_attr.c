@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <sys/errno.h>
 
-/* origin_attr is used to remember original terminal attributes.
+/* origin_attr is used to remember original terminal attributes
 **
 ** isatty makes sure stdin is a terminal.
 **
@@ -23,34 +23,36 @@
 **   And afterwards we're calling set which will install the updated structure
 **
 ** set returns OK if it was able to perform ANY of the requested actions,
-** so it is our responsibility to see whether all the requested actions were performed:
-** we need to call tcgetattr and compare the actual terminal's attributes to the desired attributes
+** so it is our responsibility to see whether all the requested actions
+** were performed:
+** we need to call tcgetattr and compare the actual terminal's attributes
+** to the desired attributes
 ** to detect any differences.
 */
 
-int    set_input_mode (struct termios *origin_attr)
+int	set_input_mode(struct termios *origin_attr)
 {
-  struct termios term_attr;
+	struct termios	term_attr;
 
-  if (!isatty (STDIN_FILENO) || tcgetattr(STDIN_FILENO, origin_attr) < 0)
-    {
-        errno = ENOTTY;
-        return(0);
-    }
-  term_attr = *origin_attr;
-  term_attr.c_lflag &= ~(ICANON | ECHO); 
-  term_attr.c_cc[VMIN] = 1;
-  term_attr.c_cc[VTIME] = 0;
-  if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_attr) < 0)
-  {
-  		printf("Error. Unable to set one or more terminal attributes.\n");
-        return(0);
-  }
-if (tcgetattr(STDIN_FILENO, &term_attr) < 0)
-	return(reset_input_mode(origin_attr, EBADF));
-if ((term_attr.c_lflag & (ECHO | ICANON)) || term_attr.c_cc[VMIN] != 1 ||
-	term_attr.c_cc[VTIME] != 0)
-		return(reset_input_mode(origin_attr, EINVAL));
+	if (!isatty (STDIN_FILENO) || tcgetattr(STDIN_FILENO, origin_attr) < 0)
+	{
+		errno = ENOTTY;
+		return (0);
+	}
+	term_attr = *origin_attr;
+	term_attr.c_lflag &= ~(ICANON | ECHO);
+	term_attr.c_cc[VMIN] = 1;
+	term_attr.c_cc[VTIME] = 0;
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &term_attr) < 0)
+	{
+		printf("Error. Unable to set one or more terminal attributes.\n");
+		return (0);
+	}
+	if (tcgetattr(STDIN_FILENO, &term_attr) < 0)
+		return (reset_input_mode(origin_attr, EBADF));
+	if ((term_attr.c_lflag & (ECHO | ICANON)) || term_attr.c_cc[VMIN] != 1
+		|| term_attr.c_cc[VTIME] != 0)
+		return (reset_input_mode(origin_attr, EINVAL));
 	return (1);
 }
 
@@ -64,8 +66,7 @@ int	reset_input_mode(struct termios *origin_attr, int error_code)
 	else
 	{
 		tcsetattr(STDIN_FILENO, TCSANOW, origin_attr);
-      	errno = error_code;
+		errno = error_code;
 		return (0);
 	}	
 }
-

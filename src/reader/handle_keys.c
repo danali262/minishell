@@ -2,7 +2,6 @@
 #include "keys.h"
 #include "read_command_line.h"
 
-
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
