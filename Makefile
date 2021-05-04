@@ -18,6 +18,8 @@ SRC = \
 	src/parser/lexer/lexer4.c \
 	src/parser/lexer/utilities.c\
 	src/parser/parser.c\
+	src/parser/parser2.c\
+	src/parser/parser3.c\
 	src/parser/parser_functions.c\
 	src/parser/astree.c 
 
