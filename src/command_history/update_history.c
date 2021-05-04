@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        ::::::::            */
-/*   update_history.c                                   :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: osamara <osamara@student.codam.nl>           +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2021/04/29 16:53:12 by osamara       #+#    #+#                 */
-/*   Updated: 2021/05/04 11:03:44 by osamara       ########   odam.nl         */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "command_history.h"
 #include "../reader/handle_keys.h"
 
@@ -35,10 +23,11 @@ int	add_history_line(t_history *history, t_line *cmd_line)
 			i++;
 		}
 	}
-	history->last_shown_line++;
+	history->last_shown_line = history->num_lines - 1;
     i = history->last_shown_line;
-	free(history->lines[i]);
-	if (history->saved_temp_input[MAX_HISTORY] != NULL)
+	if (history->saved_temp_input[MAX_HISTORY] != NULL
+			&& ft_strncmp(history->saved_temp_input[MAX_HISTORY], cmd_line->buf,
+						ft_strlen(history->saved_temp_input[MAX_HISTORY])) == 0)
 		history->lines[i] = ft_strdup(history->saved_temp_input[MAX_HISTORY]);
 	else
 		history->lines[i] = ft_strdup(cmd_line->buf);
@@ -58,7 +47,6 @@ int	handle_newline(t_history *history, t_line *cmd_line)
 	printf("\n");
 	free(history->saved_temp_input[MAX_HISTORY]);
 	history->saved_temp_input[MAX_HISTORY] = NULL;
-	history->last_shown_line = history->num_lines - 1;
 	history->iter_mode = 0;
 	history->is_command_executed = 1;
 	return (1);
@@ -143,9 +131,9 @@ int	show_next_history(t_history *history, t_line *cmd_line)
 				cmd_line->buf = ft_memcpy(cmd_line->buf, history->saved_temp_input[MAX_HISTORY], cmd_line->size);
 				free(history->saved_temp_input[MAX_HISTORY]);
 				history->saved_temp_input[MAX_HISTORY] = NULL;
-				history->iter_mode = 0;
             	write(STDOUT_FILENO, cmd_line->buf, cmd_line->size);
 			}
+				history->iter_mode = 0;
 		}
 	}
 	return (1);
