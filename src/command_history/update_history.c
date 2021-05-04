@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 16:53:12 by osamara       #+#    #+#                 */
-/*   Updated: 2021/05/04 10:29:36 by osamara       ########   odam.nl         */
+/*   Updated: 2021/05/04 11:03:44 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,8 @@ int	show_next_history(t_history *history, t_line *cmd_line)
 	if (history->num_lines != 0)
 	{
 		if (cmd_line->size != 0 && !history->iter_mode)
-		// if (cmd_line->size != 0) // will replace the upper line
 		{
 			history->saved_temp_input[MAX_HISTORY] = ft_strdup(cmd_line->buf);
-			history->is_command_executed = 0;
 		}
 		if (history->last_shown_line != history->num_lines - 1)
 		{
@@ -136,16 +134,19 @@ int	show_next_history(t_history *history, t_line *cmd_line)
             write(STDOUT_FILENO, cmd_line->buf, cmd_line->size);
 		}
 		else
+		{
+			while (cmd_line->size != 0)
+					handle_backspace(history, cmd_line);
 			if (history->saved_temp_input[MAX_HISTORY] != NULL)
 			{
 				cmd_line->size = ft_strlen(history->saved_temp_input[MAX_HISTORY]); //dry
 				cmd_line->buf = ft_memcpy(cmd_line->buf, history->saved_temp_input[MAX_HISTORY], cmd_line->size);
 				free(history->saved_temp_input[MAX_HISTORY]);
 				history->saved_temp_input[MAX_HISTORY] = NULL;
+				history->iter_mode = 0;
+            	write(STDOUT_FILENO, cmd_line->buf, cmd_line->size);
 			}
-			else
-				while (cmd_line->size != 0)
-					handle_backspace(history, cmd_line);
+		}
 	}
 	return (1);
 }
