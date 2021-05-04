@@ -31,8 +31,8 @@ typedef	enum
 	NODE_REDIRECT_OUT,					/* > */
 	NODE_APPEND,						/* >> */
 	NODE_ARG,							/* argument */
-	// NODE_PATH,							/* pathname */
-	// NODE_FILE							/* filename */
+	NODE_PATH,							/* pathname */
+	NODE_FILE							/* filename */
 }		t_nodetype;
 
 
@@ -47,9 +47,15 @@ t_treenode	*command_line3(t_curtok *curtok);
 t_treenode	*job(t_curtok *curtok);
 t_treenode	*job1(t_curtok *curtok);
 t_treenode	*job2(t_curtok *curtok);
+t_treenode	*cmd(t_curtok *curtok);
+t_treenode	*cmd1(t_curtok *curtok);
+t_treenode	*cmd2(t_curtok *curtok);
+t_treenode	*cmd3(t_curtok *curtok);
+t_treenode	*cmd4(t_curtok *curtok);
 
 void		delete_node(t_treenode *node);
 void		set_node_type(t_treenode *node, t_nodetype nodetype);
+void		set_node_data(t_treenode *node, char *data);
 void		attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode *rightNode);
 
 

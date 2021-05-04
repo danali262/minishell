@@ -35,3 +35,19 @@ static t_treenode	*parse_simple_command(t_token *current_token)
 	return (cmd);
 }
 
+
+// static t_treenode	*parser_functions(t_token *current_token, t_treenode *syntax_tree)
+// {
+// 	syntax_tree = parse_simple_command(current_token);
+// 	printf("syntax tree is %s\n", syntax_tree->data);
+// 	// printf("syntax tree child is %s\n", syntax_tree->left->data);
+// 	// printf("syntax tree child's child is %s\n", syntax_tree->left->next_sibling->data);
+// 	syntax_tree = syntax_tree->left;
+// 	while (syntax_tree != NULL)
+// 	{
+// 		printf("syntax tree child is %s\n", syntax_tree->data);
+// 		// printf("syntax tree child's child is %s\n", syntax_tree->left->data);
+// 		syntax_tree = syntax_tree->next_sibling;
+// 		// printf("syntax tree child is %s\n", syntax_tree->data);
+// 	}
+// 

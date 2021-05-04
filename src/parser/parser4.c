@@ -9,40 +9,104 @@ t_treenode	*cmd(t_curtok *curtok)
 		return (node);
 	if (node = cmd2(curtok) != NULL)
 		return (node);
-	if (node = cmd3(curtok) != NULL)
-		return (node);
+	// if (node = cmd3(curtok) != NULL)
+	// 	return (node);
 	if (node = cmd4(curtok) != NULL)
 		return (node);
 	return (NULL);
 }
 
-t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> <redirection list> */
+t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
 {
-	t_treenode	*smplcmdNode;
-	t_treenode	*redirlistNode;
+	t_treenode	*simplecmdNode;
+	t_treenode	*filenameNode;
 	t_treenode	*result;
+	char		*filename;
 
-	smplcmdNode = cmd(curtok);
-	if (cmdNode == NULL)
+	simplecmdNode = simplecmd(curtok);
+	if (simplecmdNode == NULL)
 		return (NULL);
-	if (!term(CHAR_PIPE, NULL, curtok->current_token))
+	if (!term(CHAR_LESSER, NULL, curtok->current_token))
 	{
-		delete_node(cmdNode);
+		delete_node(simplecmdNode);
 		return (NULL);
 	}
-	jobNode = job(curtok);
-	if (jobNode == NULL)
+	if (!term(TOKEN, &filename, curtok->current_token))
 	{
-		delete_node(cmdNode);
+		free(filename);
+		delete_node(simplecmdNode);
 		return (NULL);
 	}
 	result = malloc(sizeof(t_treenode));
-	set_node_type(result, NODE_PIPE);
-	attach_tree_branch(result, cmdNode, jobNode);
+	filenameNode = malloc(sizeof(t_treenode));
+	set_node_type(result, NODE_REDIRECT_IN);
+	set_node_type(filenameNode, NODE_FILE);
+	set_node_data(filenameNode, filename);
+	attach_tree_branch(result, filenameNode, simplecmdNode);
 	return (result);
 }
 
-t_treenode	*job2(t_curtok *curtok)
+t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 {
-	return(cmd(curtok));
+	t_treenode	*simplecmdNode;
+	t_treenode	*filenameNode;
+	t_treenode	*result;
+	char		*filename;
+
+	simplecmdNode = simplecmd(curtok);
+	if (simplecmdNode == NULL)
+		return (NULL);
+	if (!term(CHAR_GREATER, NULL, curtok->current_token))
+	{
+		delete_node(simplecmdNode);
+		return (NULL);
+	}
+	if (!term(TOKEN, &filename, curtok->current_token))
+	{
+		free(filename);
+		delete_node(simplecmdNode);
+		return (NULL);
+	}
+	result = malloc(sizeof(t_treenode));
+	filenameNode = malloc(sizeof(t_treenode));
+	set_node_type(result, NODE_REDIRECT_OUT);
+	set_node_type(filenameNode, NODE_FILE);
+	set_node_data(filenameNode, filename);
+	attach_tree_branch(result, filenameNode, simplecmdNode);
+	return (result);
+}
+
+// t_treenode	*cmd3(t_curtok *curtok)		/* WIP <simple command> '>>' <filename> WIP */
+// {
+// 	t_treenode	*simplecmdNode;
+// 	t_treenode	*filenameNode;
+// 	t_treenode	*result;
+// 	char		*filename;
+
+// 	simplecmdNode = simplecmd(curtok);
+// 	if (simplecmdNode == NULL)
+// 		return (NULL);
+// 	if (!term(CHAR_GREATER, NULL, curtok->current_token))
+// 	{
+// 		delete_node(simplecmdNode);
+// 		return (NULL);
+// 	}
+// 	if (!term(TOKEN, &filename, curtok->current_token))
+// 	{
+// 		free(filename);
+// 		delete_node(simplecmdNode);
+// 		return (NULL);
+// 	}
+// 	result = malloc(sizeof(t_treenode));
+// 	filenameNode = malloc(sizeof(t_treenode));
+// 	set_node_type(result, NODE_REDIRECT_OUT);
+// 	set_node_type(filenameNode, NODE_FILE);
+// 	set_node_data(filenameNode, filename);
+// 	attach_tree_branch(result, filenameNode, simplecmdNode);
+// 	return (result);
+// }
+
+t_treenode	*cmd4(t_curtok *curtok)
+{
+	return(simplecmd());
 }
