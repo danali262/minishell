@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/29 16:53:12 by osamara       #+#    #+#                 */
-/*   Updated: 2021/05/03 01:15:12 by osamara       ########   odam.nl         */
+/*   Updated: 2021/05/04 10:29:36 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,36 +71,38 @@ int	show_prev_history(t_history *history, t_line *cmd_line)
 	if (history->num_lines != 0)
 	{
 		if (cmd_line->size != 0 && !history->iter_mode)
-		// if (cmd_line->size != 0) //iter mode won't be needed after refactoring
 		{
-            history->saved_temp_input[MAX_HISTORY] = ft_calloc(BUF_SIZE + 1, 1);
+			history->saved_temp_input[MAX_HISTORY] = ft_strdup(cmd_line->buf);
             if (history->saved_temp_input[MAX_HISTORY] == NULL)
             {
                 ft_putstr_fd("Error. Unable to allocate memory.\n", STDOUT_FILENO);
                 return (0);
             }
-			history->saved_temp_input[MAX_HISTORY] = ft_strdup(cmd_line->buf);
-			history->is_command_executed = 0;
 		}
-		if (history->num_lines == 1 && cmd_line->size == 0) //dry!
+		if ((history->num_lines == 1 && cmd_line->size == 0)
+				|| (history->num_lines == 1
+				&& history->saved_temp_input[MAX_HISTORY] != NULL
+				&& ft_strncmp(history->saved_temp_input[MAX_HISTORY], cmd_line->buf,
+						ft_strlen(history->saved_temp_input[MAX_HISTORY])) == 0)
+				|| history->last_shown_line != 0)
 		{
-			cmd_line->size = ft_strlen(history->lines[0]);
-			cmd_line->buf = ft_memcpy(cmd_line->buf, history->lines[0], cmd_line->size);
-			if (cmd_line->buf == NULL)
-				return (0);
-			history->iter_mode = 1;
-			write(STDOUT_FILENO, cmd_line->buf, cmd_line->size);
-		}
-		else if (history->last_shown_line != 0)
-		{
+           if ((history->saved_temp_input[MAX_HISTORY] != NULL
+			   && ft_strncmp(history->saved_temp_input[MAX_HISTORY], cmd_line->buf,
+				   ft_strlen(history->saved_temp_input[MAX_HISTORY])) == 0)
+			   || (history->saved_temp_input[MAX_HISTORY] == NULL
+				   && cmd_line->size == 0))
+		   {
+				history->last_shown_line++;
+				prev_line = history->lines[history->last_shown_line];
+		   }
+            	prev_line = history->lines[history->last_shown_line - 1];
+				history->last_shown_line--;
 			while (cmd_line->size != 0)
 				handle_backspace(history, cmd_line);
-			prev_line = history->lines[history->last_shown_line - 1];
 			cmd_line->size = ft_strlen(prev_line);
 			cmd_line->buf = ft_memcpy(cmd_line->buf, prev_line, cmd_line->size);
 			if (cmd_line->buf == NULL)
 				return (0);
-			history->last_shown_line--;
 			history->iter_mode = 1;
             write(STDOUT_FILENO, cmd_line->buf, cmd_line->size);
 		}
@@ -112,7 +114,6 @@ int	show_next_history(t_history *history, t_line *cmd_line)
 {
     char	*next_line;
 
-	// clear_command_line(cmd_line);
 	if (history->num_lines != 0)
 	{
 		if (cmd_line->size != 0 && !history->iter_mode)
@@ -142,7 +143,9 @@ int	show_next_history(t_history *history, t_line *cmd_line)
 				free(history->saved_temp_input[MAX_HISTORY]);
 				history->saved_temp_input[MAX_HISTORY] = NULL;
 			}
-		//TODO: add check if history is iterated after newline and no new command is enetered
+			else
+				while (cmd_line->size != 0)
+					handle_backspace(history, cmd_line);
 	}
 	return (1);
 }
