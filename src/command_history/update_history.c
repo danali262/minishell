@@ -12,17 +12,21 @@ int	add_history_line(t_history *history, t_line *cmd_line)
 {
 	int i;
 
-	history->num_lines++;
-	if (history->num_lines > MAX_HISTORY)
+	if (history->num_lines + 1 > MAX_HISTORY)
 	{
 		free(history->lines[0]);
+		history->lines[0] = NULL;
 		i = 1;
-		while (i < MAX_HISTORY - 1)
+		while (i <= MAX_HISTORY - 1)
 		{
 			history->lines[i - 1] = history->lines[i];
 			i++;
 		}
+		free(history->lines[MAX_HISTORY - 1]);
+		history->lines[MAX_HISTORY - 1] = NULL;
 	}
+	else
+		history->num_lines++;
 	history->last_shown_line = history->num_lines - 1;
     i = history->last_shown_line;
 	if (history->saved_temp_input[MAX_HISTORY] != NULL
