@@ -30,9 +30,10 @@ typedef	enum
 	NODE_REDIRECT_IN,					/* < */
 	NODE_REDIRECT_OUT,					/* > */
 	NODE_APPEND,						/* >> */
-	NODE_ARG,							/* argument */
+	NODE_FILE,							/* filename */
 	NODE_PATH,							/* pathname */
-	NODE_FILE							/* filename */
+	NODE_ARG,							/* argument */
+	NODE_TOKEN							/* tokenlist */
 }		t_nodetype;
 
 
@@ -52,6 +53,10 @@ t_treenode	*cmd1(t_curtok *curtok);
 t_treenode	*cmd2(t_curtok *curtok);
 t_treenode	*cmd3(t_curtok *curtok);
 t_treenode	*cmd4(t_curtok *curtok);
+t_treenode	*simplecmd(t_curtok *curtok);
+t_treenode	*tokenlist(t_curtok *curtok);
+t_treenode	*tokenlist1(t_curtok *curtok);
+t_treenode	*tokenlist2(void);
 
 void		delete_node(t_treenode *node);
 void		set_node_type(t_treenode *node, t_nodetype nodetype);

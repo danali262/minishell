@@ -7,7 +7,7 @@ t_treenode	*job(t_curtok *curtok)
 
 	if ((node = job1(curtok)) != NULL)
 		return (node);
-	if (node = job2(curtok) != NULL)
+	if ((node = job2(curtok)) != NULL)
 		return (node);
 	return (NULL);
 }

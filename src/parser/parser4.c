@@ -7,11 +7,11 @@ t_treenode	*cmd(t_curtok *curtok)
 
 	if ((node = cmd1(curtok)) != NULL)
 		return (node);
-	if (node = cmd2(curtok) != NULL)
+	if ((node = cmd2(curtok)) != NULL)
 		return (node);
-	// if (node = cmd3(curtok) != NULL)
+	// if ((node = cmd3(curtok)) != NULL)
 	// 	return (node);
-	if (node = cmd4(curtok) != NULL)
+	if ((node = cmd4(curtok)) != NULL)
 		return (node);
 	return (NULL);
 }
@@ -21,7 +21,7 @@ t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
 	t_treenode	*simplecmdNode;
 	t_treenode	*filenameNode;
 	t_treenode	*result;
-	char		*filename;
+	char		filename;
 
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
@@ -41,7 +41,7 @@ t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
 	filenameNode = malloc(sizeof(t_treenode));
 	set_node_type(result, NODE_REDIRECT_IN);
 	set_node_type(filenameNode, NODE_FILE);
-	set_node_data(filenameNode, filename);
+	set_node_data(filenameNode, &filename);
 	attach_tree_branch(result, filenameNode, simplecmdNode);
 	return (result);
 }
@@ -51,7 +51,7 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 	t_treenode	*simplecmdNode;
 	t_treenode	*filenameNode;
 	t_treenode	*result;
-	char		*filename;
+	char		filename;
 
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
@@ -63,7 +63,6 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 	}
 	if (!term(TOKEN, &filename, curtok->current_token))
 	{
-		free(filename);
 		delete_node(simplecmdNode);
 		return (NULL);
 	}
@@ -71,7 +70,7 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 	filenameNode = malloc(sizeof(t_treenode));
 	set_node_type(result, NODE_REDIRECT_OUT);
 	set_node_type(filenameNode, NODE_FILE);
-	set_node_data(filenameNode, filename);
+	set_node_data(filenameNode, &filename);
 	attach_tree_branch(result, filenameNode, simplecmdNode);
 	return (result);
 }
@@ -108,5 +107,5 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 
 t_treenode	*cmd4(t_curtok *curtok)
 {
-	return(simplecmd());
+	return(simplecmd(curtok));
 }

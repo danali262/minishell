@@ -21,7 +21,8 @@ SRC = \
 	src/parser/parser2.c\
 	src/parser/parser3.c\
 	src/parser/parser4.c\
-	src/parser/parser_functions.c\
+	src/parser/parser5.c\
+	src/parser/parser_aux.c\
 	src/parser/astree.c 
 
 

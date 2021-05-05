@@ -7,9 +7,9 @@ t_treenode	*command_line(t_curtok *curtok)
 
 	if ((node = command_line1(curtok)) != NULL)
 		return (node);
-	if (node = command_line2(curtok) != NULL)
+	if ((node = command_line2(curtok)) != NULL)
 		return (node);
-	if (node = command_line3(curtok) != NULL)
+	if ((node = command_line3(curtok)) != NULL)
 		return (node);
 	return (NULL);
 }
