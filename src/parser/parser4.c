@@ -33,7 +33,6 @@ t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
 	}
 	if (!term(TOKEN, &filename, curtok->current_token))
 	{
-		free(filename);
 		delete_node(simplecmdNode);
 		return (NULL);
 	}

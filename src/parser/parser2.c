@@ -56,6 +56,7 @@ t_treenode	*command_line2(t_curtok *curtok)	/* <job> ';' */
 	result = malloc(sizeof(t_treenode));
 	set_node_type(result, NODE_SEMI);
 	attach_tree_branch(result, jobNode, NULL);
+	return (result);
 }
 
 t_treenode	*command_line3(t_curtok *curtok)	/* <job> */

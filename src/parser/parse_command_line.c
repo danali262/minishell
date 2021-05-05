@@ -26,5 +26,5 @@ int	parse_command_line(t_line *cmd_line)
 	print_tokens(&lexerbuf);
     if (parser(&lexerbuf, &syntax_tree) == -1)
         return (0);
-	return (1);
+    return (1);
 }

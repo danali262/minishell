@@ -4,6 +4,7 @@
 # include <stddef.h>
 # include <limits.h>
 
+# define ARG_MAX 2097152
 # define BUF_SIZE ARG_MAX
 # define PROMPT "minishell-0.1$ " // temp prompt to differentiate from original bash
 // # define PROMPT "bash-3.2$ "
