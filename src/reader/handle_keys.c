@@ -2,6 +2,8 @@
 #include "keys.h"
 #include "read_command_line.h"
 
+#include "libft.h"
+
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,14 +32,17 @@ int	handle_backspace(t_history *history, t_line *cmd_line)
 
 int	handle_eot(t_history *history, t_line *cmd_line)
 {
-	// only if ^D after the command is executed:
-	if (history->is_command_executed)
+	char	*exit_msg;
+
+	exit_msg = "\nSaving session...\n...copying shared history...\
+		\n...saving history...truncating history files...\
+		\n...completed.\n\n[Process completed]\n";
+	if (cmd_line->size == 0)
 	{
-		printf("exit\n");
+		ft_putstr_fd(exit_msg, STDOUT_FILENO);
 		free_history(history);
 		free_command_line(cmd_line);
 		exit(0);
-		
 	}
 	//TODO: ^D while typing the command works as TAB
 	return (1);
