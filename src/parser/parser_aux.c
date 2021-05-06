@@ -1,19 +1,19 @@
 #include "parser.h"
 
-bool	term(int tokentype, char *buffer, t_token *current_token)
+bool	term(int tokentype, char **buffer, t_curtok *curtok)
 {
-	if (current_token == NULL)
+	if (curtok->current_token == NULL)
         return (false);
-    if (current_token->type == tokentype)
+    if (curtok->current_token->type == tokentype)
     {
         if (buffer != NULL)
         {
-            buffer = malloc(ft_strlen(current_token->data) + 1);
-            ft_strlcpy(buffer, current_token->data, ft_strlen(current_token->data) + 1);
+            *buffer = malloc(ft_strlen(curtok->current_token->data) + 1);
+            ft_strlcpy(*buffer, curtok->current_token->data, ft_strlen(curtok->current_token->data) + 1);
         }
-        current_token = current_token->next;
+        curtok->current_token = curtok->current_token->next;
         return (true);
     }
-    current_token = current_token->next;
+    curtok->current_token = curtok->current_token->next;
     return (false);
 }
