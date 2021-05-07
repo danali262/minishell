@@ -3,7 +3,6 @@
 #include "../parser/parser.h"
 #include "../command_history/init_terminal_data.h"
 
-
 #include "libft.h"
 
 #include <unistd.h>
@@ -19,8 +18,8 @@ int	read_input(void)
 	if (!init_command_line(&cmd_line))
 		return (0);
 	clear_command_line(&cmd_line);
-    init_history(&history);
-		while (1)
+	init_history(&history);
+	while (1)
 	{
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 		while (history.is_command_executed != 1)
@@ -43,7 +42,6 @@ int	read_input(void)
 	}
 	return (1);
 }
-
 
 int	read_command_line(int fd, t_history *history, t_line *cmd_line)
 {

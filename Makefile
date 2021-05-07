@@ -8,8 +8,10 @@ SRC = \
 	src/reader/keys.c \
 	src/reader/handle_keys.c \
 	src/command_history/init_terminal_data.c \
-	src/command_history/command_history.c \
 	src/command_history/update_history.c \
+	src/command_history/prev_history.c \
+	src/command_history/next_history.c \
+	src/command_history/history_aux.c \
 	src/parser/parse_command_line.c \
 	src/parser/lexer/lexer_aux.c \
 	src/parser/lexer/lexer.c \
@@ -20,7 +22,7 @@ SRC = \
 
 
 OBJS = $(SRC:.c=.o)
-# remove the flafs for amd processor and debugging
+# remove the flags for amd processor and debugging
 CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12 
 
 INCLUDES =	./libft

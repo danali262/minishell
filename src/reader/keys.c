@@ -8,10 +8,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 void	map_key_actions(t_history *history, t_line *cmd_line, char keycode)
 {
-	int	i;
+	int						i;
 	static t_keycodes_map	keycodes_map[] =
 	{
 		{ARROW_UP, show_prev_history},
@@ -28,10 +27,10 @@ void	map_key_actions(t_history *history, t_line *cmd_line, char keycode)
 	while (keycodes_map[i].keycode != '\0')
 	{
 		if (keycode == keycodes_map[i].keycode)
-        {
+		{
 			keycodes_map[i].action(history, cmd_line);
-            break ;
-        }
+			break ;
+		}
 		i++;
 	}
 }
