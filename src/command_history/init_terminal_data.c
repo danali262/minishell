@@ -6,6 +6,11 @@
 #include <stdio.h>
 # include <stdlib.h>
 
+int	set_capabilities()
+{
+	
+}
+
 /*
 ** The use of static char	*term_buffer:
 ** termcap records its address internally for use when you later interrogate
