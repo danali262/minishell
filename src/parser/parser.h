@@ -63,10 +63,10 @@ void	delete_node(t_treenode *node);
 void	set_node_type(t_treenode *node, t_nodetype nodetype);
 void	set_node_data(t_treenode *node, char *data);
 void	attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode *rightNode);
+void	add_child_node(t_treenode *parent, t_treenode *child);
 
 // t_treenode	*new_node(t_nodetype type);
 // void		free_node_tree(t_treenode *node);
 // void		set_node_val_str(t_treenode *node, char *val);
-// void		add_child_node(t_treenode *parent, t_treenode *child);
 
 #endif
