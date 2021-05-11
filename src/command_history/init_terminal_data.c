@@ -6,10 +6,6 @@
 #include <stdio.h>
 # include <stdlib.h>
 
-int	set_capabilities()
-{
-	
-}
 
 /*
 ** The use of static char	*term_buffer:

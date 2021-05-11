@@ -1,5 +1,6 @@
 #include "lexer/lexer.h"
 #include "parser.h"
+#include "../executor/executor.h"
 
 void    print_tokens(t_lexer *lexerbuf)
 {
@@ -22,6 +23,7 @@ int	parse_command_line(t_line *cmd_line)
     lex_state.line = cmd_line;
     if (lexer_build(&lex_state, &lexerbuf) == -1)
 		return (0);
-	print_tokens(&lexerbuf);
-	return (1);
+    print_tokens(&lexerbuf);
+    execute_command(&lexerbuf);
+    return (1);
 }
