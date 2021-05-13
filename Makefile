@@ -7,7 +7,7 @@ SRC = \
 	src/reader/set_term_attr.c \
 	src/reader/keys.c \
 	src/reader/handle_keys.c \
-	src/command_history/init_terminal_data.c \
+	src/term_cap/init_terminal_data.c \
 	src/command_history/update_history.c \
 	src/command_history/prev_history.c \
 	src/command_history/next_history.c \
