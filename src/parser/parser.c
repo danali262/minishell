@@ -1,32 +1,35 @@
 #include "lexer/lexer.h"
 #include "parser.h"
 
+void	print_tree(t_treenode *syntax_tree)
+{
+	if (!syntax_tree)
+		return;
+	printf("SYNTAX TREE NODE is %s\n", syntax_tree->data);
+	// printf("SYNTAX TREE NODETYPE is %d\n", syntax_tree->type);
+	print_tree(syntax_tree->left);
+	print_tree(syntax_tree->right);
+}
+
 int	parser(t_lexer *lexerbuf, t_treenode *syntax_tree)
 {
 	t_curtok	curtok;
-	t_treenode	*child;
 
 	if (!lexerbuf->tokens_nbr)
 		return (-1);
 	curtok.current_token = lexerbuf->tokens_list;
-	// printf("current token is %s\n", curtok.current_token->data);
-	syntax_tree = command_line(syntax_tree, &curtok);
-	child = malloc(sizeof(t_treenode));
-	child = syntax_tree->left;
-	if (syntax_tree == NULL)
+	syntax_tree = command_line(&curtok);
+	if (curtok.current_token != NULL && curtok.current_token->type != 0)
 	{
-		printf("syntax tree is NULL\n");
-		// print_post_order(syntax_tree);
+		printf("Syntax Error near: %s\n", curtok.current_token->data);
+		return (-1);
 	}
+	if (syntax_tree == NULL)
+		printf("syntax tree is NULL\n");
 	else
 	{
-		printf("SYNTAX TREE DATA is %s\n", syntax_tree->data);
-		printf("SYNTAX TREE TYPE is %d\n", syntax_tree->type);
-		while (child)
-		{
-			printf("SYNTAX TREE CHILD is %s\n", child->data);
-			child = child->next_sibling;
-		}
+		printf("syntax tree is:\n");
+		print_tree(syntax_tree);
 	}
 	return (0);
 }

@@ -14,6 +14,7 @@ int	read_input(void)
 	struct termios	origin_attr;
 	t_history		history;
 	t_line			cmd_line;
+	t_treenode		syntax_tree;
 
 	init_terminal_data(); //probably to the main?
 	if (!init_command_line(&cmd_line))
@@ -35,7 +36,7 @@ int	read_input(void)
 			}
 		}
 		reset_input_mode(&origin_attr, 0);
-		if (!parse_command_line(&cmd_line))
+		if (!parse_command_line(&cmd_line, &syntax_tree))
 			return (0);
 
 		printf("execution result...\n");//remove

@@ -38,25 +38,25 @@ typedef	enum
 }		t_nodetype;
 
 
-int			parse_command_line(t_line *cmd_line);
+int			parse_command_line(t_line *cmd_line, t_treenode *syntax_tree);
 int			parser(t_lexer *lexerbuf, t_treenode *syntax_tree);
 
 bool		term(int tokentype, char **buffer, t_curtok *curtok);
-t_treenode	*command_line(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*command_line1(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*command_line2(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*command_line3(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*job(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*job1(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*job2(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*cmd(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*cmd1(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*cmd2(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*cmd3(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*cmd4(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*simplecmd(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*tokenlist(t_treenode *syntax_tree, t_curtok *curtok);
-t_treenode	*tokenlist1(t_treenode *syntax_tree, t_curtok *curtok);
+t_treenode	*command_line(t_curtok *curtok);
+t_treenode	*command_line1(t_curtok *curtok);
+t_treenode	*command_line2(t_curtok *curtok);
+t_treenode	*command_line3(t_curtok *curtok);
+t_treenode	*job(t_curtok *curtok);
+t_treenode	*job1(t_curtok *curtok);
+t_treenode	*job2(t_curtok *curtok);
+t_treenode	*cmd(t_curtok *curtok);
+t_treenode	*cmd1(t_curtok *curtok);
+t_treenode	*cmd2(t_curtok *curtok);
+t_treenode	*cmd3(t_curtok *curtok);
+t_treenode	*cmd4(t_curtok *curtok);
+t_treenode	*simplecmd(t_curtok *curtok);
+t_treenode	*tokenlist(t_curtok *curtok);
+t_treenode	*tokenlist1(t_curtok *curtok);
 t_treenode	*tokenlist2(void);
 
 void	delete_node(t_treenode *node);
@@ -65,8 +65,6 @@ void	set_node_data(t_treenode *node, char *data);
 void	attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode *rightNode);
 void	add_child_node(t_treenode *parent, t_treenode *child);
 
-// t_treenode	*new_node(t_nodetype type);
-// void		free_node_tree(t_treenode *node);
-// void		set_node_val_str(t_treenode *node, char *val);
+void	print_tree(t_treenode *node);
 
 #endif
