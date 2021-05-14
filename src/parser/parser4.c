@@ -1,6 +1,89 @@
 #include "lexer/lexer.h"
 #include "parser.h"
 
+<<<<<<< HEAD
+t_treenode	*cmd(t_curtok *curtok)
+{
+	t_treenode	*node;
+	t_token		*save;
+
+	save = curtok->current_token;
+	curtok->current_token = save;
+	node = cmd1(curtok);
+	if (node != NULL)
+		return (node);
+	curtok->current_token = save;
+	node = cmd2(curtok);
+	if (node != NULL)
+		return (node);
+	// curtok->current_token = save;
+	// if ((node = cmd3(curtok)) != NULL)
+	// 	return (node);
+	curtok->current_token = save;
+	node = cmd4(curtok);
+	if (node != NULL)
+		return (node);
+	return (NULL);
+}
+
+t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
+{
+	t_treenode	*simplecmdNode;
+	t_treenode	*root;
+	t_treenode	*filenameNode;
+	char		*filename;
+
+	simplecmdNode = simplecmd(curtok);
+	if (simplecmdNode == NULL)
+		return (NULL);
+	if (!term(CHAR_LESSER, NULL, curtok))
+	{
+		delete_node(simplecmdNode);
+		return (NULL);
+	}
+	if (!term(TOKEN, &filename, curtok))
+	{
+		free(filename);
+		delete_node(simplecmdNode);
+		return (NULL);
+	}
+	root = malloc(sizeof(*root));
+	filenameNode = malloc(sizeof(*filenameNode));
+	set_node_data_type(root, "<", NODE_REDIRECT_IN);
+	set_node_data_type(filenameNode, filename, NODE_FILE);
+	attach_tree_branch(root, simplecmdNode, filenameNode);
+	return (root);
+}
+
+t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
+{
+	t_treenode	*simplecmdNode;
+	t_treenode	*root;
+	t_treenode	*filenameNode;
+	char		*filename;
+
+	simplecmdNode = simplecmd(curtok);
+	if (simplecmdNode == NULL)
+		return (NULL);
+	if (!term(CHAR_GREATER, NULL, curtok))
+	{
+		delete_node(simplecmdNode);
+		return (NULL);
+	}
+	if (!term(TOKEN, &filename, curtok))
+	{
+		free(filename);
+		delete_node(simplecmdNode);
+		return (NULL);
+	}
+	root = malloc(sizeof(*root));
+	filenameNode = malloc(sizeof(*filenameNode));
+	set_node_data_type(root, ">", NODE_REDIRECT_OUT);
+	set_node_data_type(filenameNode, filename, NODE_FILE);
+	attach_tree_branch(root, simplecmdNode, filenameNode);
+	return (root);
+}
+=======
 t_treenode	*cmd(t_treenode *syntax_tree, t_curtok *curtok)
 {
 	// printf("i am in cmd\n");
@@ -78,6 +161,7 @@ t_treenode	*cmd(t_treenode *syntax_tree, t_curtok *curtok)
 // 	attach_tree_branch(syntax_tree, filenameNode, simplecmdNode);
 // 	return (syntax_tree);
 // }
+>>>>>>> 7cc7773d618f9f601bdb0e9eada90eb52b29bfc3
 
 // t_treenode	*cmd3(t_curtok *curtok)		/* WIP <simple command> '>>' <filename> WIP */
 // {
@@ -109,8 +193,15 @@ t_treenode	*cmd(t_treenode *syntax_tree, t_curtok *curtok)
 // 	return (result);
 // }
 
+<<<<<<< HEAD
+t_treenode	*cmd4(t_curtok *curtok)
+{
+	return (simplecmd(curtok));
+}
+=======
 t_treenode	*cmd4(t_treenode *syntax_tree, t_curtok *curtok)
 {
 	// printf("i am in cmd4\n");
 	return(simplecmd(syntax_tree, curtok));
 }
+>>>>>>> 7cc7773d618f9f601bdb0e9eada90eb52b29bfc3

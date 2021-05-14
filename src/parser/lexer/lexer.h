@@ -1,7 +1,7 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "libft.h"
+# include "../../../libft/include/libft.h"
 
 # include <stdio.h>
 # include <unistd.h>
@@ -74,6 +74,7 @@ char	**ft_split(char const *s, char c);
 int		lexer_build(t_lexer_state *lex_state, t_lexer *lexerbuf);
 void	tok_init(t_token *tok, int datasize);
 void    print_tokens(t_lexer *lexerbuf);
+void	free_token(t_token *tok);
 t_token	*process_general_state(t_lexer_state *lex_state, t_token *token, t_counters *count, char c);
 t_token	*process_others(t_lexer_state *lex_state, t_token *token, t_counters *count);
 t_token	*new_token(t_lexer_state *lex_state, t_token *token, t_counters *count);
