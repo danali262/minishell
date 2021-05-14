@@ -29,7 +29,6 @@ t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
 	t_treenode	*filenameNode;
 	char		*filename;
 
-	// printf("i am in cmd1\n");
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
 		return (NULL);
@@ -50,8 +49,6 @@ t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
 	set_node_type(filenameNode, NODE_FILE);
 	set_node_data(root, "<");
 	set_node_data(filenameNode, filename);
-	// printf("filename is %s\n", filename);
-	printf("3. WE ATTACH TO %s: LEFT %s and RIGHT %s\n", root->data, simplecmdNode->data, filenameNode->data);
 	attach_tree_branch(root, simplecmdNode, filenameNode);
 	return (root);
 }
@@ -63,7 +60,6 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 	t_treenode	*filenameNode;
 	char		*filename;
 
-	// printf("i am in cmd2\n");
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
 		return (NULL);
@@ -84,8 +80,6 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 	set_node_type(filenameNode, NODE_FILE);
 	set_node_data(root, ">");
 	set_node_data(filenameNode, filename);
-	// printf("filename is %s\n", filename);
-	printf("4. WE ATTACH TO %s: LEFT %s and RIGHT %s\n", root->data, simplecmdNode->data, filenameNode->data);
 	attach_tree_branch(root, simplecmdNode, filenameNode);
 	return (root);
 }
@@ -122,6 +116,5 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 
 t_treenode	*cmd4(t_curtok *curtok)
 {
-	// printf("i am in cmd4\n");
 	return(simplecmd(curtok));
 }

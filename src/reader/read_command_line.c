@@ -2,7 +2,7 @@
 #include "keys.h"
 #include "../parser/parser.h"
 #include "../command_history/init_terminal_data.h"
-
+#include "../shell_state.h"
 
 #include "libft.h"
 
@@ -14,15 +14,16 @@ int	read_input(void)
 	struct termios	origin_attr;
 	t_history		history;
 	t_line			cmd_line;
-	t_treenode		syntax_tree;
+	t_shell			shell;
 
 	init_terminal_data(); //probably to the main?
 	if (!init_command_line(&cmd_line))
 		return (0);
 	clear_command_line(&cmd_line);
     init_history(&history);
-		while (1)
+	while (1)
 	{
+		initialize_shell(&shell);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 		while (history.is_command_executed != 1)
 		{
@@ -36,15 +37,14 @@ int	read_input(void)
 			}
 		}
 		reset_input_mode(&origin_attr, 0);
-		if (!parse_command_line(&cmd_line, &syntax_tree))
+		if (!parse_command_line(&cmd_line, &shell))
 			return (0);
-
 		printf("execution result...\n");//remove
+		delete_node(shell.syntax_tree);		/* to be reviewed */
 		history.is_command_executed = 0;
 	}
 	return (1);
 }
-
 
 int	read_command_line(int fd, t_history *history, t_line *cmd_line)
 {

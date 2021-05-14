@@ -22,7 +22,6 @@ t_treenode	*job1(t_curtok *curtok)		/* <command> '|' <job> */
 	t_treenode	*jobNode;
 	t_treenode	*root;
 
-	// printf("i am in job1\n");
 	cmdNode = cmd(curtok);
 	if (cmdNode == NULL)
 		return (NULL);
@@ -40,13 +39,11 @@ t_treenode	*job1(t_curtok *curtok)		/* <command> '|' <job> */
 	root = malloc(sizeof(*root));
 	set_node_type(root, NODE_PIPE);
 	set_node_data(root, "|");
-	printf("2. WE ATTACH TO %s: LEFT %s and RIGHT %s\n", root->data, cmdNode->data, jobNode->data);
 	attach_tree_branch(root, cmdNode, jobNode);
 	return (root);
 }
 
 t_treenode	*job2(t_curtok *curtok)		/*  <command> */
 {
-	// printf("i am in job2\n");
 	return(cmd(curtok));
 }
