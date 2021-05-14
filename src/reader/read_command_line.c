@@ -1,7 +1,7 @@
 #include "read_command_line.h"
 #include "keys.h"
 #include "../parser/parser.h"
-#include "../command_history/init_terminal_data.h"
+#include "../term_cap/init_terminal_data.h"
 #include "../shell_state.h"
 
 #include "libft.h"

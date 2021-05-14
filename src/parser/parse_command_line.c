@@ -1,6 +1,7 @@
 #include "lexer/lexer.h"
 #include "parser.h"
 #include "../shell_state.h"
+#include "../executor/executor.h"
 
 // void	print_tokens(t_lexer *lexerbuf)         /* to be deleted */
 // {
@@ -25,5 +26,6 @@ int	parse_command_line(t_line *cmd_line, t_shell *shell)
 	// print_tokens(&lexerbuf);        /* to be deleted */
 	if (parser(&lexerbuf, shell) == -1)
 		return (0);
-	return (1);
+    execute_command(&lexerbuf);
+    return (1);
 }

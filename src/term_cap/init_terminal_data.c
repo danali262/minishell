@@ -1,15 +1,13 @@
 #include "init_terminal_data.h"
+#include "termcap_codes.h"
+
+#include "libft.h"
 
 #include <curses.h>
 #include <term.h>
 #include <termcap.h>
-#include <stdio.h>
+#include <unistd.h>
 # include <stdlib.h>
-
-int	set_capabilities()
-{
-	
-}
 
 /*
 ** The use of static char	*term_buffer:
@@ -18,14 +16,13 @@ int	set_capabilities()
 ** for as long as you still plan to interrogate the description.
 */
 
-
 int	init_terminal_data(void)
 {
 	char		*term_type;
 	static char	*term_buffer;
 	int			result;
 
-	term_buffer = malloc(2048);
+	term_buffer = malloc(2048); //don't forget to free allocated memory at exit
 	term_type = getenv("TERM");
 	if (term_type == NULL)
 	{
@@ -43,10 +40,25 @@ int	init_terminal_data(void)
 		printf("The terminal type is not defined.");
 		return (0);
 	}
-	char *temp = tgetstr ("ku", &term_buffer);
-	char *temp1 = tgetstr ("kd", &term_buffer);
-	printf("ku: %s\n", temp); //remove
-	printf("kd: %s\n", temp1); //remove
+	if (!get_termcap_codes(&term_buffer))
+		return (0);
+	return (1);
+}
 
+/*
+**	tgetstr will return code value or 0 if it is not available
+*/
+
+int	get_termcap_codes(char **term_buffer)
+{
+	t_termcap_codes	termcap_codes;
+	
+	termcap_codes.keyup = tgetstr("ku", term_buffer);
+	termcap_codes.keydown = tgetstr("kd", term_buffer);
+	if (termcap_codes.keyup == 0 || termcap_codes.keydown == 0)
+	{
+		ft_putstr_fd("Error. Terminal capabilities unavailable.\n", STDOUT_FILENO);
+		return (0);
+	}
 	return (1);
 }

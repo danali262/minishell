@@ -8,7 +8,7 @@ SRC = \
 	src/reader/keys.c\
 	src/reader/handle_keys.c \
 	src/reader/shell_utilities.c\
-	src/command_history/init_terminal_data.c \
+	src/term_cap/init_terminal_data.c \
 	src/command_history/update_history.c \
 	src/command_history/prev_history.c \
 	src/command_history/next_history.c \
@@ -26,7 +26,9 @@ SRC = \
 	src/parser/parser4.c\
 	src/parser/parser5.c\
 	src/parser/parser_aux.c\
-	src/parser/astree.c 
+	src/parser/astree.c \
+	src/executor/execute_command.c \
+	src/executor/builtins/builtins.c
 
 
 OBJS = $(SRC:.c=.o)
