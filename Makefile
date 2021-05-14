@@ -5,8 +5,9 @@ SRC = \
 	src/reader/read_command_line.c \
 	src/reader/command_line_aux.c \
 	src/reader/set_term_attr.c \
-	src/reader/keys.c \
+	src/reader/keys.c\
 	src/reader/handle_keys.c \
+	src/reader/shell_utilities.c\
 	src/command_history/init_terminal_data.c \
 	src/command_history/update_history.c \
 	src/command_history/prev_history.c \
@@ -18,7 +19,14 @@ SRC = \
 	src/parser/lexer/lexer2.c \
 	src/parser/lexer/lexer3.c \
 	src/parser/lexer/lexer4.c \
-	src/parser/lexer/utilities.c 
+	src/parser/lexer/utilities.c\
+	src/parser/parser.c\
+	src/parser/parser2.c\
+	src/parser/parser3.c\
+	src/parser/parser4.c\
+	src/parser/parser5.c\
+	src/parser/parser_aux.c\
+	src/parser/astree.c 
 
 
 OBJS = $(SRC:.c=.o)
@@ -36,6 +44,7 @@ $(NAME):	$(OBJS) $(INCLUDES)
 			cp libft/libft.a .
 			$(CC) -ltermcap -Llibft -lft \
 			-o $(NAME) $(OBJS) $(CFLAGS)
+			# $(CC) $(CFLAGS) -o $(NAME) $(OBJS) -ltermcap -Llibft -lft
 
 %.o:	%.c
 			$(CC) $(CFLAGS) -Ilibft/include -Isrc -c $< -o $@
