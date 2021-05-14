@@ -48,8 +48,8 @@ SRC = src/ft_memset.c \
 
 OBJ = $(SRC:.c=.o)
 
-# CFLAGS = -Wall -Werror -Wextra -target x86_64-apple-macos10.12
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -target x86_64-apple-macos10.12
+# CFLAGS = -Wall -Werror -Wextra
 
 all: $(NAME)
 
