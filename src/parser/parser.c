@@ -4,23 +4,23 @@
 // void	print_tree(t_treenode *syntax_tree)		/* to be deleted */
 // {
 // 	if (!syntax_tree)
-// 		return;
+// 		return ;
 // 	printf("SYNTAX TREE NODE is %s\n", syntax_tree->data);
 // 	printf("SYNTAX TREE NODETYPE is %d\n", syntax_tree->type);
 // 	print_tree(syntax_tree->left);
 // 	print_tree(syntax_tree->right);
 // }
 
-static void    count_nodes(t_treenode *syntax_tree, t_shell *shell)
+static void	count_nodes(t_treenode *syntax_tree, t_shell *shell)
 {
-    if (!syntax_tree)
-        return ;
-    if (syntax_tree->type == 0)
-        shell->nbr_semis++;
-    if (syntax_tree->type == 1)
-        shell->nbr_pipes++;
-    count_nodes(syntax_tree->left, shell);
-    count_nodes(syntax_tree->right, shell);
+	if (!syntax_tree)
+		return ;
+	if (syntax_tree->type == 0)
+		shell->nbr_semis++;
+	if (syntax_tree->type == 1)
+		shell->nbr_pipes++;
+	count_nodes(syntax_tree->left, shell);
+	count_nodes(syntax_tree->right, shell);
 }
 
 int	parser(t_lexer *lexerbuf, t_shell *shell)
@@ -44,7 +44,7 @@ int	parser(t_lexer *lexerbuf, t_shell *shell)
 	// 	print_tree(shell->syntax_tree);
 	// }
 	count_nodes(shell->syntax_tree, shell);
-    // printf("number of semicolons is %d\n", shell->nbr_semis);
-    // printf("number of pipes is %d\n", shell->nbr_pipes);
+	// printf("number of semicolons is %d\n", shell->nbr_semis);	/* to be deleted */
+	// printf("number of pipes is %d\n", shell->nbr_pipes);
 	return (0);
 }

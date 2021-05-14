@@ -8,18 +8,21 @@ t_treenode	*command_line(t_curtok *curtok)
 
 	save = curtok->current_token;
 	curtok->current_token = save;
-	if ((node = command_line1(curtok)) != NULL)
+	node = command_line1(curtok);
+	if (node != NULL)
 		return (node);
 	curtok->current_token = save;
-	if ((node = command_line2(curtok)) != NULL)
+	node = command_line2(curtok);
+	if (node != NULL)
 		return (node);
 	curtok->current_token = save;
-	if ((node = command_line3(curtok)) != NULL)
+	node = command_line3(curtok);
+	if (node != NULL)
 		return (node);
 	return (NULL);
 }
 
-t_treenode	*command_line1(t_curtok *curtok)		/* <job> ';' <command line> */
+t_treenode	*command_line1(t_curtok *curtok)
 {
 	t_treenode	*jobNode;
 	t_treenode	*cmdlineNode;
@@ -40,13 +43,12 @@ t_treenode	*command_line1(t_curtok *curtok)		/* <job> ';' <command line> */
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
-	set_node_type(root, NODE_SEMI);
-	set_node_data(root, ";");
+	set_node_data_type(root, ";", NODE_SEMI);
 	attach_tree_branch(root, jobNode, cmdlineNode);
 	return (root);
 }
 
-t_treenode	*command_line2(t_curtok *curtok)	/* <job> ';' */
+t_treenode	*command_line2(t_curtok *curtok)
 {
 	t_treenode	*jobNode;
 	t_treenode	*root;
@@ -60,13 +62,12 @@ t_treenode	*command_line2(t_curtok *curtok)	/* <job> ';' */
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
-	set_node_type(root, NODE_SEMI);
-	set_node_data(root, ";");
+	set_node_data_type(root, ";", NODE_SEMI);
 	attach_tree_branch(root, jobNode, NULL);
 	return (root);
 }
 
-t_treenode	*command_line3(t_curtok *curtok)	/* <job> */
+t_treenode	*command_line3(t_curtok *curtok)
 {
-	return(job(curtok));
+	return (job(curtok));
 }

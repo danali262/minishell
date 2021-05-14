@@ -26,7 +26,6 @@ typedef	enum
 	NODE_EMPTY							/* 10. empty */
 }		t_nodetype;
 
-
 bool	term(int tokentype, char **buffer, t_curtok *curtok);
 void    initialize_syntax_tree(t_treenode *syntax_tree);
 
@@ -48,8 +47,7 @@ t_treenode	*tokenlist1(t_curtok *curtok);
 t_treenode	*tokenlist2(void);
 
 void	delete_node(t_treenode *node);
-void	set_node_type(t_treenode *node, t_nodetype nodetype);
-void	set_node_data(t_treenode *node, char *data);
+void	set_node_data_type(t_treenode *node, char *data, t_nodetype nodetype);
 void	attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode *rightNode);
 
 void	print_tree(t_treenode *node);

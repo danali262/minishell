@@ -8,15 +8,17 @@ t_treenode	*job(t_curtok *curtok)
 
 	save = curtok->current_token;
 	curtok->current_token = save;
-	if ((node = job1(curtok)) != NULL)
+	node = job1(curtok);
+	if (node != NULL)
 		return (node);
 	curtok->current_token = save;
-	if ((node = job2(curtok)) != NULL)
+	node = job2(curtok);
+	if (node != NULL)
 		return (node);
 	return (NULL);
 }
 
-t_treenode	*job1(t_curtok *curtok)		/* <command> '|' <job> */
+t_treenode	*job1(t_curtok *curtok)
 {
 	t_treenode	*cmdNode;
 	t_treenode	*jobNode;
@@ -37,13 +39,12 @@ t_treenode	*job1(t_curtok *curtok)		/* <command> '|' <job> */
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
-	set_node_type(root, NODE_PIPE);
-	set_node_data(root, "|");
+	set_node_data_type(root, "|", NODE_PIPE);
 	attach_tree_branch(root, cmdNode, jobNode);
 	return (root);
 }
 
-t_treenode	*job2(t_curtok *curtok)		/*  <command> */
+t_treenode	*job2(t_curtok *curtok)
 {
-	return(cmd(curtok));
+	return (cmd(curtok));
 }

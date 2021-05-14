@@ -8,16 +8,19 @@ t_treenode	*cmd(t_curtok *curtok)
 
 	save = curtok->current_token;
 	curtok->current_token = save;
-	if ((node = cmd1(curtok)) != NULL)
+	node = cmd1(curtok);
+	if (node != NULL)
 		return (node);
 	curtok->current_token = save;
-	if ((node = cmd2(curtok)) != NULL)
+	node = cmd2(curtok);
+	if (node != NULL)
 		return (node);
 	// curtok->current_token = save;
 	// if ((node = cmd3(curtok)) != NULL)
 	// 	return (node);
 	curtok->current_token = save;
-	if ((node = cmd4(curtok)) != NULL)
+	node = cmd4(curtok);
+	if (node != NULL)
 		return (node);
 	return (NULL);
 }
@@ -45,10 +48,8 @@ t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
 	}
 	root = malloc(sizeof(*root));
 	filenameNode = malloc(sizeof(*filenameNode));
-	set_node_type(root, NODE_REDIRECT_IN);
-	set_node_type(filenameNode, NODE_FILE);
-	set_node_data(root, "<");
-	set_node_data(filenameNode, filename);
+	set_node_data_type(root, "<", NODE_REDIRECT_IN);
+	set_node_data_type(filenameNode, filename, NODE_FILE);
 	attach_tree_branch(root, simplecmdNode, filenameNode);
 	return (root);
 }
@@ -76,10 +77,8 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 	}
 	root = malloc(sizeof(*root));
 	filenameNode = malloc(sizeof(*filenameNode));
-	set_node_type(root, NODE_REDIRECT_OUT);
-	set_node_type(filenameNode, NODE_FILE);
-	set_node_data(root, ">");
-	set_node_data(filenameNode, filename);
+	set_node_data_type(root, ">", NODE_REDIRECT_OUT);
+	set_node_data_type(filenameNode, filename, NODE_FILE);
 	attach_tree_branch(root, simplecmdNode, filenameNode);
 	return (root);
 }
@@ -116,5 +115,5 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 
 t_treenode	*cmd4(t_curtok *curtok)
 {
-	return(simplecmd(curtok));
+	return (simplecmd(curtok));
 }

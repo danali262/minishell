@@ -5,28 +5,23 @@ void	delete_node(t_treenode *node)
 	if (node == NULL)
 		return ;
 	if (node->data)
-        free(node->data);
+		free(node->data);
 	delete_node(node->left);
 	delete_node(node->right);
 	free(node);
 }
 
-void	set_node_type(t_treenode *node, t_nodetype nodetype)
-{
-	if (node == NULL)
-		return ;			/* should I exit? */
-	node->type = nodetype;
-}
-
-void	set_node_data(t_treenode *node, char *data)
+void	set_node_data_type(t_treenode *node, char *data, t_nodetype nodetype)
 {
 	if (node == NULL)
 		return ;
 	if (data != NULL)
 		node->data = ft_strdup(data);
+	node->type = nodetype;
 }
 
-void	attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode *rightNode)
+void	attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode
+		*rightNode)
 {
 	if (root == NULL)
 		return ;
