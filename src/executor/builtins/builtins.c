@@ -5,8 +5,13 @@
 
 int	execute_echo(t_lexer *lexerbuf)
 {
-	ft_putstr_fd(lexerbuf->tokens_list->next->data, STDOUT_FILENO);
-	ft_putstr_fd("\n", STDOUT_FILENO);
+	if (ft_strncmp(lexerbuf->tokens_list->next->data, "-n", 3) == 0)
+		ft_putstr_fd(lexerbuf->tokens_list->next->next->data, STDOUT_FILENO);
+	else
+	{
+		ft_putstr_fd(lexerbuf->tokens_list->next->data, STDOUT_FILENO);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+	}
 	return (1);
 }
 
