@@ -19,7 +19,8 @@ SRC = \
 	src/parser/lexer/lexer3.c \
 	src/parser/lexer/lexer4.c \
 	src/parser/lexer/utilities.c \
-	src/executor/execute_command.c 
+	src/executor/execute_command.c \
+	src/executor/builtins/builtins.c
 
 
 OBJS = $(SRC:.c=.o)
