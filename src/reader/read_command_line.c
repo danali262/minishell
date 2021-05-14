@@ -1,7 +1,7 @@
 #include "read_command_line.h"
 #include "keys.h"
 #include "../parser/parser.h"
-#include "../command_history/init_terminal_data.h"
+#include "../term_cap/init_terminal_data.h"
 
 #include "libft.h"
 
@@ -36,8 +36,7 @@ int	read_input(void)
 		reset_input_mode(&origin_attr, 0);
 		if (!parse_command_line(&cmd_line))
 			return (0);
-
-		printf("execution result...\n");//remove
+		// printf("execution result...\n");//remove
 		history.is_command_executed = 0;
 	}
 	return (1);
