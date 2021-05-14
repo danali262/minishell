@@ -22,7 +22,7 @@ int	init_terminal_data(void)
 	static char	*term_buffer;
 	int			result;
 
-	term_buffer = malloc(2048);
+	term_buffer = malloc(2048); //don't forget to free allocated memory at exit
 	term_type = getenv("TERM");
 	if (term_type == NULL)
 	{
