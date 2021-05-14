@@ -4,4 +4,3 @@
 int	init_terminal_data(void);
 
 #endif
-

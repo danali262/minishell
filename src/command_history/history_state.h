@@ -1,7 +1,8 @@
 #ifndef HISTORY_STATE_H
 # define HISTORY_STATE_H
 
-# define MAX_HISTORY 200
+# define MAX_HIST 100 //temp for debug, make 200 before pushing
+
 /*
 ** num_lines == number of lines filled
 **
@@ -12,8 +13,8 @@
 
 typedef struct s_history
 {
-	char	*lines[MAX_HISTORY];
-	char	*saved_temp_input[MAX_HISTORY + 1];
+	char	*lines[MAX_HIST];
+	char	*saved_temp_input[MAX_HIST + 1];
 	int		num_lines;
 	int		last_shown_line;
 	int		is_command_executed;
