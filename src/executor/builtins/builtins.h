@@ -1,8 +1,9 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-#include "../../parser/lexer/lexer.h" //will be replaced by parser results
+#include "shell_state.h"
 
-int	can_execute_builtin(t_lexer *lexerbuf);
+int	can_execute_builtin(t_treenode *syntax_tree);
+
 
 #endif
