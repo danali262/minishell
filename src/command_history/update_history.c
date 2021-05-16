@@ -23,7 +23,7 @@ void static	overlap_history(t_history *history)
 	}
 }
 
-int	static	add_history_line(t_history *history, t_line *cmd_line)
+int	add_history_line(t_history *history, t_line *cmd_line)
 {
 	int	i;
 
@@ -41,16 +41,5 @@ int	static	add_history_line(t_history *history, t_line *cmd_line)
 		history->lines[i] = ft_strdup(cmd_line->buf);
 	if (history->lines[i] == NULL)
 		return (0);
-	return (1);
-}
-
-int	handle_newline(t_history *history, t_line *cmd_line)
-{
-	if (!add_history_line(history, cmd_line))
-		return (0);
-	printf("\n");
-	free_temp_input(history);
-	history->iter_mode = 0;
-	history->is_command_executed = 1;
 	return (1);
 }

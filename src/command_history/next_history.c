@@ -6,7 +6,7 @@ int static	load_next_history_line(t_history *history, t_line *cmd_line)
 {
 	char	*next_line;
 
-	erase_current_line(history, cmd_line);
+	erase_current_line(cmd_line);
 	next_line = history->lines[history->last_shown_line + 1];
 	if (!update_cmd_line(next_line, cmd_line))
 		return (0);
@@ -40,7 +40,7 @@ int	show_next_history(t_history *history, t_line *cmd_line)
 		}
 		else
 		{
-			erase_current_line(history, cmd_line);
+			erase_current_line(cmd_line);
 			if (history->saved_temp_input[MAX_HIST] != NULL)
 			{
 				if (!load_from_temp_input(history, cmd_line))

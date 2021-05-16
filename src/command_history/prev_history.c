@@ -34,7 +34,7 @@ int static	load_prev_history_line(t_history *history, t_line *cmd_line)
 	}		
 	prev_line = history->lines[history->last_shown_line - 1];
 	history->last_shown_line--;
-	erase_current_line(history, cmd_line);
+	erase_current_line(cmd_line);
 	if (!update_cmd_line(prev_line, cmd_line))
 		return (0);
 	history->iter_mode = 1;
