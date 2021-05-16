@@ -50,7 +50,8 @@ int	set_input_mode(struct termios *origin_attr)
 	}
 	if (tcgetattr(STDIN_FILENO, &term_attr) < 0)
 		return (reset_input_mode(origin_attr, EBADF));
-	if ((term_attr.c_lflag & (ECHO | ICANON)) || term_attr.c_cc[VMIN] != 1
+	// if ((term_attr.c_lflag & (ECHO | ICANON | ISIG)) || term_attr.c_cc[VMIN] != 1 
+	if ((term_attr.c_lflag & (ECHO | ICANON)) || term_attr.c_cc[VMIN] != 1 //replace this string when exit function is implemented
 		|| term_attr.c_cc[VTIME] != 0)
 		return (reset_input_mode(origin_attr, EINVAL));
 	return (1);
