@@ -2,30 +2,27 @@
 # define KEYS_H
 
 # include "../command_history/command_history.h"
-# include "../command_history/history_state.h"
-# include "command_line_state.h"
 
-/*
-** Terminal capabilities for keys:
-*/
+// /*
+// ** Terminal capabilities for keys:
+// */
 # define ARROW_UP 'A'
 # define ARROW_DOWN 'B'
 
 //  ANSI escape sequences, which extend the functions available with the control
 // codes:
 # define ESC '\x1b'
-# define NEWLINE '\x0a'
-# define CARRIAGE_RETURN '\x0d'
+# define ENTER '\x0a'
 # define BACKSPACE '\x7f' // or '\x08' ????
 # define CTRL_D '\x04'
 
-typedef struct s_keycodes_map
-{
-	char	keycode;
-	int		(*action)(t_history *history, t_line *cmd_line);
-}				t_keycodes_map;
+// typedef struct s_keycodes_map
+// {
+// 	char	keycode;
+// 	int		(*action)(t_shell *shell);
+// }				t_keycodes_map;
 
 char	get_keycode(int fd, char *sequence);
-void	map_key_actions(t_history *history, t_line *cmd_line, char keycode);
+void	handle_key_action(t_shell *shell, char keycode);
 
 #endif

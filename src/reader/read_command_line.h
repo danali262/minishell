@@ -22,15 +22,11 @@ int		init_command_line(t_line *cmd_line);
 void	clear_command_line(t_line *cmd_line);
 void	free_command_line(t_line *cmd_line);
 int		update_cmd_line(char *new_line, t_line *cmd_line);
-void	erase_current_line(t_history *history, t_line *cmd_line);
+void	erase_current_line(t_line *cmd_line);
 
-int	read_input(void);
-int	read_command_line(int fd, t_history *history, t_line *cmd_line);
+int		read_input(t_shell *shell, struct termios *origin_attr);
+int		read_command_line(int fd, t_shell *shell);
+void	capture_keystrokes(int fd, char ch, t_shell *shell);
 
-/*
-** Parser-related functions:
-*/
-
-void	initialize_shell(t_shell *shell);
 
 #endif

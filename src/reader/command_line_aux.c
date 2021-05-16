@@ -38,14 +38,12 @@ int	update_cmd_line(char *new_line, t_line *cmd_line)
 {
 	cmd_line->size = ft_strlen(new_line);
 	cmd_line->buf = ft_memcpy(cmd_line->buf, new_line, cmd_line->size);
-	if (cmd_line->buf == NULL)
-		return (0);
 	write(STDOUT_FILENO, cmd_line->buf, cmd_line->size);
 	return (1);
 }
 
-void	erase_current_line(t_history *history, t_line *cmd_line)
+void	erase_current_line(t_line *cmd_line)
 {
 	while (cmd_line->size != 0)
-		handle_backspace(history, cmd_line);
+		handle_backspace(cmd_line);
 }

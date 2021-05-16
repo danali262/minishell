@@ -1,6 +1,5 @@
 #include "keys.h"
 #include "handle_keys.h"
-#include "../command_history/command_history.h"
 
 #include "libft.h"
 
@@ -8,31 +7,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	map_key_actions(t_history *history, t_line *cmd_line, char keycode)
+void	handle_key_action(t_shell *shell, char keycode)
 {
-	int						i;
-	static t_keycodes_map	keycodes_map[] =
-	{
-		{ARROW_UP, show_prev_history},
-		{ARROW_DOWN, show_next_history},
-		{BACKSPACE, handle_backspace},
-		{NEWLINE, handle_newline},
-		{CTRL_D, handle_eot},
-		// {CTRL_C, handle_interrupt},
-		// {CTRL_\, handle_quit},
-		{'\0', NULL}
-	};
-
-	i = 0;
-	while (keycodes_map[i].keycode != '\0')
-	{
-		if (keycode == keycodes_map[i].keycode)
-		{
-			keycodes_map[i].action(history, cmd_line);
-			break ;
-		}
-		i++;
-	}
+	if (keycode == BACKSPACE)
+		handle_backspace(&shell->cmd_line);
+	else if (keycode == ENTER)
+		handle_enter(shell);
+	else if (keycode == CTRL_D)
+		handle_eot(&shell->history, &shell->cmd_line);
+	else if (keycode == ARROW_UP)
+		show_prev_history(&shell->history, &shell->cmd_line);
+	else if (keycode == ARROW_DOWN)
+		show_next_history(&shell->history, &shell->cmd_line);
+	// else if (keycode == shell->termcap_codes.keyup[0]
+	// 		&& shell->termcap_codes.keyup[1] == '\0')
+	// 	show_prev_history(&shell->history, &shell->cmd_line);
+	// else if (keycode == shell->termcap_codes.keydown[0]
+	// 		&& shell->termcap_codes.keydown[1] == '\0')
+	// 	show_next_history(&shell->history, &shell->cmd_line);
 }
 
 char	get_keycode(int fd, char *sequence)

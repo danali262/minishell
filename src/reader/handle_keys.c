@@ -8,33 +8,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int	handle_backspace(t_history *history, t_line *cmd_line)
+
+void	handle_backspace(t_line *cmd_line)
 {
 	size_t i;
 
-	if (history->last_shown_line != -2) //quick hack, get rid of it
+	i = cmd_line->size - 1;
+	if (cmd_line->size != 0)
 	{
-        if (cmd_line->size != 0)
-        {
-            i = cmd_line->size - 1;
-            cmd_line->buf[i] = '\b';
-            write(STDOUT_FILENO, "\b", 1);
-            cmd_line->buf[i] = ' ';
-            write(STDOUT_FILENO, " ", 1);
-             cmd_line->buf[i] = '\b';
-             cmd_line->buf[i] = '\0';
-            write(STDOUT_FILENO, "\b", 1);
-            cmd_line->size--;
-        }
+		cmd_line->buf[i] = '\b';
+		write(STDOUT_FILENO, "\b", 1);
+		cmd_line->buf[i] = ' ';
+		write(STDOUT_FILENO, " ", 1);
+		cmd_line->buf[i] = '\b';
+		cmd_line->buf[i] = '\0';
+		write(STDOUT_FILENO, "\b", 1);
+		cmd_line->size--;
 	}
+}
+
+int	handle_enter(t_shell *shell)
+{
+	if (!add_history_line(&shell->history, &shell->cmd_line))
+		return (0);
+	printf("\n");
+	free_temp_input(&shell->history);
+	shell->history.iter_mode = 0;
+	shell->is_command_executed = 1;
 	return (1);
 }
 
-int	handle_eot(t_history *history, t_line *cmd_line)
+int	handle_eot(t_history *history, t_line *cmd_line) // replace with the other funcion when exit is implemented
 {
 	char	*exit_msg;
 
-	exit_msg = "\nSaving session...\n...copying shared history...\
+	exit_msg = "logout\nSaving session...\n...copying shared history...\
 		\n...saving history...truncating history files...\
 		\n...completed.\n\n[Process completed]\n";
 	if (cmd_line->size == 0)
@@ -47,6 +55,15 @@ int	handle_eot(t_history *history, t_line *cmd_line)
 	//TODO: ^D while typing the command works as TAB
 	return (1);
 }
+
+// int	handle_eot(t_shell *shell)
+// {
+// 	shell->cmd_line.size = ft_strlen("exit");
+// 	shell->cmd_line.buf = ft_memcpy(shell->cmd_line.buf, "exit", shell->cmd_line.size);
+// 	if (!handle_enter(shell))
+// 		return (0);
+// 	return (1);
+// }
 
 // void	handle_interrupt(t_history *history, t_line *cmd_line)
 // {

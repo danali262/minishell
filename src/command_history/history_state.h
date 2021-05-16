@@ -17,7 +17,6 @@ typedef struct s_history
 	char	*saved_temp_input[MAX_HIST + 1];
 	int		num_lines;
 	int		last_shown_line;
-	int		is_command_executed;
 	int		iter_mode;
 }				t_history;
 #endif

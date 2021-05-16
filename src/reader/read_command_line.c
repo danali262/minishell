@@ -1,7 +1,7 @@
 #include "read_command_line.h"
 #include "keys.h"
 #include "../parser/parser.h"
-#include "../command_history/init_terminal_data.h"
+#include "../term_cap/init_terminal_data.h"
 #include "../shell_state.h"
 
 #include "libft.h"
@@ -9,64 +9,44 @@
 #include <unistd.h>
 #include <stdio.h>//remove
 
-int	read_input(void)
+int	read_input(t_shell *shell, struct termios *origin_attr)
 {
-	struct termios	origin_attr;
-	t_history		history;
-	t_line			cmd_line;
-	t_shell			shell;
-
-	init_terminal_data(); //probably to the main?
-	if (!init_command_line(&cmd_line))
+	if (!set_input_mode(origin_attr))
 		return (0);
-	clear_command_line(&cmd_line);
-    init_history(&history);
-	while (1)
+	if (read_command_line(STDIN_FILENO, shell) == -1)
 	{
-		initialize_shell(&shell);
-		ft_putstr_fd(PROMPT, STDOUT_FILENO);
-		while (history.is_command_executed != 1)
-		{
-			if (!set_input_mode(&origin_attr))
-				return (0);
-			if (read_command_line(STDIN_FILENO, &history, &cmd_line) == -1)
-			{
-				free_command_line(&cmd_line);
-				free_history(&history);
-				return (0);
-			}
-		}
-		reset_input_mode(&origin_attr, 0);
-		if (!parse_command_line(&cmd_line, &shell))
-			return (0);
-		printf("execution result...\n");//remove
-		delete_node(shell.syntax_tree);		/* to be reviewed */
-		history.is_command_executed = 0;
+		free_command_line(&shell->cmd_line);
+		free_history(&shell->history);
+		return (0);
 	}
 	return (1);
 }
 
-int	read_command_line(int fd, t_history *history, t_line *cmd_line)
+int	read_command_line(int fd, t_shell *shell)
 {
 	ssize_t	bytes_read;
 	char	ch;
-	char	sequence[3];
-	char	keycode;
 
 	ch = 0;
 	bytes_read = read(fd, &ch, 1);
 	if (bytes_read == -1) // check if read returns cntrlD? 
-	{
 		return (-1);
-	}
 	if (ft_isprint(ch))
 	{
 		write(STDOUT_FILENO, &ch, 1);
-		cmd_line->buf[cmd_line->size] = ch;
-		cmd_line->size++;
+		shell->cmd_line.buf[shell->cmd_line.size] = ch;
+		shell->cmd_line.size++;
 	}
 	else
-	{
+		capture_keystrokes(fd, ch, shell);
+	return (1);
+}
+
+void	capture_keystrokes(int fd, char ch, t_shell *shell)
+{
+		char	keycode;
+		char	sequence[3];
+
 		keycode = 0;
 		if (ch == ESC)
 		{
@@ -76,7 +56,5 @@ int	read_command_line(int fd, t_history *history, t_line *cmd_line)
 				ch = keycode;
 			}
 		}
-		map_key_actions(history, cmd_line, ch);
-	}
-	return (1);
+		handle_key_action(shell, ch);
 }

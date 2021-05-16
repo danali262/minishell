@@ -2,6 +2,10 @@
 
 #include "libft.h"
 
+/*
+** ft_strncmp comparing if what is saved in cmd buffer is the same as in cmd_line now
+*/
+
 int	static	can_get_prev_history(t_history *history, t_line *cmd_line)
 {
 	if ((history->num_lines == 1 && cmd_line->size == 0)
@@ -30,7 +34,7 @@ int static	load_prev_history_line(t_history *history, t_line *cmd_line)
 	}		
 	prev_line = history->lines[history->last_shown_line - 1];
 	history->last_shown_line--;
-	erase_current_line(history, cmd_line);
+	erase_current_line(cmd_line);
 	if (!update_cmd_line(prev_line, cmd_line))
 		return (0);
 	history->iter_mode = 1;
