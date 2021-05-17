@@ -1,4 +1,5 @@
 .DS_Store
 *.o
-libft.a
+*.a
 minishell
+.*

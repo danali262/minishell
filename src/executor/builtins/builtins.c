@@ -32,7 +32,7 @@ int	execute_echo(t_treenode *simple_cmd_node)
 	return (1);
 }
 
-int	can_execute_builtin(t_treenode *cmd_node)
+int	can_execute_builtin(t_treenode *simple_cmd_node)
 {
 	int		i;
 	static t_builtins_map	builtins_map[] =
@@ -50,10 +50,10 @@ int	can_execute_builtin(t_treenode *cmd_node)
 	i = 0;
 	while (builtins_map[i].cmd_name[0] != '\0')
 	{
-		if (ft_strncmp(builtins_map[i].cmd_name, cmd_node->data,
+		if (ft_strncmp(builtins_map[i].cmd_name, simple_cmd_node->data,
 			ft_strlen(builtins_map[i].cmd_name)) == 0)
 		{
-			if (!builtins_map[i].cmd_executor(cmd_node))
+			if (!builtins_map[i].cmd_executor(simple_cmd_node))
 				return (-1); // if error in execution function
 			else
 				return (1);
