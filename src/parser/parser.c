@@ -28,7 +28,7 @@ int	parser(t_lexer *lexerbuf, t_shell *shell)
 	t_curtok	curtok;
 
 	if (!lexerbuf->tokens_nbr)
-		return (-1);
+		return (0);
 	curtok.current_token = lexerbuf->tokens_list;
 	shell->syntax_tree = command_line(&curtok);
 	if (curtok.current_token != NULL && curtok.current_token->type != 0)
@@ -46,5 +46,5 @@ int	parser(t_lexer *lexerbuf, t_shell *shell)
 	// count_nodes(shell->syntax_tree, shell);
 	// printf("number of semicolons is %d\n", shell->nbr_semis);	/* to be deleted */
 	// printf("number of pipes is %d\n", shell->nbr_pipes);
-	return (0);
+	return (1);
 }

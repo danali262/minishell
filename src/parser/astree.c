@@ -5,10 +5,14 @@ void	delete_node(t_treenode *node)
 	if (node == NULL)
 		return ;
 	if (node->data)
-		free(node->data);
+    {
+        free(node->data);
+        node->data = NULL;
+    }
 	delete_node(node->left);
 	delete_node(node->right);
 	free(node);
+    node = NULL;
 }
 
 void	set_node_data_type(t_treenode *node, char *data, t_nodetype nodetype)

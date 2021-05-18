@@ -79,5 +79,5 @@ int	lexer_build(t_lexer_state *lex_state, t_lexer *lexerbuf)
 	token = loop(lex_state, token);
 	token = lexerbuf->tokens_list;
 	clear_command_line(lex_state->line);
-	return (0);
+	return (1);
 }

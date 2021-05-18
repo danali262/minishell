@@ -24,7 +24,7 @@ int	init_command_line(t_line *cmd_line)
 
 void	clear_command_line(t_line *cmd_line)
 {
-	cmd_line->buf[0] = '\0';
+	ft_bzero(cmd_line->buf, cmd_line->size);
 	cmd_line->size = 0;
 }
 

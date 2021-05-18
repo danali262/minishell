@@ -7,7 +7,8 @@
 int shell_event_loop(t_shell *shell)
 {
     struct termios	origin_attr;
-    
+    int             parser_result;
+
     while (1)
 	{
         ft_putstr_fd(PROMPT, STDOUT_FILENO);
@@ -16,12 +17,13 @@ int shell_event_loop(t_shell *shell)
             if (!read_input(shell, &origin_attr))
                 return (0);
 		}
-		reset_input_mode(&origin_attr, 0);
-        if (parse_command_line(shell) == -1)
+        reset_input_mode(&origin_attr, 0);
+        parser_result = parse_command_line(shell);
+        if (parser_result == -1)
             return (0);
-        else
+        else if (parser_result != 0)
             execute_command_line(shell->syntax_tree);
-        delete_node(shell->syntax_tree);		/* to be reviewed */
+        // delete_node(shell->syntax_tree);		/* to be reviewed */
         shell->is_command_executed = 0;
 	}
 	return (1);

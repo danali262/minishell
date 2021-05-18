@@ -5,7 +5,7 @@
 #include "libft.h"
 
 #include <unistd.h>
-#include <fcntl.h>
+#include<sys/stat.h>
 
 static char	*append_cmd_to_dir(char *directory, char *cmd_alias)
 {
@@ -30,14 +30,13 @@ static char	*append_cmd_to_dir(char *directory, char *cmd_alias)
 
 static int	is_valid_path(char *cmd_location)
 {
-	int	fd;
+	struct stat buffer;
 
-	fd = open(cmd_location, O_RDONLY);
-	if (fd > 2)
+	int exist = stat(cmd_location, &buffer);
+    if(exist == 0)
 	{
 		return (1);
 	}
-	close(fd);
 	return (0);
 }
 
@@ -75,8 +74,14 @@ char	*locate_executable_path(t_treenode *simple_cmd_node)
 	{
 		cmd_location = append_cmd_to_dir(dir_list[i], simple_cmd_node->data);
 		if (is_valid_path(cmd_location))
+		{
+			// printf("\033[1;31m file path: %s \x1b[0m \n", cmd_location); //remove
+			printf("file path: %s\n", cmd_location);
+			// printf("\x1b[0m");
 			break;
+		}
 		i++;
+		cmd_location = NULL;
 	}
 	free_array_memory(dir_list);
 	return (cmd_location);
