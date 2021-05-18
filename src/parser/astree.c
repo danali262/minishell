@@ -24,7 +24,8 @@ void	set_node_data_type(t_treenode *node, char *data, t_nodetype nodetype)
 		return ;
 	if (data != NULL)
 		node->data = ft_strdup(data);
-	node->type = nodetype;
+	node->type = malloc(sizeof(int));
+	*node->type = nodetype;
 }
 
 void	attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode
