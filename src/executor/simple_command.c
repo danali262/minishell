@@ -50,22 +50,24 @@ int	run_cmd_executable(t_treenode *simple_cmd_node)
 	if (executable_path != NULL)
 	{
 		argv = fill_args_list(simple_cmd_node, executable_path);
+		free(executable_path);
 		if (execve(argv[0], argv, environ) == -1)
 		{
 			free_array_memory(argv);
 			ft_putstr_fd("execve error.\n", STDOUT_FILENO);
-			return (0);
+			exit(EXIT_FAILURE);
 		}
-		free_array_memory(argv);
-		free(executable_path);
 	}
 	else
 		printf("minishell: %s: command not found\n", simple_cmd_node->data);
-	return (1);
+	exit (0);
 }
 
+/*
+** WIFEXITED  valuates to nonzero if status was returned by a normally terminated child process. 
+*/
 
-int	create_child_process(t_treenode *simple_cmd_node)
+void	create_child_process(t_treenode *simple_cmd_node)
 {
 	pid_t pid;
 	int status;
@@ -77,19 +79,18 @@ int	create_child_process(t_treenode *simple_cmd_node)
 		exit(0);
 	}
 	else if (pid == 0)
-	{
-		if (!run_cmd_executable(simple_cmd_node))
-			exit(1);
-		exit(0);
-	}
+		run_cmd_executable(simple_cmd_node);
 	else
 	{
-		if (!WIFEXITED(status))
+		int wait_return = wait(&status);
+		printf("wait_return: %d\n", wait_return);
+		printf("pid of the parent process: %d\n", pid);
+		if (wait_return != pid)
+			ft_putstr_fd("wait error.\n", STDOUT_FILENO);	
+		if (WIFEXITED(status) > 0)
 		{
-			if (wait(&status) != pid)
-				ft_putstr_fd("wait error.\n", STDOUT_FILENO);	
+			printf("child exited");
 		}
-		return (1);
 	}
 }
 
@@ -100,13 +101,15 @@ int	run_simple_command(t_treenode *simple_cmd_node)
 	builtin_result = can_execute_builtin(simple_cmd_node);
 	if (builtin_result == -1) //if any error happened, with e.g. memory allocation
 	{
-		printf("builtin error.s\n"); //remove
+		printf("builtin error.s\n"); //remove, set error code
 		return (0);
 	}
 	else if (builtin_result == 0) //if it's not a builtin command
 	{
-		if (!create_child_process(simple_cmd_node))
-			return (0);
+		// if (!create_child_process(simple_cmd_node))
+		// 	return (0);
+		create_child_process(simple_cmd_node);
+			
 	}
 	return (1);
 }

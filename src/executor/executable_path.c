@@ -75,9 +75,7 @@ char	*locate_executable_path(t_treenode *simple_cmd_node)
 		cmd_location = append_cmd_to_dir(dir_list[i], simple_cmd_node->data);
 		if (is_valid_path(cmd_location))
 		{
-			// printf("\033[1;31m file path: %s \x1b[0m \n", cmd_location); //remove
-			printf("file path: %s\n", cmd_location);
-			// printf("\x1b[0m");
+			// printf("file path: %s\n", cmd_location);
 			break;
 		}
 		i++;
