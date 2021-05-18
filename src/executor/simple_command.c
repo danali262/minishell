@@ -60,7 +60,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node)
 		free(executable_path);
 	}
 	else
-		printf("bash: %s: command not found\n", simple_cmd_node->data);
+		printf("minishell: %s: command not found\n", simple_cmd_node->data);
 	return (1);
 }
 
