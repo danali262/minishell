@@ -8,9 +8,11 @@ int shell_event_loop(t_shell *shell)
 {
     struct termios	origin_attr;
     int             parser_result;
+    t_treenode      tree;
 
     while (1)
 	{
+        shell->syntax_tree = &tree;
         init_tree(shell->syntax_tree);
         ft_putstr_fd(PROMPT, STDOUT_FILENO);
         while (shell->is_command_executed != 1)
