@@ -19,8 +19,8 @@ typedef struct  s_lexer_state
 
 typedef struct  s_counters
 {
-    int i;
-    int j;
+    size_t i;
+    size_t j;
 }               t_counters;
 
 enum    e_tokentype

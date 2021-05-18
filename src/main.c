@@ -11,6 +11,7 @@ int shell_event_loop(t_shell *shell)
 
     while (1)
 	{
+        init_tree(shell->syntax_tree);
         ft_putstr_fd(PROMPT, STDOUT_FILENO);
         while (shell->is_command_executed != 1)
         {
@@ -23,7 +24,7 @@ int shell_event_loop(t_shell *shell)
             return (0);
         else if (parser_result != 0)
             execute_command_line(shell->syntax_tree);
-        // delete_node(shell->syntax_tree);		/* to be reviewed */
+        delete_node(shell->syntax_tree);
         shell->is_command_executed = 0;
 	}
 	return (1);
@@ -34,7 +35,6 @@ int init_shell(t_shell *shell)
 	init_terminal_data();
 	if (!init_command_line(&shell->cmd_line))
 		return (0);
-	clear_command_line(&shell->cmd_line);
     init_history(&shell->history);
     shell->is_command_executed = 0;
     return (1);

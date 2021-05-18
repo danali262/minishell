@@ -7,7 +7,7 @@
 
 typedef struct  s_treenode
 {
-    int						type;
+    int						*type;
     char					*data;
     struct	s_treenode		*left;
     struct	s_treenode		*right;
@@ -22,7 +22,8 @@ typedef struct  s_shell
     int				is_command_executed;
 }               t_shell;
 
-int			parse_command_line(t_shell *shell);
-int			parser(t_lexer *lexerbuf, t_shell *shell);
+int		parse_command_line(t_shell *shell);
+int		parser(t_lexer *lexerbuf, t_shell *shell);
+void    init_tree(t_treenode *syntax_tree);
 
 #endif

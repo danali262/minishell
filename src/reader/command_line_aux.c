@@ -19,6 +19,7 @@ int	init_command_line(t_line *cmd_line)
 		ft_putstr_fd("Error. Unable to allocate memory.\n", STDOUT_FILENO);
 		return (0);
 	}
+	cmd_line->size = 0;
 	return (1);
 }
 
