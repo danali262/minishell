@@ -24,7 +24,7 @@ void	execute_command_line(t_treenode *top_node)
 {
 	if (top_node == NULL)
 		return ;
-	if (top_node->type == NODE_SEMI || top_node->type == NODE_PIPE)
+	if (*top_node->type == NODE_SEMI || *top_node->type == NODE_PIPE)
 	{
 		execute_job(top_node->left);
 		execute_command_line(top_node->right);
