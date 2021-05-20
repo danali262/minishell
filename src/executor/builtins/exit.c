@@ -23,9 +23,7 @@ int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
 	char	*exit_msg;
 	int		arg_num;
 
-	exit_msg = "logout\nSaving session...\n...copying shared history...\
-		\n...saving history...truncating history files...\
-		\n...completed.\n\n[Process completed]\n";
+	exit_msg = "exit";
 	arg_num = count_arguments(simple_cmd_node);
 	if (arg_num == 0)
 	{
