@@ -7,7 +7,7 @@
 #include <term.h>
 #include <termcap.h>
 #include <unistd.h>
-# include <stdlib.h>
+#include <stdlib.h>
 
 /*
 ** The use of static char	*term_buffer:

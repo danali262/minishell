@@ -32,4 +32,3 @@ int	execute_echo(t_treenode *simple_cmd_node)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (1);
 }
-

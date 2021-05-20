@@ -27,6 +27,7 @@ SRC = \
 	src/parser/parser5.c\
 	src/parser/parser_aux.c\
 	src/parser/astree.c \
+	src/executor/environment.c \
 	src/executor/execute_cmd_line.c \
 	src/executor/simple_command.c \
 	src/executor/executable_path.c \

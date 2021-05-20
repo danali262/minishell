@@ -7,4 +7,10 @@ void	execute_command_line(t_treenode *top_node, t_shell *shell);
 char	*locate_executable_path(t_treenode *simple_cmd_node);
 int		run_simple_command(t_treenode *simple_cmd_node, t_shell *shell);
 
+/*
+** environment:
+*/ 
+
+void	create_env_var_list(char **env_list);
+
 #endif
