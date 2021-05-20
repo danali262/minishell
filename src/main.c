@@ -18,33 +18,33 @@ int shell_event_loop(t_shell *shell)
         ft_putstr_fd(PROMPT, STDOUT_FILENO);
         while (shell->is_command_executed != 1)
         {
-            if (!read_input(shell, &origin_attr))
-                return (0);
+            if (read_input(shell, &origin_attr) == ERROR)
+                return (ERROR);
         }
         reset_input_mode(&origin_attr, 0);
         parser_result = parse_command_line(shell);
         if (parser_result == -1)
-            return (0);
+            return (ERROR);
         else if (parser_result != 0)
             execute_command_line(shell->syntax_tree, shell);
         delete_node(shell->syntax_tree);
         if (shell->minishell_exits == true)
-            return(1);
+            return(SUCCESS);
         shell->is_command_executed = 0;
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 int init_shell(t_shell *shell)
 {
     init_terminal_data(shell);
-	if (!init_command_line(&shell->cmd_line))
-		return (0);
+	if (init_command_line(&shell->cmd_line) == ERROR)
+		return (ERROR);
     init_history(&shell->history);
     shell->is_command_executed = 0;
     shell->exit_code = -1;
     shell->minishell_exits = false;
-    return (1);
+    return (SUCCESS);
 }
 
 void    free_shell_data(t_shell *shell)
@@ -60,11 +60,11 @@ int		main(void)
 	t_shell			shell;
     
     init_shell(&shell);
-    if (!shell_event_loop(&shell))
+    if (shell_event_loop(&shell) == ERROR)
     {
-        // free_shell_data(&shell); // not implemented yet
+        free_shell_data(&shell);
         return (1);
     }
-    // free_shell_data(&shell); // not implemented yet
+    free_shell_data(&shell);
     return (0);
 }
