@@ -16,13 +16,14 @@
 ** for as long as you still plan to interrogate the description.
 */
 
-int	init_terminal_data(void)
+int	init_terminal_data(t_shell *shell)
 {
 	char		*term_type;
 	static char	*term_buffer;
 	int			result;
 
 	term_buffer = malloc(2048); //don't forget to free allocated memory at exit
+	shell->term_buffer = term_buffer;
 	term_type = getenv("TERM");
 	if (term_type == NULL)
 	{

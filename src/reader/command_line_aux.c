@@ -17,10 +17,10 @@ int	init_command_line(t_line *cmd_line)
 	if (cmd_line->buf == NULL)
 	{
 		ft_putstr_fd("Error. Unable to allocate memory.\n", STDOUT_FILENO);
-		return (0);
+		return (ERROR);
 	}
 	cmd_line->size = 0;
-	return (1);
+	return (SUCCESS);
 }
 
 void	clear_command_line(t_line *cmd_line)

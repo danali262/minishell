@@ -12,14 +12,14 @@
 int	read_input(t_shell *shell, struct termios *origin_attr)
 {
 	if (!set_input_mode(origin_attr))
-		return (0);
+		return (ERROR);
 	if (read_command_line(STDIN_FILENO, shell) == -1)
 	{
 		free_command_line(&shell->cmd_line);
 		free_history(&shell->history);
-		return (0);
+		return (ERROR);
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 int	read_command_line(int fd, t_shell *shell)
@@ -29,7 +29,7 @@ int	read_command_line(int fd, t_shell *shell)
 
 	ch = 0;
 	bytes_read = read(fd, &ch, 1);
-	if (bytes_read == -1) // check if read returns cntrlD? 
+	if (bytes_read == -1)
 		return (-1);
 	if (ft_isprint(ch))
 	{
