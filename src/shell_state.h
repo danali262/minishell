@@ -19,7 +19,10 @@ typedef struct  s_shell
 	t_history		history;
     t_line			cmd_line;
     t_termcap_codes	termcap_codes;
+    char            *term_buffer;
     int				is_command_executed;
+    int             exit_code;
+    int             minishell_exits;
 }               t_shell;
 
 int		parse_command_line(t_shell *shell);
