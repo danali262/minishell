@@ -30,7 +30,8 @@ SRC = \
 	src/executor/execute_cmd_line.c \
 	src/executor/simple_command.c \
 	src/executor/executable_path.c \
-	src/executor/builtins/builtins.c
+	src/executor/builtins/builtins.c \
+	src/executor/builtins/exit.c
 
 
 OBJS = $(SRC:.c=.o)
