@@ -3,8 +3,6 @@
 
 static int	get_char_type_2(char c)
 {
-	if (c == '0')
-		return (CHAR_NULL);
 	if (c == '\0')
 		return (CHAR_EMPTY);
 	else
