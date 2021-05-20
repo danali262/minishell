@@ -82,6 +82,7 @@ char	*locate_executable_path(t_treenode *simple_cmd_node)
 		cmd_location = NULL;
 	}
 	free_array_memory(dir_list);
+	dir_list = NULL;
 	return (cmd_location);
 }
 
