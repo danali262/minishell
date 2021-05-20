@@ -52,7 +52,10 @@ int	can_execute_builtin(t_treenode *simple_cmd_node, t_shell *shell)
 	if (simple_cmd_node != NULL)
 	{
 		if (ft_strncmp("exit", simple_cmd_node->data, 5) == 0)
-			execute_exit(simple_cmd_node, shell);
+        {
+            execute_exit(simple_cmd_node, shell);
+            return (1);
+        }
 		i = 0;
 		while (builtins_map[i].cmd_name[0] != '\0')
 		{
