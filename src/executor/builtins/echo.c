@@ -22,11 +22,12 @@ int	execute_echo(t_treenode *simple_cmd_node)
 		arg_node = arg_node->left;
 	while (arg_node != NULL)
 	{
+		// add the type check: whether it is the variable or the argument
 		ft_putstr_fd(arg_node->data, STDOUT_FILENO);
-		ft_putstr_fd(" ", STDOUT_FILENO);
 		arg_node = arg_node->left;
+		if (arg_node != NULL)
+			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
-	ft_putstr_fd("\b", STDOUT_FILENO);
 	if (!n_option)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (1);
