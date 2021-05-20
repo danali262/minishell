@@ -57,7 +57,7 @@ t_token	*process_general_state(t_lexer_state *lex_state, t_token *token, t_count
 		token = process_whitespace(lex_state, token, count);
 	else if ((lex_state->chtype == CHAR_SEMICOLON) | (lex_state->chtype
 			== CHAR_GREATER) | (lex_state->chtype == CHAR_LESSER) | (lex_state->chtype
-			== CHAR_AMPERSAND)
+			== CHAR_EMPTY)
 		| (lex_state->chtype == CHAR_PIPE))
 	{
 		token = process_others(lex_state, token, count);

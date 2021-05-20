@@ -16,20 +16,30 @@ int	execute_echo(t_treenode *simple_cmd_node)
 	t_treenode *arg_node;
 	int			n_option;
 
+	n_option = 0;
 	arg_node = simple_cmd_node->left;
-	n_option = is_n_option(arg_node);
-	if (n_option)
-		arg_node = arg_node->left;
-	while (arg_node != NULL)
+	if (arg_node == NULL)
 	{
-		ft_putstr_fd(arg_node->data, STDOUT_FILENO);
-		ft_putstr_fd(" ", STDOUT_FILENO);
-		arg_node = arg_node->left;
+			ft_putstr_fd(" ", STDOUT_FILENO);
+			ft_putstr_fd("\n", STDOUT_FILENO);
+			return (1);
 	}
-	ft_putstr_fd("\b", STDOUT_FILENO);
-	if (!n_option)
-		ft_putstr_fd("\n", STDOUT_FILENO);
-	return (1);
+	else
+	{
+		n_option = is_n_option(arg_node);
+		if (n_option)
+			arg_node = arg_node->left;
+		while (arg_node != NULL)
+		{
+			ft_putstr_fd(arg_node->data, STDOUT_FILENO);
+			ft_putstr_fd(" ", STDOUT_FILENO);
+			arg_node = arg_node->left;
+		}
+		ft_putstr_fd("\b", STDOUT_FILENO);
+		if (!n_option)
+			ft_putstr_fd("\n", STDOUT_FILENO);
+		return (1);
+	}
 }
 
 int	can_execute_builtin(t_treenode *simple_cmd_node)

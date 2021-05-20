@@ -5,6 +5,8 @@ static int	get_char_type_2(char c)
 {
 	if (c == '0')
 		return (CHAR_NULL);
+	if (c == '\0')
+		return (CHAR_EMPTY);
 	else
 		return (CHAR_GENERAL);
 }
@@ -17,8 +19,6 @@ static int	get_char_type(char c)
 		return (CHAR_DQUOTE);
 	else if (c == '|')
 		return (CHAR_PIPE);
-	else if (c == '&')
-		return (CHAR_AMPERSAND);
 	else if (c == ' ')
 		return (CHAR_WHITESPACE);
 	else if (c == ';')

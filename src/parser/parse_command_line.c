@@ -5,9 +5,10 @@
 // 	t_token	*head;
 
 // 	head = lexerbuf->tokens_list;
+// 	printf("tokens are:\n");
 // 	while (head != NULL)
 // 	{
-// 		printf("%s\n", head->data);
+// 		printf("|%s|\t|%d|\n", head->data, head->type);
 // 		head = head->next;
 // 	}
 // }
@@ -24,7 +25,7 @@ int	parse_command_line(t_shell *shell)
 		return (-1);
 	else if (lexer_result == 0)
 		return (0);
-		// print_tokens(&lexerbuf);        /* to be deleted */
+	// print_tokens(&lexerbuf);        /* to be deleted */
 	if (parser(&lexerbuf, shell) == -1)
 		return (-1);
     return (1);

@@ -27,7 +27,6 @@ enum    e_tokentype
 {
     CHAR_GENERAL = -1,
     CHAR_PIPE = '|',
-    CHAR_AMPERSAND = '&',
     CHAR_QUOTE = '\'',
     CHAR_DQUOTE = '\"',
     CHAR_SEMICOLON = ';',
@@ -38,6 +37,7 @@ enum    e_tokentype
     CHAR_GREATER = '>',
     CHAR_LESSER = '<',
     CHAR_NULL = 0,
+    CHAR_EMPTY = '\0',
 
     TOKEN = -1
 };
