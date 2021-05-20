@@ -58,10 +58,13 @@ int	handle_eot(t_history *history, t_line *cmd_line) // replace with the other f
 
 // int	handle_eot(t_shell *shell)
 // {
-// 	shell->cmd_line.size = ft_strlen("exit");
-// 	shell->cmd_line.buf = ft_memcpy(shell->cmd_line.buf, "exit", shell->cmd_line.size);
-// 	if (!handle_enter(shell))
-// 		return (0);
+// 	if (shell->cmd_line.size == 0)
+// 	{
+// 		shell->cmd_line.size = ft_strlen("exit");
+// 		shell->cmd_line.buf = ft_memcpy(shell->cmd_line.buf, "exit", shell->cmd_line.size);
+// 		if (!handle_enter(shell))
+// 			return (0);
+// 	}
 // 	return (1);
 // }
 
