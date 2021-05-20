@@ -45,7 +45,6 @@ int	can_execute_builtin(t_treenode *simple_cmd_node, t_shell *shell)
 		// {"export", execute_export},
 		// {"unset", execute_unset},
 		// {"env", execute_env},
-		// {"exit", execute_exit},
 		{"\0", NULL}
 	};
 
