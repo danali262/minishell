@@ -38,10 +38,10 @@ int shell_event_loop(t_shell *shell)
 int init_shell(t_shell *shell)
 {
     init_terminal_data(shell);
-	if (init_command_line(&shell->cmd_line) == ERROR)
-		return (ERROR);
+    if (init_command_line(&shell->cmd_line) == ERROR
+            ||  create_env_var_list(shell) == ERROR)
+        return (ERROR);
     init_history(&shell->history);
-    create_env_var_list(shell->env_list);
     shell->is_command_executed = 0;
     shell->exit_code = -1;
     shell->minishell_exits = false;
