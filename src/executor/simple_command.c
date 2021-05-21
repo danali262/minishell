@@ -22,7 +22,7 @@ char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path)
 	}
 	arguments = malloc(sizeof(char*) * arg_counter + 1);
 	if (arguments == NULL)
-		return (0);
+		return (NULL);
 	arguments[0] = executable_path;
 	int i = 1;
 	arg_node = simple_cmd_node->left;
@@ -66,7 +66,7 @@ void	create_child_process(char **argv)
 		// printf("wait_return: %d\n", wait_return);
 		// printf("pid of the parent process: %d\n", pid);
 		if (wait_return != pid)
-			ft_putstr_fd("wait error.\n", STDOUT_FILENO);	
+			ft_putstr_fd("wait error\n", STDOUT_FILENO);	
 		if (WIFEXITED(status) > 0)
 		{
 			printf("child exited\n"); //remove. for debug
@@ -112,7 +112,7 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 	builtin_result = can_execute_builtin(simple_cmd_node, shell);
 	if (builtin_result == -1) //if any error happened, with e.g. memory allocation/ can it actually happen?
 	{
-		printf("builtin error.s\n"); //remove, set error code
+		printf("builtin error\n"); //remove, set error code
 		return (0);
 	}
 	else if (builtin_result == 0) //if it's not a builtin command
