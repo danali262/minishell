@@ -27,7 +27,7 @@ int shell_event_loop(t_shell *shell)
             return (ERROR);
         else if (parser_result != 0)
             execute_command_line(shell->syntax_tree, shell);
-        delete_node(shell->syntax_tree);
+        delete_node(&shell->syntax_tree);
         if (shell->minishell_exits == true)
             return(SUCCESS);
         shell->is_command_executed = 0;

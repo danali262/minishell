@@ -43,7 +43,7 @@ t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
 	if (!term(TOKEN, &filename, curtok))
 	{
 		free(filename);
-		delete_node(simplecmdNode);
+		delete_node(&simplecmdNode);
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
@@ -72,7 +72,7 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 	if (!term(TOKEN, &filename, curtok))
 	{
 		free(filename);
-		delete_node(simplecmdNode);
+		delete_node(&simplecmdNode);
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
