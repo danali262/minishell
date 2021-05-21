@@ -32,6 +32,7 @@ void	clear_command_line(t_line *cmd_line)
 void	free_command_line(t_line *cmd_line)
 {
 	free(cmd_line->buf);
+    cmd_line->buf = NULL;
 	cmd_line->size = 0;
 }
 

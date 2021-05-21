@@ -38,8 +38,9 @@ int shell_event_loop(t_shell *shell)
 int init_shell(t_shell *shell)
 {
     init_terminal_data(shell);
-	if (init_command_line(&shell->cmd_line) == ERROR)
-		return (ERROR);
+    if (init_command_line(&shell->cmd_line) == ERROR
+            ||  create_env_var_list(shell) == ERROR)
+        return (ERROR);
     init_history(&shell->history);
     shell->is_command_executed = 0;
     shell->exit_code = -1;
@@ -52,6 +53,7 @@ void    free_shell_data(t_shell *shell)
     free(shell->term_buffer);
    	free_command_line(&shell->cmd_line);
 	free_history(&shell->history);
+	free_array_memory(shell->env_list);
 }
 
 int		main(void)

@@ -6,7 +6,7 @@
 typedef struct s_builtins_map
 {
 	char	*cmd_name;
-	int		(*cmd_executor)(t_treenode *syntax_tree);
+	int		(*cmd_executor)(t_treenode *syntax_tree, t_shell *shell);
 }				t_builtins_map;
 
 #endif

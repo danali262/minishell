@@ -22,6 +22,7 @@ SRC = src/ft_memset.c \
 	src/ft_isascii.c \
 	src/ft_isprint.c \
 	src/ft_free_array.c \
+	src/ft_calculate_array.c \
 	src/ft_toupper.c \
 	src/ft_tolower.c \
 	src/ft_calloc.c \

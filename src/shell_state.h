@@ -23,6 +23,7 @@ typedef struct  s_shell
     t_line			cmd_line;
     t_termcap_codes	termcap_codes;
     char            *term_buffer;
+    char            **env_list;
     int				is_command_executed;
     int             exit_code;
     int             minishell_exits;
