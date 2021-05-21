@@ -31,7 +31,7 @@ t_treenode	*tokenlist(t_curtok *curtok);
 t_treenode	*tokenlist1(t_curtok *curtok);
 t_treenode	*tokenlist2(void);
 
-void	delete_node(t_treenode *node);
+void	delete_node(t_treenode **node);
 void	set_node_data_type(t_treenode *node, char *data, t_nodetype nodetype);
 void	attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode *rightNode);
 
