@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 15:27:38 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 10:02:48 by osamara       ########   odam.nl         */
+/*   Updated: 2021/05/20 14:30:01 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int				ft_toupper(int c);
 int				ft_tolower(int c);
 void			*ft_calloc(size_t count, size_t size);
 void			free_array_memory(char **array);
+int				ft_calculate_array_size(char **array);
 char			*ft_strdup(const char *s1);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);

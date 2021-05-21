@@ -7,7 +7,7 @@
 #include <term.h>
 #include <termcap.h>
 #include <unistd.h>
-# include <stdlib.h>
+#include <stdlib.h>
 
 /*
 ** The use of static char	*term_buffer:
@@ -22,7 +22,9 @@ int	init_terminal_data(t_shell *shell)
 	static char	*term_buffer;
 	int			result;
 
-	term_buffer = malloc(2048); //don't forget to free allocated memory at exit
+	term_buffer = malloc(2048);
+	if (!term_buffer)
+		return (0);
 	shell->term_buffer = term_buffer;
 	term_type = getenv("TERM");
 	if (term_type == NULL)

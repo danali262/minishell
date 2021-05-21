@@ -6,22 +6,17 @@
 
 #include <unistd.h>
 #include<sys/stat.h>
+#include <stdlib.h>
 
 static char	*append_cmd_to_dir(char *directory, char *cmd_alias)
 {
 	size_t	dir_len;
-	size_t	alias_len;
 	char	*cmd_path;
 
 	dir_len = ft_strlen(directory);
-	alias_len = ft_strlen(cmd_alias);
 	if (directory[dir_len] != '/')
 	{
-		cmd_path = malloc(sizeof(char) * (dir_len + alias_len) + 2);
-		ft_memmove(cmd_path, directory, dir_len);
-		cmd_path[dir_len] = '/';
-		ft_memmove(cmd_path + dir_len + 1, cmd_alias, alias_len);
-		cmd_path[dir_len + alias_len + 2] = '\0';
+		cmd_path = concat_path(directory, cmd_alias);
 	}
 	else
 		cmd_path = ft_strjoin(directory, cmd_alias);
@@ -42,19 +37,11 @@ static int	is_valid_path(char *cmd_location)
 
 static char	**get_directories_list()
 {
-	int			i;
 	int			j;
-	extern char **environ;
 	char		*path_str;
 
-	i = 0;
-	while (environ[i] != 0)
-	{
-		if (ft_strncmp(environ[i], "PATH", 4) == 0)
-            break ;
-		i++;
-	}
-	path_str = environ[i];
+
+	path_str = getenv("PATH");
 	j = 0;
 	while (path_str[j] != '/')
 		j++;
