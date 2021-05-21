@@ -31,7 +31,9 @@ void	free_history(t_history *history)
 	while (i <= history->last_shown_line)
 	{
 		free(history->lines[i]);
+        history->lines[i] = NULL;
 		free(history->saved_temp_input[i]);
+        history->saved_temp_input[i] = NULL;
 		i++;
 	}
 	free_temp_input(history);
