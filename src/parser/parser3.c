@@ -29,13 +29,13 @@ t_treenode	*job1(t_curtok *curtok)
 		return (NULL);
 	if (!term(CHAR_PIPE, NULL, curtok))
 	{
-		delete_node(cmdNode);
+		delete_node(&cmdNode);
 		return (NULL);
 	}
 	jobNode = job(curtok);
 	if (jobNode == NULL)
 	{
-		delete_node(cmdNode);
+		delete_node(&cmdNode);
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
