@@ -37,7 +37,7 @@ t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
 		return (NULL);
 	if (!term(CHAR_LESSER, NULL, curtok))
 	{
-		delete_node(simplecmdNode);
+		delete_node(&simplecmdNode);
 		return (NULL);
 	}
 	if (!term(TOKEN, &filename, curtok))
@@ -66,7 +66,7 @@ t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
 		return (NULL);
 	if (!term(CHAR_GREATER, NULL, curtok))
 	{
-		delete_node(simplecmdNode);
+		delete_node(&simplecmdNode);
 		return (NULL);
 	}
 	if (!term(TOKEN, &filename, curtok))
