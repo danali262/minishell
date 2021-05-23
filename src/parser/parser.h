@@ -34,6 +34,9 @@ t_treenode	*tokenlist2(void);
 void	delete_node(t_treenode **node);
 void	set_node_data_type(t_treenode *node, char *data, t_nodetype nodetype);
 void	attach_tree_branch(t_treenode *root, t_treenode *leftNode, t_treenode *rightNode);
+char	*strip_quotes(char *arg);
+int		handle_vars_and_args(char *arg);
+char	*create_arg(char *arg);
 
 void	print_tree(t_treenode *node);
 

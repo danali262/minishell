@@ -36,15 +36,37 @@ t_treenode	*tokenlist(t_curtok *curtok)
 t_treenode	*tokenlist1(t_curtok *curtok)
 {
 	t_treenode	*tokenlistNode;
+	t_treenode	*argNode;
 	t_treenode	*root;
 	char		*arg;
+	char		*var_arg;
+	int			res;
 
 	if (!term(TOKEN, &arg, curtok))
 		return (NULL);
 	tokenlistNode = tokenlist(curtok);
 	root = malloc(sizeof(*root));
-	set_node_data_type(root, arg, NODE_ARG);
-	attach_tree_branch(root, tokenlistNode, NULL);
+	res = handle_vars_and_args(arg);
+	// printf("res is %d\n", res);
+	arg = strip_quotes(arg);
+	if (res == 0)
+	{
+		set_node_data_type(root, arg, NODE_ARG);
+		attach_tree_branch(root, tokenlistNode, NULL);
+	}
+	else if (res == 1)
+	{
+		set_node_data_type(root, arg, NODE_VAR);
+		attach_tree_branch(root, tokenlistNode, NULL);
+	}
+	else
+	{
+		set_node_data_type(root, "$?", NODE_VAR);
+		argNode = malloc(sizeof(*argNode));
+		var_arg = create_arg(arg);
+		set_node_data_type(argNode, var_arg, NODE_ARG);
+		attach_tree_branch(root, argNode, NULL);
+	}
 	return (root);
 }
 

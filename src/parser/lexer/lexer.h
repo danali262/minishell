@@ -62,13 +62,8 @@ typedef struct	s_lexer
 	int		tokens_nbr;
 }				t_lexer;
 
-// char	*ft_strdup(const char *s);
 char	*ft_strcat(char *src, char *append);
-// void	ft_putstr_fd(char *s, int fd);
 char	**ft_split(char const *s, char c);
-// size_t	ft_strlen(const char *s);
-// size_t	ft_strlcpy(char *dst, const char *src, size_t size);
-
 
 int		lexer_build(t_lexer_state *lex_state, t_lexer *lexerbuf);
 void	tok_init(t_token *tok, int datasize);

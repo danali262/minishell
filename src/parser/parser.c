@@ -11,18 +11,6 @@
 // 	print_tree(syntax_tree->right);
 // }
 
-// static void	count_nodes(t_treenode *syntax_tree, t_shell *shell)
-// {
-// 	if (!syntax_tree)
-// 		return ;
-// 	if (syntax_tree->type == 0)
-// 		shell->nbr_semis++;
-// 	if (syntax_tree->type == 1)
-// 		shell->nbr_pipes++;
-// 	count_nodes(syntax_tree->left, shell);
-// 	count_nodes(syntax_tree->right, shell);
-// }
-
 int	parser(t_lexer *lexerbuf, t_shell *shell)
 {
 	t_curtok	curtok;
@@ -43,8 +31,5 @@ int	parser(t_lexer *lexerbuf, t_shell *shell)
 	// 	printf("syntax tree is:\n");
 	// 	print_tree(shell->syntax_tree);
 	// }
-	// count_nodes(shell->syntax_tree, shell);
-	// printf("number of semicolons is %d\n", shell->nbr_semis);	/* to be deleted */
-	// printf("number of pipes is %d\n", shell->nbr_pipes);
 	return (1);
 }

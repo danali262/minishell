@@ -27,9 +27,6 @@ int	parse_command_line(t_shell *shell)
 		return (0);
 	// printf("tokens with quotes:\n");
 	// print_tokens(&lexerbuf);        /* to be deleted */
-	strip_quotes(&lexerbuf);
-	// printf("tokens without quotes:\n");
-	// print_tokens(&lexerbuf);        /* to be deleted */
 	if (parser(&lexerbuf, shell) == -1)
 		return (-1);
     return (1);
