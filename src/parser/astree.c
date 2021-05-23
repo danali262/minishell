@@ -2,7 +2,7 @@
 
 void	delete_node(t_treenode **node)
 {
-	if (node == NULL)
+	if (*node == NULL)
 		return ;
 	if ((*node)->data != NULL)
     {
