@@ -25,7 +25,7 @@ static char	*ft_fill(char *src, char *append, char *dest)
 char	*ft_strcat(char *src, char *append)
 {
 	size_t		x;
-	char	*dest;
+	char		*dest;
 
 	x = ft_strlen(src) + ft_strlen(append);
 	dest = (char *)malloc(sizeof(char) * (x + 1));

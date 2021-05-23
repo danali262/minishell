@@ -11,13 +11,13 @@
 // 	print_tree(syntax_tree->right);
 // }
 
-int	parser(t_lexer *lexerbuf, t_shell *shell)
+int	parser(t_lexer_state *lex_state, t_shell *shell)
 {
 	t_curtok	curtok;
 
-	if (!lexerbuf->tokens_nbr)
+	if (!lex_state->tokens_nbr)
 		return (0);
-	curtok.current_token = lexerbuf->tokens_list;
+	curtok.current_token = lex_state->tokens_list;
 	shell->syntax_tree = command_line(&curtok);
 	if (curtok.current_token != NULL && curtok.current_token->type != 0)
 	{

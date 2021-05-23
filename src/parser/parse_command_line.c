@@ -1,10 +1,10 @@
 #include "parser.h"
 
-// void	print_tokens(t_lexer *lexerbuf)         /* to be deleted */
+// void	print_tokens(t_token *tokens_list)         /* to be deleted */
 // {
 // 	t_token	*head;
 
-// 	head = lexerbuf->tokens_list;
+// 	head = tokens_list;
 // 	printf("tokens are:\n");
 // 	while (head != NULL)
 // 	{
@@ -16,18 +16,17 @@
 int	parse_command_line(t_shell *shell)
 {
 	t_lexer_state	lex_state;
-	t_lexer			lexerbuf;
 	int				lexer_result;
 
 	lex_state.line = &shell->cmd_line;
-	lexer_result = lexer_build(&lex_state, &lexerbuf);
+	lexer_result = lexer_build(&lex_state);
 	if (lexer_result == -1)
 		return (-1);
 	else if (lexer_result == 0)
 		return (0);
 	// printf("tokens with quotes:\n");
-	// print_tokens(&lexerbuf);        /* to be deleted */
-	if (parser(&lexerbuf, shell) == -1)
+	// print_tokens(lex_state.tokens_list);        /* to be deleted */
+	if (parser(&lex_state, shell) == -1)
 		return (-1);
     return (1);
 }

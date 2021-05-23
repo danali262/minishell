@@ -15,6 +15,7 @@ SRC = \
 	src/command_history/history_aux.c \
 	src/parser/parse_command_line.c \
 	src/parser/lexer/lexer_aux.c \
+	src/parser/lexer/lexer_error.c \
 	src/parser/lexer/lexer.c \
 	src/parser/lexer/lexer2.c \
 	src/parser/lexer/lexer3.c \
