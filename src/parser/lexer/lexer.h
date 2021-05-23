@@ -74,6 +74,5 @@ t_token	*process_others(t_lexer_state *lex_state, t_token *token, t_counters *co
 t_token	*new_token(t_lexer_state *lex_state, t_token *token, t_counters *count);
 t_token	*process_dquote_state(t_lexer_state *lex_state, t_token *token, t_counters *count);
 t_token	*process_quote_state(t_lexer_state *lex_state, t_token *token, t_counters *count);
-void	strip_quotes(t_lexer *lexerbuf);
 
 #endif
