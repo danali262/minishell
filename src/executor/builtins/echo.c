@@ -33,6 +33,6 @@ int	execute_echo(t_treenode *simple_cmd_node, t_shell *shell)
 			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
 	if (!n_option)
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putstr_fd("\n\r", STDOUT_FILENO);
 	return (1);
 }

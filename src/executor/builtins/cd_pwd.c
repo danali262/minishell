@@ -26,8 +26,8 @@ int	execute_pwd(t_treenode *simple_cmd_node, t_shell *shell)
 		
 	}
 	if (getcwd(pwd_value, sizeof(pwd_value)) == NULL)
-		printf("pwd: %s\n", strerror(errno));
-	printf("%s\n", pwd_value);
+		printf("pwd: %s\n\r", strerror(errno));
+	printf("%s\n\r", pwd_value);
 		return (1);
 }
 
@@ -67,13 +67,13 @@ int	execute_cd(t_treenode *simple_cmd_node, t_shell *shell)
 	else
 		updated_cwd = change_directory(simple_cmd_node, &cd_result);
 	if (cd_result != 0)
-		printf("minishell: cd: %s: %s\n", simple_cmd_node->left->data,
+		printf("minishell: cd: %s: %s\n\r", simple_cmd_node->left->data,
 				strerror(errno));
 	else
 	{
 		if (!change_env_value(shell, "PWD", updated_cwd))
 		{
-			printf("Error: unable to allocate memory.\n");
+			printf("Error: unable to allocate memory.\n\r");
 			return (0);
 		}
 	}
