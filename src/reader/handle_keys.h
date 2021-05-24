@@ -8,5 +8,6 @@
 int		handle_enter(t_shell *shell);
 void	handle_backspace(t_line *cmd_line);
 int		handle_eot(t_shell *shell);
+void	handle_interrupt(t_shell *shell);
 
 #endif

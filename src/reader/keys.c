@@ -15,6 +15,8 @@ void	handle_key_action(t_shell *shell, char keycode)
 		handle_enter(shell);
 	else if (keycode == CTRL_D)
 		handle_eot(shell);
+	else if (keycode == CTRL_C)
+		handle_interrupt(shell);
 	else if (keycode == ARROW_UP)
 		show_prev_history(&shell->history, &shell->cmd_line);
 	else if (keycode == ARROW_DOWN)

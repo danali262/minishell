@@ -47,4 +47,6 @@ int		parse_command_line(t_shell *shell);
 int		parser(t_lexer_state *lex_state, t_shell *shell);
 void    init_tree(t_treenode *syntax_tree);
 
+t_shell *get_shell_state(void);
+
 #endif
