@@ -54,7 +54,6 @@ static t_token	*loop(t_lexer_state *lex_state, t_token *token)
 		else if (lex_state->state == STATE_IN_QUOTE)
 			token = process_quote_state(lex_state, token, &count);
 		count.i++;
-		lex_state->tokens_nbr++;
 	}
 	return (token);
 }
@@ -70,11 +69,12 @@ int	lexer_build(t_lexer_state *lex_state)
 		lex_state->tokens_nbr = 0;
 		return (0);
 	}
+	lex_state->tokens_nbr = 0;
 	lex_state->tokens_list = malloc(sizeof(t_token));
 	if (!lex_state->tokens_list)
 		return (-1);
 	token = lex_state->tokens_list;
-	if (tok_init(token, lex_state->line->size) == -1)
+	if (tok_init(token, lex_state->line->size, lex_state) == -1)
 		return (-1);
 	lex_state->state = STATE_GENERAL;
 	lex_state->tokens_nbr = 0;
