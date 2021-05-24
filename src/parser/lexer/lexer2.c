@@ -35,7 +35,7 @@ t_counters *count)
 		if (!token->next)
 			lexer_error(lex_state->tokens_list);
 		token = token->next;
-		tok_init(token, lex_state->line->size - count->i);
+		tok_init(token, lex_state->line->size - count->i, lex_state);
 		count->j = 0;
 	}
 	return (token);

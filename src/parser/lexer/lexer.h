@@ -44,6 +44,7 @@ enum	e_tokentype
 	CHAR_NEWLINE = '\n',
 	CHAR_GREATER = '>',
 	CHAR_LESSER = '<',
+	CHAR_APPEND, 
 	CHAR_EMPTY = '\0',
 	TOKEN = -1
 };
@@ -60,7 +61,7 @@ char	*ft_strcat(char *src, char *append);
 char	**ft_split(char const *s, char c);
 
 int		lexer_build(t_lexer_state *lex_state);
-int		tok_init(t_token *tok, int datasize);
+int		tok_init(t_token *tok, int datasize, t_lexer_state *lex_state);
 void	print_tokens(t_token *tokens_list);
 void	free_token(t_token *tok);
 void	lexer_error(t_token *tokens_list);

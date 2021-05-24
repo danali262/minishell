@@ -15,10 +15,16 @@ t_treenode	*redirection_create_root(t_treenode *root, t_treenode *simplecmd,
 		set_node_data_type(filenameNode, filename, NODE_FILE);
 		attach_tree_branch(root, simplecmd, filenameNode);
 	}
-	else	/* if x == 2 */
+	else if (opt == 2)
 	{
 		set_node_data_type(root, ">", NODE_REDIRECT_OUT);
 		set_node_data_type(filenameNode, filename, NODE_FILE);
+		attach_tree_branch(root, simplecmd, filenameNode);
+	}
+	else
+	{
+		set_node_data_type(root, ">>", NODE_APPEND);
+		set_node_data_type(filenameNode,filename, NODE_FILE);
 		attach_tree_branch(root, simplecmd, filenameNode);
 	}
 	return (root);
