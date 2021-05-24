@@ -8,12 +8,14 @@ int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	char	*exit_msg;
 	int		arg_num;
+	int		is_numeric_arg;
 
 	exit_msg = "exit";
 	arg_num = count_arguments(simple_cmd_node);
+	is_numeric_arg = 0;
 	if (arg_num == 0)
 	{
-		printf("%s\n", exit_msg);
+		printf("%s\n\r", exit_msg);
 		shell->exit_code = 0;
 		shell->minishell_exits = true;
 	}
@@ -25,9 +27,16 @@ int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
 	}
 	else
 	{
-		shell->exit_code = ft_atoi(simple_cmd_node->left->data);
+		shell->exit_code = ft_printf_atoi(simple_cmd_node->left->data,
+			&is_numeric_arg);
+		if (!is_numeric_arg)		
+		{
+			printf("%s\n\r", exit_msg);
+			printf("minishell: exit: %s: numeric argument required\n\r", simple_cmd_node->left->data);
+			shell->exit_code = 255;
+		}
 		shell->minishell_exits = true;
-		return (0);
+		return (1);
 	}
 	return (1);
 }
