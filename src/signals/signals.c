@@ -14,34 +14,30 @@ void	termination_handler(int signum)
 	{
 		shell->exit_code = 1;
 		clear_command_line(&shell->cmd_line);
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		ft_putstr_fd("\n\r", STDOUT_FILENO);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 	}
-	else if (signum == SIGQUIT)
+	// else if (signum == SIGQUIT)
+	// {
+	// 	shell->exit_code = 131;
+	// 	clear_command_line(&shell->cmd_line);
+	// 	ft_putstr_fd("\n\r", STDOUT_FILENO);
+	// }
+}
+
+void	quit_execution(int signum)
+{
+		t_shell *shell;
+
+	shell = get_shell_state();
+	if (signum == SIGQUIT)
 	{
 		shell->exit_code = 131;
 		clear_command_line(&shell->cmd_line);
-		ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
-		// ft_putstr_fd(PROMPT, STDOUT_FILENO);
+		ft_putstr_fd("Quit: 3\n\r", STDOUT_FILENO);
 	}
-	// return ;
 }
-// 
-// void	quit_execution(int signum)
-// {
-// 		t_shell *shell;
-// 
-// 	shell = get_shell_state();
-// 	if (signum == SIGQUIT)
-// 	{
-// 		shell->exit_code = 131;
-// 		clear_command_line(&shell->cmd_line);
-// 		ft_putstr_fd("Quit: \3n", STDOUT_FILENO);
-// 		// ft_putstr_fd(PROMPT, STDOUT_FILENO);
-// 	}
-// 	// return ;
-// }
-// 
+
 
 void	catch_signals(void)
 {
