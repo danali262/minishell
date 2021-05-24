@@ -72,8 +72,8 @@ void	create_child_process(char **argv)
 		{
 			shell = get_shell_state();
 			shell->exit_code = WEXITSTATUS(status);
-			printf("child exited\n\r"); //remove. for debug
-			printf("exit code: %d\n\r", shell->exit_code); //remove. for debug
+			// printf("child exited\n\r"); //remove. for debug
+			// printf("exit code: %d\n\r", shell->exit_code); //remove. for debug
 		}
 	}
 }
