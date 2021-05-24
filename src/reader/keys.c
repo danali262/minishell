@@ -11,7 +11,7 @@ void	handle_key_action(t_shell *shell, char keycode)
 {
 	if (keycode == BACKSPACE)
 		handle_backspace(&shell->cmd_line);
-	else if (keycode == ENTER)
+	else if (keycode == ENTER || keycode == CARRIAGE_RETURN)
 		handle_enter(shell);
 	else if (keycode == CTRL_D)
 		handle_eot(shell);

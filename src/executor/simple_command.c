@@ -1,11 +1,14 @@
 #include "executor.h"
 
 #include "builtins/builtins.h"
+#include "../signals/signals.h"
 
 #include "libft.h"
 
 #include <unistd.h>
 #include <sys/errno.h>
+#include <signal.h>
+#include <string.h>
 
 char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path)
 {
@@ -56,7 +59,7 @@ void	create_child_process(char **argv)
 	{
 		if (execve(argv[0], argv, environ) == -1)
 		{
-			ft_putstr_fd("execve error.\n", STDOUT_FILENO);
+			printf("minishell: %s\n", strerror(errno));
 			exit(126);
 		}
 	}
@@ -69,8 +72,8 @@ void	create_child_process(char **argv)
 		{
 			shell = get_shell_state();
 			shell->exit_code = WEXITSTATUS(status);
-			// printf("child exited\n"); //remove. for debug
-			// printf("exit code: %d\n", shell->exit_code); //remove. for debug
+			printf("child exited\n"); //remove. for debug
+			printf("exit code: %d\n", shell->exit_code); //remove. for debug
 		}
 	}
 }
@@ -118,7 +121,6 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 	}
 	else if (builtin_result == 0) //if it's not a builtin command
 	{
-		// if (!create_child_process(simple_cmd_node))
 		if (!run_cmd_executable(simple_cmd_node, shell))
 			return (0);
 	}
