@@ -1,8 +1,16 @@
 #include "shell_state.h"
+#include "signals/signals.h"
 #include "reader/read_command_line.h"
 #include "parser/parser.h"
 #include "executor/executor.h"
 #include "term_cap/init_terminal_data.h"
+
+t_shell *get_shell_state(void)
+{
+    static t_shell shell;
+
+    return (&shell);
+}
 
 int shell_event_loop(t_shell *shell)
 {
@@ -16,6 +24,7 @@ int shell_event_loop(t_shell *shell)
         
         init_tree(shell->syntax_tree);
         ft_putstr_fd(PROMPT, STDOUT_FILENO);
+        catch_signals();
         while (shell->is_command_executed != 1)
         {
             if (read_input(shell, &origin_attr) == ERROR)

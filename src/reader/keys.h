@@ -14,6 +14,7 @@
 # define ESC '\x1b'
 # define ENTER '\x0a'
 # define BACKSPACE '\x7f' // or '\x08' ????
+# define CTRL_C '\x03'
 # define CTRL_D '\x04'
 
 // typedef struct s_keycodes_map
