@@ -26,7 +26,6 @@ int	parse_command_line(t_shell *shell)
 		return (0);
 	// printf("tokens with quotes:\n");
 	// print_tokens(lex_state.tokens_list);        /* to be deleted */
-	if (parser(&lex_state, shell) == -1)
-		return (-1);
+	parser(&lex_state, shell);
 	return (1);
 }
