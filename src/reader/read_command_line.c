@@ -7,7 +7,6 @@
 #include "libft.h"
 
 #include <unistd.h>
-#include <stdio.h>//remove
 
 int	read_input(t_shell *shell, struct termios *origin_attr)
 {

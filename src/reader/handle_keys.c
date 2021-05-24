@@ -43,7 +43,8 @@ int	handle_eot(t_shell *shell)
 	if (shell->cmd_line.size == 0)
 	{
 		shell->cmd_line.size = ft_strlen("exit");
-		shell->cmd_line.buf = ft_memmove(shell->cmd_line.buf, "exit", shell->cmd_line.size);
+		shell->cmd_line.buf = ft_memmove(shell->cmd_line.buf, "exit",
+				shell->cmd_line.size);
 		if (!handle_enter(shell))
 			return (0);
 	}
