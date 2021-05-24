@@ -1,6 +1,6 @@
 #include "parser.h"
 
-bool	term(int tokentype, char **buffer, t_curtok *curtok)
+bool	term(int tokentype, char **buffer, t_curtok *curtok, t_treenode *node)
 {
 	if (curtok->current_token == NULL)
 		return (false);
@@ -9,6 +9,8 @@ bool	term(int tokentype, char **buffer, t_curtok *curtok)
 		if (buffer != NULL)
 		{
 			*buffer = malloc(ft_strlen(curtok->current_token->data) + 1);
+			if (!buffer)
+				parser_error(node);
 			ft_strlcpy(*buffer, curtok->current_token->data,
 				ft_strlen(curtok->current_token->data) + 1);
 		}

@@ -5,10 +5,10 @@ void	delete_node(t_treenode **node)
 	if (*node == NULL)
 		return ;
 	if ((*node)->data != NULL)
-    {
-        free((*node)->data);
-        (*node)->data = NULL;
-    }
+	{
+		free((*node)->data);
+		(*node)->data = NULL;
+	}
 	delete_node(&(*node)->left);
 	delete_node(&(*node)->right);
 	free(*node);

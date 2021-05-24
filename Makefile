@@ -26,8 +26,10 @@ SRC = \
 	src/parser/parser3.c\
 	src/parser/parser4.c\
 	src/parser/parser5.c\
+	src/parser/parser6.c\
 	src/parser/parser_aux.c\
 	src/parser/parser_aux2.c\
+	src/parser/parser_error.c\
 	src/parser/astree.c \
 	src/executor/executor_aux.c \
 	src/executor/environment.c \

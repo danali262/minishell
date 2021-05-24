@@ -28,5 +28,5 @@ int	parse_command_line(t_shell *shell)
 	// print_tokens(lex_state.tokens_list);        /* to be deleted */
 	if (parser(&lex_state, shell) == -1)
 		return (-1);
-    return (1);
+	return (1);
 }

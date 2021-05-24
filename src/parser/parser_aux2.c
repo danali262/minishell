@@ -1,6 +1,6 @@
 #include "parser.h"
 
-char	*strip_quotes(char *arg)
+char	*strip_quotes(char *arg, t_treenode *node)
 {
 	int		i;
 	int		token_len;
@@ -10,8 +10,11 @@ char	*strip_quotes(char *arg)
 	token_len = ft_strlen(arg);
 	temp_len = token_len - 2;
 	temp = malloc(sizeof(char) * (temp_len + 1));
+	if (!temp)
+		parser_error(node);
 	i = 0;
-	if ((arg[i] == '\''&& arg[token_len - 1] == '\'') || (arg[i] == '\"' && arg[token_len - 1] == '\"'))
+	if ((arg[i] == '\'' && arg[token_len - 1] == '\'') || (arg[i] == '\"'
+			&& arg[token_len - 1] == '\"'))
 	{
 		while (i < temp_len)
 		{
@@ -26,7 +29,7 @@ char	*strip_quotes(char *arg)
 	return (arg);
 }
 
-char	*create_arg(char *arg)
+char	*create_arg(char *arg, t_treenode *node)
 {
 	char	*temp;
 	int		arg_len;
@@ -35,6 +38,8 @@ char	*create_arg(char *arg)
 
 	arg_len = ft_strlen(arg);
 	temp = malloc(sizeof(char) * (arg_len - 1));
+	if (!temp)
+		parser_error(node);
 	i = 2;
 	j = 0;
 	while (j < arg_len - 2)
@@ -44,6 +49,5 @@ char	*create_arg(char *arg)
 		j++;
 	}
 	temp[i] = '\0';
-	// free(temp);
 	return (temp);
 }

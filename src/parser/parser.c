@@ -24,7 +24,7 @@ int	parser(t_lexer_state *lex_state, t_shell *shell)
 		printf("Syntax Error near: %s\n", curtok.current_token->data);
 		return (-1);
 	}
-	// if (shell->syntax_tree == NULL)		/* to be deleted */
+	// if (shell->syntax_tree == NULL) /* to be deleted */
 	// 	printf("syntax tree is NULL\n");
 	// else
 	// {

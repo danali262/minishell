@@ -27,7 +27,7 @@ t_treenode	*job1(t_curtok *curtok)
 	cmdNode = cmd(curtok);
 	if (cmdNode == NULL)
 		return (NULL);
-	if (!term(CHAR_PIPE, NULL, curtok))
+	if (!term(CHAR_PIPE, NULL, curtok, cmdNode))
 	{
 		delete_node(&cmdNode);
 		return (NULL);
@@ -39,6 +39,8 @@ t_treenode	*job1(t_curtok *curtok)
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
+	if (!root)
+		parser_error(root);
 	set_node_data_type(root, "|", NODE_PIPE);
 	attach_tree_branch(root, cmdNode, jobNode);
 	return (root);

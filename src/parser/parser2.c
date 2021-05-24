@@ -31,7 +31,7 @@ t_treenode	*command_line1(t_curtok *curtok)
 	jobNode = job(curtok);
 	if (jobNode == NULL)
 		return (NULL);
-	if (!term(CHAR_SEMICOLON, NULL, curtok))
+	if (!term(CHAR_SEMICOLON, NULL, curtok, jobNode))
 	{
 		delete_node(&jobNode);
 		return (NULL);
@@ -43,6 +43,8 @@ t_treenode	*command_line1(t_curtok *curtok)
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
+	if (!root)
+		parser_error(root);
 	set_node_data_type(root, ";", NODE_SEMI);
 	attach_tree_branch(root, jobNode, cmdlineNode);
 	return (root);
@@ -56,12 +58,14 @@ t_treenode	*command_line2(t_curtok *curtok)
 	jobNode = job(curtok);
 	if (jobNode == NULL)
 		return (NULL);
-	if (!term(CHAR_SEMICOLON, NULL, curtok))
+	if (!term(CHAR_SEMICOLON, NULL, curtok, jobNode))
 	{
 		delete_node(&jobNode);
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
+	if (!root)
+		parser_error(root);
 	set_node_data_type(root, ";", NODE_SEMI);
 	attach_tree_branch(root, jobNode, NULL);
 	return (root);
