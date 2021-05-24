@@ -50,13 +50,10 @@ int	handle_eot(t_shell *shell)
 	return (1);
 }
 
-// void	handle_interrupt(t_history *history, t_line *cmd_line)
-// {
-// 	
-// }
-
-// void	handle_quit(t_history *history, t_line *cmd_line)
-// {
-// 	
-// }
-
+void	handle_interrupt(t_shell *shell)
+{
+	shell->exit_code = 1;
+	clear_command_line(&shell->cmd_line);
+	ft_putstr_fd("\n", STDOUT_FILENO);
+	ft_putstr_fd(PROMPT, STDOUT_FILENO);
+}
