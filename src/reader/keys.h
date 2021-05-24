@@ -13,6 +13,7 @@
 // codes:
 # define ESC '\x1b'
 # define ENTER '\x0a'
+# define CARRIAGE_RETURN '\x0d'
 # define BACKSPACE '\x7f' // or '\x08' ????
 # define CTRL_C '\x03'
 # define CTRL_D '\x04'

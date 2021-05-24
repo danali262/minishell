@@ -23,6 +23,7 @@ int shell_event_loop(t_shell *shell)
         shell->syntax_tree = &tree;
         
         init_tree(shell->syntax_tree);
+		write(STDOUT_FILENO, "\r", 1);
         ft_putstr_fd(PROMPT, STDOUT_FILENO);
         catch_signals();
         while (shell->is_command_executed != 1)

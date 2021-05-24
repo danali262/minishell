@@ -1,11 +1,14 @@
 #include "executor.h"
 
 #include "builtins/builtins.h"
+#include "../signals/signals.h"
 
 #include "libft.h"
 
 #include <unistd.h>
 #include <sys/errno.h>
+#include <signal.h>
+#include <string.h>
 
 char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path)
 {
@@ -49,14 +52,14 @@ void	create_child_process(char **argv)
 	pid = fork();
 	if (pid < 0)
 	{
-		ft_putstr_fd("Error. Unable to create the child process.\n", STDOUT_FILENO);
+		ft_putstr_fd("Error. Unable to create the child process.\n\r", STDOUT_FILENO);
 		exit(errno);
 	}
 	else if (pid == 0)
 	{
 		if (execve(argv[0], argv, environ) == -1)
 		{
-			ft_putstr_fd("execve error.\n", STDOUT_FILENO);
+			printf("minishell: %s\n\r", strerror(errno));
 			exit(126);
 		}
 	}
@@ -64,13 +67,13 @@ void	create_child_process(char **argv)
 	{
 		int wait_return = wait(&status);
 		if (wait_return != pid)
-			ft_putstr_fd("wait error\n", STDOUT_FILENO);	
+			ft_putstr_fd("wait error\n\r", STDOUT_FILENO);	
 		if (WIFEXITED(status) > 0)
 		{
 			shell = get_shell_state();
 			shell->exit_code = WEXITSTATUS(status);
-			// printf("child exited\n"); //remove. for debug
-			// printf("exit code: %d\n", shell->exit_code); //remove. for debug
+			// printf("child exited\n\r"); //remove. for debug
+			// printf("exit code: %d\n\r", shell->exit_code); //remove. for debug
 		}
 	}
 }
@@ -99,7 +102,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 	}
 	else
 	{
-		printf("minishell: %s: command not found\n", simple_cmd_node->data);
+		printf("minishell: %s: command not found\n\r", simple_cmd_node->data);
 		shell->exit_code = 127;
 	}
 	return (1);
@@ -110,15 +113,15 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	int	builtin_result;
 
+	signal(SIGQUIT, quit_execution);
 	builtin_result = can_execute_builtin(simple_cmd_node, shell);
 	if (builtin_result == -1) //if any error happened, with e.g. memory allocation/ can it actually happen?
 	{
-		printf("builtin error\n"); //remove, set error code
+		printf("builtin error\n\r"); //remove, set error code
 		return (0);
 	}
 	else if (builtin_result == 0) //if it's not a builtin command
 	{
-		// if (!create_child_process(simple_cmd_node))
 		if (!run_cmd_executable(simple_cmd_node, shell))
 			return (0);
 	}

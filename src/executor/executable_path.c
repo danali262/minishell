@@ -62,7 +62,6 @@ char	*locate_executable_path(t_treenode *simple_cmd_node)
 		cmd_location = append_cmd_to_dir(dir_list[i], simple_cmd_node->data);
 		if (is_valid_path(cmd_location))
 		{
-			// printf("file path: %s\n", cmd_location);
 			break;
 		}
 		i++;

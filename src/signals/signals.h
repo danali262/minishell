@@ -4,5 +4,6 @@
 #include "shell_state.h"
 
 void    catch_signals(void);
+void	quit_execution(int signum);
 
 #endif
