@@ -45,7 +45,7 @@ void	create_child_process(char **argv)
 	pid_t 		pid;
 	extern char	**environ;
 	int 		status;
-
+	t_shell		*shell;
 	pid = fork();
 	if (pid < 0)
 	{
@@ -63,13 +63,14 @@ void	create_child_process(char **argv)
 	else
 	{
 		int wait_return = wait(&status);
-		// printf("wait_return: %d\n", wait_return);
-		// printf("pid of the parent process: %d\n", pid);
 		if (wait_return != pid)
 			ft_putstr_fd("wait error\n", STDOUT_FILENO);	
 		if (WIFEXITED(status) > 0)
 		{
-			printf("child exited\n"); //remove. for debug
+			shell = get_shell_state();
+			shell->exit_code = WEXITSTATUS(status);
+			// printf("child exited\n"); //remove. for debug
+			// printf("exit code: %d\n", shell->exit_code); //remove. for debug
 		}
 	}
 }
