@@ -41,10 +41,7 @@ int	copy_environ(t_envlist	**env_list)
 	while (environ[i] != NULL)
 	{
 		envar_name = get_envar_name(environ[i]);
-		if (ft_strncmp(envar_name, "_", 2) == 0)
-			envar_value = ft_strdup("env");
-		else
-			envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1); // + 1 is needed to skip the = sign
+		envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1); // + 1 is needed to skip the = sign
 		if (!envar_name || !envar_value)
 			return (ERROR);
 		envar_node = ft_env_lstnew(envar_name, envar_value);
@@ -145,6 +142,6 @@ int	create_environment(t_shell *shell)
 	// if (create_env_list(shell) == ERROR || create_export_list(shell) == ERROR)
 	if (create_env_list(shell) == ERROR)
 		return (ERROR);
-		shell->local_var_list = NULL;
+	shell->local_var_list = NULL;
 	return (SUCCESS);
 }

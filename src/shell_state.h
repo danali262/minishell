@@ -25,7 +25,7 @@ typedef struct  s_shell
     t_termcap_codes	termcap_codes;
     char            *term_buffer;
     t_envlist		*env_list;
-    t_envlist		*export_list;
+    // t_envlist		*export_list;
     t_envlist		*local_var_list;
     int				is_command_executed;
     int             exit_code;
