@@ -51,7 +51,7 @@ int init_shell(t_shell *shell)
 {
     init_terminal_data(shell);
     if (init_command_line(&shell->cmd_line) == ERROR
-            ||  create_env_var_list(shell) == ERROR)
+            ||  create_environment(shell) == ERROR)
         return (ERROR);
     init_history(&shell->history);
     shell->is_command_executed = 0;
@@ -65,7 +65,8 @@ void    free_shell_data(t_shell *shell)
     free(shell->term_buffer);
    	free_command_line(&shell->cmd_line);
 	free_history(&shell->history);
-	free_array_memory(shell->env_list);
+	// TODO:
+    // free_all_env_var_lists(3 lists);
 }
 
 int		main(void)
