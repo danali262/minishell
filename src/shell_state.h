@@ -16,12 +16,27 @@ typedef struct  s_treenode
     struct	s_treenode		*right;
 }               t_treenode;
 
+typedef struct s_redirection
+{
+	int     redirect_in;
+	int     redirect_out;
+	int		redirect_app;
+	char	*filename_in;
+	char	*filename_out;
+	char	*filename_app;
+	int		fd;
+	int		stdoutfd;
+	int		stdinfd;
+}			t_redirection;
+
+
 typedef struct  s_shell
 {
     t_treenode		*syntax_tree;
 	t_history		history;
     t_line			cmd_line;
     t_termcap_codes	termcap_codes;
+    t_redirection   *redir;
     char            *term_buffer;
     t_list          *env_list;
     int				is_command_executed;
@@ -45,7 +60,7 @@ typedef	enum
 
 int		parse_command_line(t_shell *shell);
 int		parser(t_lexer_state *lex_state, t_shell *shell);
-void    init_tree(t_treenode *syntax_tree);
+void    init_tree(t_shell *syntax_tree);
 
 t_shell *get_shell_state(void);
 

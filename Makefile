@@ -40,7 +40,10 @@ SRC = \
 	src/executor/builtins/builtins.c \
 	src/executor/builtins/echo.c \
 	src/executor/builtins/cd_pwd.c \
-	src/executor/builtins/exit.c
+	src/executor/builtins/exit.c\
+	src/redirection/check_for_redirection.c\
+	src/redirection/implement_redirection.c\
+	src/redirection/redirection_error.c
 
 
 OBJS = $(SRC:.c=.o)

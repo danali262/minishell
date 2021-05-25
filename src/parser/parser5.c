@@ -13,6 +13,7 @@ t_treenode	*simplecmd(t_curtok *curtok)
 	if (!term(TOKEN, &pathname, curtok, root))
 		return (NULL);
 	tokenlistNode = tokenlist(curtok);
+	pathname = strip_quotes(pathname, root);
 	set_node_data_type(root, pathname, NODE_PATH);
 	attach_tree_branch(root, tokenlistNode, NULL);
 	return (root);
