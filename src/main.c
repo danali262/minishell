@@ -55,7 +55,7 @@ int init_shell(t_shell *shell)
         return (ERROR);
     init_history(&shell->history);
     shell->is_command_executed = 0;
-    shell->exit_code = -1;
+    shell->exit_code = 0;
     shell->minishell_exits = false;
     return (SUCCESS);
 }
