@@ -77,7 +77,6 @@ int	execute_cd(t_treenode *simple_cmd_node, t_shell *shell)
 			free(updated_cwd);
 			return (0);
 		}
-		free(updated_cwd);
 	}
 		return (1);
 }
