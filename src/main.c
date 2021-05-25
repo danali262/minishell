@@ -4,6 +4,7 @@
 #include "parser/parser.h"
 #include "executor/executor.h"
 #include "term_cap/init_terminal_data.h"
+#include "redirection/redirection.h"
 
 t_shell *get_shell_state(void)
 {
@@ -17,12 +18,14 @@ int shell_event_loop(t_shell *shell)
     struct termios	origin_attr;
     int             parser_result;
     t_treenode      tree;
+    t_redirection   redir;
 
     while (1)
 	{
         shell->syntax_tree = &tree;
-        
-        init_tree(shell->syntax_tree);
+        shell->redir = &redir;
+
+        init_tree(shell);
 		write(STDOUT_FILENO, "\r", 1);
         ft_putstr_fd(PROMPT, STDOUT_FILENO);
         catch_signals();
@@ -37,8 +40,10 @@ int shell_event_loop(t_shell *shell)
             return (ERROR);
         else if (parser_result != 0)
         {
+            check_for_redirection(shell->syntax_tree, shell);
             execute_command_line(shell->syntax_tree, shell);
             delete_node(&shell->syntax_tree);
+            restore_stdio(shell);
         }
         if (shell->minishell_exits == true)
             return(SUCCESS);

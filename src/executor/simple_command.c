@@ -113,6 +113,28 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	int	builtin_result;
 
+	if (simple_cmd_node->type == NODE_REDIRECT_IN)
+	{
+		shell->redir->stdinfd = dup(STDIN_FILENO);
+		shell->redir->fd = open(shell->redir->filename_in, O_RDONLY);
+		// if (shell->redir->fd == -1)
+		// 	executor_error();
+		dup2(shell->redir->fd, STDIN_FILENO);	/* check if it fails */
+		close(shell->redir->fd);				/* check if it fails */
+		simple_cmd_node = simple_cmd_node->left;
+	}
+	if (simple_cmd_node->type == NODE_REDIRECT_OUT)
+	{
+		shell->redir->stdoutfd = dup(STDOUT_FILENO);
+		shell->redir->fd = open(shell->redir->filename_out, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		// if (fd == -1)
+		// 	executor_error;
+		dup2(shell->redir->fd, STDOUT_FILENO);	/* check if it fails */
+		close(shell->redir->fd);					/* check if it fails */
+		simple_cmd_node = simple_cmd_node->left;
+	}
+	if (simple_cmd_node->type == NODE_APPEND)
+		simple_cmd_node = simple_cmd_node->left;
 	signal(SIGQUIT, quit_execution);
 	builtin_result = can_execute_builtin(simple_cmd_node, shell);
 	if (builtin_result == -1) //if any error happened, with e.g. memory allocation/ can it actually happen?
