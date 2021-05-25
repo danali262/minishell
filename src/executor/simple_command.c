@@ -111,9 +111,19 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 
 int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 {
-	int	builtin_result;
+	int		builtin_result;
+	char	*command;
 
 	signal(SIGQUIT, quit_execution);
+	if (is_envar(simple_cmd_node))
+	{
+		command = replace_envar(simple_cmd_node, shell);
+		if (command != NULL)
+		{
+			free(simple_cmd_node->data);
+			simple_cmd_node->data = command;
+		}
+	}
 	builtin_result = can_execute_builtin(simple_cmd_node, shell);
 	if (builtin_result == -1) //if any error happened, with e.g. memory allocation/ can it actually happen?
 	{

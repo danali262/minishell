@@ -41,7 +41,10 @@ int	copy_environ(t_envlist	**env_list)
 	while (environ[i] != NULL)
 	{
 		envar_name = get_envar_name(environ[i]);
-		envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1); // + 1 is needed to skip the = sign
+		if (ft_strncmp(envar_name, "_", 2) == 0)
+			envar_value = ft_strdup("env");
+		else
+			envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1); // + 1 is needed to skip the = sign
 		if (!envar_name || !envar_value)
 			return (ERROR);
 		envar_node = ft_env_lstnew(envar_name, envar_value);
@@ -50,10 +53,6 @@ int	copy_environ(t_envlist	**env_list)
 		ft_env_lstadd_back(env_list, envar_node);
 		i++;
 	}
-	envar_name = get_envar_name("_");
-	envar_value = ft_strdup("/usr/bin/env");
-	envar_node = ft_env_lstnew(envar_name, envar_value);
-	ft_env_lstadd_back(env_list, envar_node);
 	return (SUCCESS);
 }
 
@@ -76,24 +75,24 @@ int	create_env_list(t_shell *shell)
 	return (SUCCESS);
 }
 
-int	create_export_list(t_shell *shell)
-{
-    t_envlist	*export_list;
+// int	create_export_list(t_shell *shell)
+// {
+//     t_envlist	*export_list;
 	
-	export_list = NULL;
-	if (copy_environ(&export_list) == ERROR)
-	 return (ERROR);
-	shell->export_list = export_list;
-// export_list printing function:
+// 	export_list = NULL;
+// 	if (copy_environ(&export_list) == ERROR)
+// 	 return (ERROR);
+// 	shell->export_list = export_list;
+// // export_list printing function:
 
-	// t_envlist *node = shell->export_list; 
-	// while (node->next != NULL)
-	// {
-	// 	printf("declare -x %s=\"%s\"\n", node->name, node->value);
-	// 	node = node->next;
-	// }
-	return (SUCCESS);
-}
+// 	// t_envlist *node = shell->export_list; 
+// 	// while (node->next != NULL)
+// 	// {
+// 	// 	printf("declare -x %s=\"%s\"\n", node->name, node->value);
+// 	// 	node = node->next;
+// 	// }
+// 	return (SUCCESS);
+// }
 
 void	update_old_pwd(char	*envar_value, t_shell *shell)
 {
@@ -117,13 +116,11 @@ void	update_old_pwd(char	*envar_value, t_shell *shell)
 int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 {
 	size_t		name_len;
-	size_t		new_value_len;
 	char		*updated_value;
 	t_envlist	*envar_node;
 
 	updated_value = NULL;
 	name_len = ft_strlen(var_name);
-	new_value_len = ft_strlen(new_value);
 	updated_value = ft_strdup(new_value);
 	if (!updated_value)
 		return (ERROR);
@@ -145,7 +142,8 @@ int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 
 int	create_environment(t_shell *shell)
 {
-	if (create_env_list(shell) == ERROR || create_export_list(shell) == ERROR)
+	// if (create_env_list(shell) == ERROR || create_export_list(shell) == ERROR)
+	if (create_env_list(shell) == ERROR)
 		return (ERROR);
 		shell->local_var_list = NULL;
 	return (SUCCESS);
