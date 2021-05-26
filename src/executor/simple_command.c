@@ -90,13 +90,6 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 	if (executable_path != NULL)
 	{
 		argv = fill_args_list(simple_cmd_node, executable_path);
-		// int i = 0;
-		// while (argv[i] != NULL)//remove the printing array function!!!!!
-		// {
-		// 	printf("%s\n", argv[i]);
-		// 	i++;
-		// }
-		// 	printf("%s\n", argv[i]);
 		create_child_process(argv);
 		free_array_memory(argv);
 		argv = NULL;
@@ -112,13 +105,23 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 
 int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 {
-	int	builtin_result;
-	int	res;
+	int		builtin_result;
+	int		res;
+	char	*command;
 
 	signal(SIGQUIT, quit_execution);
 	res = implement_redirection(simple_cmd_node, shell);
 	if (res)
-		simple_cmd_node = simple_cmd_node->left;
+		simple_cmd_node = simple_cmd_node->left;						
+	if (is_envar(simple_cmd_node))
+	{
+		command = replace_envar(simple_cmd_node, shell);
+		if (command != NULL)
+		{
+			free(simple_cmd_node->data);
+			simple_cmd_node->data = command;
+		}
+	}
 	builtin_result = can_execute_builtin(simple_cmd_node, shell);
 	if (builtin_result == -1) //if any error happened, with e.g. memory allocation/ can it actually happen?
 	{

@@ -4,6 +4,7 @@
 # include "parser/lexer/lexer.h"
 # include "command_history/history_state.h"
 # include "term_cap/termcap_codes.h"
+# include "executor/environment/environment.h"
 
 # define ERROR 1
 # define SUCCESS 0
@@ -38,7 +39,9 @@ typedef struct  s_shell
     t_termcap_codes	termcap_codes;
     t_redirection   *redir;
     char            *term_buffer;
-    char            **env_list;
+    t_envlist		*env_list;
+    // t_envlist		*export_list;
+    t_envlist		*local_var_list;
     int				is_command_executed;
     int             exit_code;
     int             minishell_exits;

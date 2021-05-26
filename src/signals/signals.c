@@ -17,12 +17,6 @@ void	termination_handler(int signum)
 		ft_putstr_fd("\n\r", STDOUT_FILENO);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 	}
-	// else if (signum == SIGQUIT)
-	// {
-	// 	shell->exit_code = 131;
-	// 	clear_command_line(&shell->cmd_line);
-	// 	ft_putstr_fd("\n\r", STDOUT_FILENO);
-	// }
 }
 
 void	quit_execution(int signum)
