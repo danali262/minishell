@@ -21,7 +21,7 @@ int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
 	}
 	else if (arg_num > 1)
 	{
-		printf("\nlogout\n-minishell: %s: too many arguments\n",
+		printf("exit\nminishell: %s: too many arguments\n",
 				simple_cmd_node->data);
 		return (ERROR);
 	}

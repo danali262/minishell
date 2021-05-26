@@ -30,7 +30,7 @@ char    *get_envar_value(char *command, t_shell *shell)
 	value = NULL;
 	while (envar_node->next != NULL)
 	{
-		if (ft_strncmp(envar_node->name, command, ft_strlen(command)) == 0)
+		if (ft_strncmp(envar_node->name, command, ft_strlen(command) + 1) == 0)
 		{
 			value = envar_node->value;
 			break ;
