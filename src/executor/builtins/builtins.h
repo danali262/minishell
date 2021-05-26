@@ -1,7 +1,9 @@
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-#include "shell_state.h"
+# include "shell_state.h"
+
+# define NOT_BUILTIN -1
 
 int	can_execute_builtin(t_treenode *syntax_tree, t_shell *shell);
 int	execute_echo(t_treenode *simple_cmd_node, t_shell *shell);

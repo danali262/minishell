@@ -44,12 +44,12 @@ char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path)
 ** WIFEXITED  valuates to nonzero if status was returned by a normally terminated child process. 
 */
 
-void	create_child_process(char **argv)
+void	create_child_process(char **argv, t_shell *shell)
 {
 	pid_t 		pid;
 	extern char	**environ;
 	int 		status;
-	t_shell		*shell;
+
 	pid = fork();
 	if (pid < 0)
 	{
@@ -71,7 +71,6 @@ void	create_child_process(char **argv)
 			ft_putstr_fd("wait error\n\r", STDOUT_FILENO);	
 		if (WIFEXITED(status) > 0)
 		{
-			shell = get_shell_state();
 			shell->exit_code = WEXITSTATUS(status);
 			// printf("child exited\n\r"); //remove. for debug
 			// printf("exit code: %d\n\r", shell->exit_code); //remove. for debug
@@ -90,7 +89,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 	if (executable_path != NULL)
 	{
 		argv = fill_args_list(simple_cmd_node, executable_path);
-		create_child_process(argv);
+		create_child_process(argv, shell);
 		free_array_memory(argv);
 		argv = NULL;
 	}
@@ -99,7 +98,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 		printf("minishell: %s: command not found\n\r", simple_cmd_node->data);
 		shell->exit_code = 127;
 	}
-	return (1);
+	return (SUCCESS);
 }
 
 
@@ -116,22 +115,16 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 	if (is_envar(simple_cmd_node))
 	{
 		command = replace_envar(simple_cmd_node, shell);
-		if (command != NULL)
-		{
-			free(simple_cmd_node->data);
+		if (command == NULL)
 			simple_cmd_node->data = command;
-		}
 	}
 	builtin_result = can_execute_builtin(simple_cmd_node, shell);
-	if (builtin_result == -1) //if any error happened, with e.g. memory allocation/ can it actually happen?
+	if (builtin_result == ERROR)
+		return (ERROR);
+	else if (builtin_result == NOT_BUILTIN)
 	{
-		printf("builtin error\n\r"); //remove, set error code
-		return (0);
+		if (run_cmd_executable(simple_cmd_node, shell) == ERROR)
+			return (ERROR);
 	}
-	else if (builtin_result == 0) //if it's not a builtin command
-	{
-		if (!run_cmd_executable(simple_cmd_node, shell))
-			return (0);
-	}
-	return (1);
+	return (SUCCESS);
 }
