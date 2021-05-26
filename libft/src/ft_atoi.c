@@ -6,7 +6,7 @@
 /*   By: osamara <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 20:22:35 by osamara       #+#    #+#                 */
-/*   Updated: 2021/04/26 09:42:50 by osamara       ########   odam.nl         */
+/*   Updated: 2021/05/26 19:22:54 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,21 @@ int	ft_printf_atoi(const char *start, int *num)
 	index = 0;
 	accumulator = 0;
 	while (start[index] == '0')
-	{
 		index++;
-	}
 	start_index = index;
 	while (start[index] >= '0' && start[index] <= '9')
 	{
 		ptr = start[index] - '0';
 		accumulator = accumulator * 10 + ptr;
-		if (accumulator > 2147483647 || index >= start_index + 10)
-		{
-			*num = 0;
-			return (0);
-		}
 		index++;
 	}
-	*num = index;
+	if (accumulator > 2147483647 || index >= start_index + 10
+		|| start[index] != '\0')
+	{
+		*num = 0;
+		return (0);
+	}
+	else
+		*num = index;
 	return ((int)accumulator);
 }
