@@ -40,7 +40,10 @@ char 	*change_directory(t_treenode *simple_cmd_node, int *cd_result)
 	arg_node = simple_cmd_node->left;
 	updated_cwd = NULL;
 	if (arg_node->data[0] == '/')
-		*cd_result = chdir(simple_cmd_node->data);
+	{
+		updated_cwd = arg_node->data;
+		*cd_result = chdir(updated_cwd);
+	}
 	else
 	{
 		updated_cwd = concat_path(getcwd(pwd_value, sizeof(pwd_value)),
