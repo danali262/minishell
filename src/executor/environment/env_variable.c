@@ -42,7 +42,7 @@ char    *get_envar_value(char *command, t_shell *shell)
 
 int	is_envar(t_treenode *arg_node)
 {
-	if (arg_node->data[0] == '$')
+	if (arg_node->data[0] == '$' && arg_node->left == NULL)
 		return (1);
 	return (0);
 }
