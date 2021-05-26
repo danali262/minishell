@@ -55,6 +55,7 @@ char    *replace_envar(t_treenode *arg_node, t_shell *shell)
 	if (arg_node->data[1] == '?')
 		value = replace_dollar_question(arg_node, shell);
 	else
-		value = get_envar_value(arg_node->data + 1, shell);	
+		value = get_envar_value(arg_node->data + 1, shell);
+	free(arg_node->data);
 	return (value);
 }

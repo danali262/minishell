@@ -24,10 +24,7 @@ int	execute_echo(t_treenode *simple_cmd_node, t_shell *shell)
 	while (arg_node != NULL)
 	{
 		if (arg_node->type == NODE_VAR)
-		{
-			free(arg_node->data);
 			arg_node->data = replace_envar(arg_node, shell);
-		}
 		ft_putstr_fd(arg_node->data, STDOUT_FILENO);
 		if (arg_node->left != NULL && arg_node->type != NODE_VAR)
 			ft_putstr_fd(" ", STDOUT_FILENO);
