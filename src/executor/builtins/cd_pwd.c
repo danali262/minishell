@@ -71,9 +71,10 @@ int	execute_cd(t_treenode *simple_cmd_node, t_shell *shell)
 				strerror(errno));
 	else
 	{
-		if (!change_env_value(shell, "PWD", updated_cwd))
+		if (change_env_value(shell, "PWD", updated_cwd) == ERROR)
 		{
 			printf("Error: unable to allocate memory.\n\r");
+			free(updated_cwd);
 			return (0);
 		}
 	}
