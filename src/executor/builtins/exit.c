@@ -23,7 +23,7 @@ int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
 	{
 		printf("\nlogout\n-minishell: %s: too many arguments\n",
 				simple_cmd_node->data);
-		return (0);
+		return (ERROR);
 	}
 	else
 	{
@@ -36,7 +36,6 @@ int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
 			shell->exit_code = 255;
 		}
 		shell->minishell_exits = true;
-		return (1);
 	}
-	return (1);
+	return (SUCCESS);
 }

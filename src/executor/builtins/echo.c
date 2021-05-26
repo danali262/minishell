@@ -33,5 +33,5 @@ int	execute_echo(t_treenode *simple_cmd_node, t_shell *shell)
 	if (!n_option)
 		ft_putstr_fd("\n\r", STDOUT_FILENO);
     shell->exit_code = 0;
-	return (1);
+	return (SUCCESS);
 }
