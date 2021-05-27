@@ -119,18 +119,3 @@ int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 	envar_node->value = updated_value;
 	return (SUCCESS);
 }
-
-int	create_environment(t_shell *shell)
-{
-	if (create_env_list(shell) == ERROR)
-		return (ERROR);
-		// env_list printing function:
-
-	// t_envlist *node = shell->env_list; 
-	// while (node->next != NULL)
-	// {
-	// 	printf("%s=%s\n", node->name, node->value);
-	// 	node = node->next;
-	// }
-	return (SUCCESS);
-}
