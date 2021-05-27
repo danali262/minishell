@@ -1,8 +1,6 @@
 #include "builtins.h"
 #include "../executor.h"
 
-#include "libft.h"
-
 int execute_env(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	t_envlist *node;
