@@ -12,15 +12,14 @@ int		run_simple_command(t_treenode *simple_cmd_node, t_shell *shell);
 /*
 ** environment:
 */ 
-int     create_environment(t_shell *shell);
-int		create_env_var_list(t_shell *shell);
-int     is_envar(t_treenode *arg_node);
-char    *replace_envar(t_treenode *arg_node, t_shell *shell);
 
-int		change_env_value(t_shell *shell, char *var_name, char *new_value);
+int	        create_env_list(t_shell *shell);
+int         is_envar(t_treenode *arg_node);
+char        *replace_envar(t_treenode *arg_node, t_shell *shell);
+int		    change_env_value(t_shell *shell, char *var_name, char *new_value);
 
 t_envlist	*ft_env_lstnew(char *name, char *value);
-void	ft_env_lstadd_back(t_envlist **lst, t_envlist *new);
+void	    ft_env_lstadd_back(t_envlist **lst, t_envlist *new);
 
 
 /*

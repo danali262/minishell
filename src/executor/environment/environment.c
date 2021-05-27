@@ -56,10 +56,20 @@ int	copy_environ(t_envlist	**env_list)
 int	create_env_list(t_shell *shell)
 {
     t_envlist	*env_list;
-	
+	t_envlist	*envar_node;
+	char		*underscore_name;
+	char		*underscore_value;
+
 	env_list = NULL;
+	envar_node = NULL;
 	if (copy_environ(&env_list) == ERROR)
 	 return (ERROR);
+	underscore_name = ft_strdup("_");
+	underscore_value = ft_strdup("/usr/bin/env");
+	envar_node = ft_env_lstnew(underscore_name, underscore_value);
+	if (!envar_node)
+		return (ERROR);
+	ft_env_lstadd_back(&env_list, envar_node);
 	shell->env_list = env_list;
 	return (SUCCESS);
 }
@@ -122,6 +132,5 @@ int	create_environment(t_shell *shell)
 	// 	printf("%s=%s\n", node->name, node->value);
 	// 	node = node->next;
 	// }
-
 	return (SUCCESS);
 }
