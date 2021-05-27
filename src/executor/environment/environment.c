@@ -18,7 +18,7 @@ char	*get_envar_name(char *env_string)
 			break ;
 		i++;
 	}
-	envar_name = malloc(sizeof(char) * i);
+	envar_name = malloc(sizeof(char) * i + 1);
 	if (!envar_name)
 		return (NULL);
 	ft_memmove(envar_name, env_string, i);
@@ -61,35 +61,8 @@ int	create_env_list(t_shell *shell)
 	if (copy_environ(&env_list) == ERROR)
 	 return (ERROR);
 	shell->env_list = env_list;
-// env_list printing function:
-
-	// t_envlist *node = shell->env_list; 
-	// while (node->next != NULL)
-	// {
-	// 	printf("%s=%s\n", node->name, node->value);
-	// 	node = node->next;
-	// }
 	return (SUCCESS);
 }
-
-// int	create_export_list(t_shell *shell)
-// {
-//     t_envlist	*export_list;
-	
-// 	export_list = NULL;
-// 	if (copy_environ(&export_list) == ERROR)
-// 	 return (ERROR);
-// 	shell->export_list = export_list;
-// // export_list printing function:
-
-// 	// t_envlist *node = shell->export_list; 
-// 	// while (node->next != NULL)
-// 	// {
-// 	// 	printf("declare -x %s=\"%s\"\n", node->name, node->value);
-// 	// 	node = node->next;
-// 	// }
-// 	return (SUCCESS);
-// }
 
 void	update_old_pwd(char	*envar_value, t_shell *shell)
 {
@@ -139,9 +112,16 @@ int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 
 int	create_environment(t_shell *shell)
 {
-	// if (create_env_list(shell) == ERROR || create_export_list(shell) == ERROR)
 	if (create_env_list(shell) == ERROR)
 		return (ERROR);
-	shell->local_var_list = NULL;
+		// env_list printing function:
+
+	// t_envlist *node = shell->env_list; 
+	// while (node->next != NULL)
+	// {
+	// 	printf("%s=%s\n", node->name, node->value);
+	// 	node = node->next;
+	// }
+
 	return (SUCCESS);
 }

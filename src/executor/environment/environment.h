@@ -4,7 +4,7 @@
 typedef struct s_envlist
 {
 	char				*name;
-	void				*value;
+	char				*value;
 	struct s_envlist	*next;
 }				t_envlist;
 
