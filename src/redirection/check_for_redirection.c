@@ -4,17 +4,29 @@ void	restore_stdio(t_shell *shell)
 {
 	if (shell->redir->redirect_in == 1)
 	{
-		free(shell->redir->filename_in);
+		if (shell->redir->filename_in)
+		{
+			free(shell->redir->filename_in);
+			shell->redir->filename_in = NULL;
+		}
 		dup2(shell->redir->stdinfd, STDIN_FILENO);
 	}
 	if (shell->redir->redirect_out == 1)
 	{
-		free(shell->redir->filename_out);
+		if (shell->redir->filename_out != NULL)
+		{
+			free(shell->redir->filename_out);
+			shell->redir->filename_out = NULL;
+		}
 		dup2(shell->redir->stdoutfd, STDOUT_FILENO);
 	}
 	if (shell->redir->redirect_app)
 	{
-		free(shell->redir->filename_app);
+		if (shell->redir->filename_app)
+		{
+			free(shell->redir->filename_app);
+			shell->redir->filename_app = NULL;
+		}
 		dup2(shell->redir->stdoutfd, STDOUT_FILENO);
 	}
 }

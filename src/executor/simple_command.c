@@ -53,6 +53,7 @@ void	create_child_process(char **argv, t_shell *shell)
 	pid = fork();
 	if (pid < 0)
 	{
+		restore_stdio(shell);
 		ft_putstr_fd("Error. Unable to create the child process.\n\r", STDOUT_FILENO);
 		exit(errno);
 	}
@@ -68,7 +69,10 @@ void	create_child_process(char **argv, t_shell *shell)
 	{
 		int wait_return = wait(&status);
 		if (wait_return != pid)
+		{
+			restore_stdio(shell);
 			ft_putstr_fd("wait error\n\r", STDOUT_FILENO);	
+		}
 		if (WIFEXITED(status) > 0)
 		{
 			shell->exit_code = WEXITSTATUS(status);
@@ -95,6 +99,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 	}
 	else
 	{
+		restore_stdio(shell);
 		printf("minishell: %s: command not found\n\r", simple_cmd_node->data);
 		shell->exit_code = 127;
 	}
