@@ -51,5 +51,6 @@ int	parse_command_line(t_shell *shell)
 	// print_tokens(lex_state.tokens_list);        /* to be deleted */
 	// printf("number of tokens is %d\n", lex_state.tokens_nbr);
 	parser(&lex_state, shell);
+	lexer_destroy(&lex_state);
 	return (1);
 }

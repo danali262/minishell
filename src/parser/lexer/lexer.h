@@ -74,5 +74,7 @@ t_token	*process_dquote_state(t_lexer_state *lex_state, t_token *token,
 			t_counters *count);
 t_token	*process_quote_state(t_lexer_state *lex_state,
 			t_token *token, t_counters *count);
+void	lexer_destroy(t_lexer_state *lex_state);
+
 
 #endif

@@ -19,7 +19,6 @@ t_token	*process_others(t_lexer_state *lex_state, t_token *token, t_counters
 t_token	*new_token(t_lexer_state *lex_state, t_token *token, t_counters *count)
 {
 	token->data[0] = lex_state->chtype;
-	token->data[1] = 0;
 	token->type = lex_state->chtype;
 	token->next = malloc(sizeof(t_token));
 	if (!token->next)
