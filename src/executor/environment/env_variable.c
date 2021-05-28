@@ -24,7 +24,7 @@ char    *replace_dollar_question(t_treenode *arg_node, t_shell *shell)
 char    *get_envar_value(char *command, t_shell *shell)
 {
 	t_envlist	*envar_node;
-	char	*value;
+	char		*value;
 
 	envar_node = shell->env_list;
 	value = NULL;
@@ -32,7 +32,7 @@ char    *get_envar_value(char *command, t_shell *shell)
 	{
 		if (ft_strncmp(envar_node->name, command, ft_strlen(command) + 1) == 0)
 		{
-			value = envar_node->value;
+			value = ft_strdup(envar_node->value);
 			break ;
 		}
 		envar_node = envar_node->next;

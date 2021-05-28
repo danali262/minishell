@@ -56,7 +56,7 @@ int init_shell(t_shell *shell)
 {
     init_terminal_data(shell);
     if (init_command_line(&shell->cmd_line) == ERROR
-            ||  create_environment(shell) == ERROR)
+            ||  create_env_list(shell) == ERROR)
         return (ERROR);
     init_history(&shell->history);
     shell->is_command_executed = 0;

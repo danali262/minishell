@@ -43,6 +43,8 @@ SRC = \
 	src/executor/builtins/echo.c \
 	src/executor/builtins/cd_pwd.c \
 	src/executor/builtins/exit.c\
+	src/executor/builtins/env.c\
+	src/executor/builtins/export_unset.c\
 	src/redirection/check_for_redirection.c\
 	src/redirection/implement_redirection.c\
 	src/redirection/redirection_error.c
