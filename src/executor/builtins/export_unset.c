@@ -37,7 +37,7 @@ int execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 
 	value_start = NULL;
 	arg_node = simple_cmd_node->left;
-	if (arg_node->data != NULL)
+	if (arg_node != NULL)
     {
 		envar_name = set_envar_name(arg_node->data);
 		name_len = ft_strlen(envar_name);
