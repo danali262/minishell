@@ -3,84 +3,53 @@
 
 #include "libft.h"
 
-#include <stdbool.h>
-
-char	*set_envar_name(char *argument)
+int	update_env_list(t_shell *shell, char *envar_name, char *value_start)
 {
-	char	*name;
-	int		i;
-
-	name = NULL;
-	i = 0;
-	while (argument[i] != '\0')
-	{
-		if (argument[i] == '=')
-		{
-			if (i != 0)
-			{
-				name = malloc(sizeof(char) * i + 1);
-				if (!name)
-					return (NULL);
-				ft_memmove(name, argument, i);
-				argument[i] = '\0';
-			}
-			else
-			{
-				printf("minishell: \'%s\': not a valid identifier\n\r",
-						argument);
-				break ;
-			}
-		}
-		i++;
-	}
-	return (name);
-}
-
-int	has_alpha_char(char *name, char *argument)
-{
-	int i;
-
-	i = 0;
-	while (name[i] != '\0')
-	{
-		if (ft_isalpha(name[i]))
-			return (true);
-		i++;
-	}
-	printf("minishell: \'%s\': not a valid identifier\n\r", argument);
-	return (false);
-}
-
-int	parse_envar_argument(char *argument)
-{
-	char	*envar_name;
-	size_t	name_len;
+	int		change_value_res;
 	char	*envar_value;
 
-	envar_name = set_envar_name(argument);
-	name_len = ft_strlen(envar_name);
-	envar_value = NULL;
-	if (envar_name == NULL || !has_alpha_char(envar_name, argument))
-		return (ERROR);
-	if (ft_strncmp(envar_name, argument, name_len != 0))
-		envar_value = ft_strtrim(argument + name_len + 1, "\"\'");
-	if (!envar_value)
-		return (ERROR);
-	printf("name: %s\n", envar_name);
-	printf("value: %s\n", envar_value);
+	change_value_res = change_env_value(shell, envar_name, value_start);
+	if (change_value_res == ERROR)
+			return (ERROR);
+	else if (change_value_res == NOT_IN_ENVLIST)
+	{
+		envar_value = ft_strtrim(value_start, "'\"");
+		if (envar_value == NULL)
+			return (ERROR);
+		add_to_env_list(envar_name, envar_value, &(shell->env_list));
+	}
+// 
+// 		t_envlist *node = shell->env_list; 
+// 		while (node != NULL)
+// 		{
+// 			printf("%s=%s\n", node->name, node->value);
+// 			node = node->next;
+// 		}
 	return (SUCCESS);
 }
 
 int execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 {
     t_treenode	*arg_node;
+	char		*envar_name;
+	char		*value_start;
+	size_t		name_len;
 
+	value_start = NULL;
 	arg_node = simple_cmd_node->left;
-    if (arg_node->data != NULL)
+	if (arg_node->data != NULL)
     {
-		if (parse_envar_argument(arg_node->data) == ERROR)
+		envar_name = set_envar_name(arg_node->data);
+		name_len = ft_strlen(envar_name);
+		if (envar_name == NULL)
 			return (ERROR);
-    }
+		if (ft_strncmp(envar_name, arg_node->data, name_len + 1) != 0)
+		{
+			value_start = arg_node->data + name_len + 1;
+			if (update_env_list(shell, envar_name, value_start) == ERROR)
+				return (ERROR);
+		}
+	}
 	else
 		execute_env(simple_cmd_node, shell);
     return (SUCCESS);
