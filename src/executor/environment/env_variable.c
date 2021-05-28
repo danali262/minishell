@@ -24,7 +24,7 @@ char    *replace_dollar_question(t_treenode *arg_node, t_shell *shell)
 char    *get_envar_value(char *command, t_shell *shell)
 {
 	t_envlist	*envar_node;
-	char	*value;
+	char		*value;
 
 	envar_node = shell->env_list;
 	value = NULL;
