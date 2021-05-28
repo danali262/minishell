@@ -5,7 +5,7 @@
 # include <limits.h>
 
 # define BUF_SIZE ARG_MAX
-# define PROMPT "minishell-0.61$ "// temp prompt to differentiate from original bash
+# define PROMPT "minishell-0.7$ "// temp prompt to differentiate from original bash
 // # define PROMPT "bash-3.2$ "
 
 typedef struct s_line
