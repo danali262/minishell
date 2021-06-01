@@ -44,7 +44,7 @@ int	read_command_line(int fd, t_shell *shell)
 void	capture_keystrokes(int fd, char ch, t_shell *shell)
 {
 		char	keycode;
-		char	sequence[3];
+		char	sequence[2];
 
 		keycode = 0;
 		if (ch == ESC)

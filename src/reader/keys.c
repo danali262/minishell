@@ -33,7 +33,7 @@ char	get_keycode(int fd, char *sequence)
 {
 	if (read(fd, sequence, 1) == -1 || read(fd, sequence + 1, 1) == -1)
 		return (0);
-	if (sequence[0] == '[')
+	if (sequence[0] == '[' || sequence[0] == 'O')
 	{
 		if (sequence[1] >= '0' && sequence[1] <= '9')
 		{
