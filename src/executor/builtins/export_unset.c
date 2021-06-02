@@ -62,3 +62,34 @@ int execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 	}
     return (SUCCESS);
 }
+
+int execute_unset(t_treenode *simple_cmd_node, t_shell *shell)
+{
+	t_treenode	*arg_node;
+	t_envlist	*envar_node;
+	t_envlist	*node_to_delete;
+	t_envlist	*temp;
+
+	if (simple_cmd_node->left != NULL)
+	{
+		arg_node = simple_cmd_node->left;
+		while (arg_node != NULL)
+		{
+			envar_node = shell->env_list;
+			while (envar_node->next != NULL)
+			{
+				if (ft_strncmp(envar_node->next->name, arg_node->data,
+						ft_strlen(arg_node->data) + 1) == 0)
+				{
+					node_to_delete = envar_node->next;
+					temp = node_to_delete->next;
+					ft_env_lstdelone(&node_to_delete);
+					envar_node->next = temp;
+				}
+				envar_node = envar_node->next;
+			}
+			arg_node = arg_node->left;
+		}
+	}
+    return (SUCCESS);
+}

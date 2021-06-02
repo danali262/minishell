@@ -58,3 +58,16 @@ void	ft_env_lstadd_before_last_node(t_envlist **lst, t_envlist *new)
 		ptr->next = new;
 	}
 }
+
+
+void	ft_env_lstdelone(t_envlist **lst)
+{
+	if (*lst == NULL)
+		return ;
+	free((*lst)->name);
+	(*lst)->name = NULL;
+	free((*lst)->value);
+	(*lst)->value = NULL;
+	free(*lst);
+	*lst = NULL;
+}
