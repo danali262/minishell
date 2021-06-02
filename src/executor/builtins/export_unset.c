@@ -17,16 +17,13 @@ int	update_env_list(t_shell *shell, char *envar_name, char *value_start)
 		envar_value = ft_strtrim(value_start, "'\"");
 		if (envar_value == NULL)
 			return (ERROR);
-		// add_to_env_list(envar_name, envar_value, &(shell->env_list));
-	
 		envar_node = ft_env_lstnew(envar_name, envar_value);
 		if (!envar_node)
 			return (ERROR);
 		ft_env_lstadd_before_last_node(&(shell->env_list), envar_node);
 	}
 	
-	// 
-// 		t_envlist *node = shell->env_list; 
+	// 		t_envlist *node = shell->env_list; 
 // 		while (node != NULL)
 // 		{
 // 			printf("%s=%s\n", node->name, node->value);
@@ -43,21 +40,25 @@ int execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 	size_t		name_len;
 
 	value_start = NULL;
-	arg_node = simple_cmd_node->left;
-	if (arg_node != NULL)
-    {
-		envar_name = get_envar_name(arg_node->data);
-		name_len = ft_strlen(envar_name);
-		if (envar_name == NULL)
-			return (ERROR);
-		if (ft_strncmp(envar_name, arg_node->data, name_len + 1) != 0)
+	if (simple_cmd_node->left == NULL)
+		execute_env(simple_cmd_node, shell);
+	else
+	{
+		arg_node = simple_cmd_node->left;
+		while (arg_node != NULL)
 		{
-			value_start = arg_node->data + name_len + 1;
-			if (update_env_list(shell, envar_name, value_start) == ERROR)
+			envar_name = get_envar_name(arg_node->data);
+			if (envar_name == NULL)
 				return (ERROR);
+			name_len = ft_strlen(envar_name);
+			if (ft_strncmp(envar_name, arg_node->data, name_len + 1) != 0)
+			{
+				value_start = arg_node->data + name_len + 1;
+				if (update_env_list(shell, envar_name, value_start) == ERROR)
+					return (ERROR);
+			}
+			arg_node = arg_node->left;
 		}
 	}
-	else
-		execute_env(simple_cmd_node, shell);
     return (SUCCESS);
 }
