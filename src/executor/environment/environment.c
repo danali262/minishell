@@ -20,7 +20,7 @@ int	has_alpha_char(char *name, int	length)
 	return (false);
 }
 
-char	*set_envar_name(char *argument)
+char	*get_envar_name(char *argument)
 {
 	char	*name;
 	int		i;
@@ -74,7 +74,7 @@ int	create_env_list(t_shell *shell)
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		envar_name = set_envar_name(environ[i]);
+		envar_name = get_envar_name(environ[i]);
 		if (ft_strncmp(envar_name, "_", 2) == 0)
 			envar_value = ft_strdup("");
 		else
