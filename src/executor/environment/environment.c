@@ -20,7 +20,7 @@ int	has_alpha_char(char *name, int	length)
 	return (false);
 }
 
-char	*set_envar_name(char *argument)
+char	*get_envar_name(char *argument)
 {
 	char	*name;
 	int		i;
@@ -58,45 +58,32 @@ int add_to_env_list(char *envar_name, char *envar_value, t_envlist	**env_list)
 	return (SUCCESS);
 }
 
-t_envlist	*copy_environ()
+/*
+**  + 1 in envar_value is needed to skip the '=' sign
+*/
+
+int	create_env_list(t_shell *shell)
 {
 	extern char		**environ;
-	t_envlist		*env_list;
 	char			*envar_name;
 	char			*envar_value;
 	int				i;
 
-	env_list = NULL;
 	envar_name = NULL;
 	envar_value = NULL;
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		envar_name = set_envar_name(environ[i]);
-		envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1); // + 1 is needed to skip the = sign
+		envar_name = get_envar_name(environ[i]);
+		if (ft_strncmp(envar_name, "_", 2) == 0)
+			envar_value = ft_strdup("");
+		else
+			envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
 		if (!envar_name || !envar_value)
-			return (NULL);
-		add_to_env_list(envar_name, envar_value, &env_list);
+			return (ERROR);
+		add_to_env_list(envar_name, envar_value, &shell->env_list);
 		i++;
 	}
-	return (env_list);
-}
-
-int	create_env_list(t_shell *shell)
-{
-    // t_envlist	*env_list;
-	// t_envlist	*envar_node;
-	// char		*underscore_name;
-	// char		*underscore_value;
-
-	// env_list = NULL;
-	// envar_node = NULL;
-	shell->env_list = copy_environ();
-	if (shell->env_list == NULL)
-	 return (ERROR);
-	// underscore_name = ft_strdup("_");
-	// underscore_value = ft_strdup("env");
-	// add_to_env_list(underscore_name, underscore_value, &env_list);
 	return (SUCCESS);
 }
 
