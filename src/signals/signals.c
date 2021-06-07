@@ -1,4 +1,5 @@
 #include "signals.h"
+#include "../shell_state.h"
 #include "../reader/command_line_state.h"
 #include "../reader/read_command_line.h"
 
@@ -7,13 +8,11 @@
 
 void	termination_handler(int signum)
 {
-	t_shell *shell;
-
-	shell = get_shell_state();
 	if (signum == SIGINT)
 	{
-		shell->exit_code = 1;
-		clear_command_line(&shell->cmd_line);
+		shell.exit_code = 1;
+		shell.is_command_executed = 1;
+		clear_command_line(&shell.cmd_line);
 		ft_putstr_fd("\n\r", STDOUT_FILENO);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 	}
@@ -21,17 +20,13 @@ void	termination_handler(int signum)
 
 void	quit_execution(int signum)
 {
-		t_shell *shell;
-
-	shell = get_shell_state();
 	if (signum == SIGQUIT)
 	{
-		shell->exit_code = 131;
-		clear_command_line(&shell->cmd_line);
+		shell.exit_code = 131;
+		clear_command_line(&shell.cmd_line);
 		ft_putstr_fd("Quit: 3\n\r", STDOUT_FILENO);
 	}
 }
-
 
 void	catch_signals(void)
 {

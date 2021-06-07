@@ -73,7 +73,7 @@ void	create_child_process(char **argv, t_shell *shell)
 			restore_stdio(shell);
 			ft_putstr_fd("wait error\n\r", STDOUT_FILENO);	
 		}
-		if (WIFEXITED(status) > 0)
+		if (WIFEXITED(status))
 		{
 			shell->exit_code = WEXITSTATUS(status);
 			// printf("child exited\n\r"); //remove. for debug

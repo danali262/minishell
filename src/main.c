@@ -6,13 +6,6 @@
 #include "term_cap/init_terminal_data.h"
 #include "redirection/redirection.h"
 
-t_shell *get_shell_state(void)
-{
-    static t_shell shell;
-
-    return (&shell);
-}
-
 int shell_event_loop(t_shell *shell)
 {
     struct termios	origin_attr;
@@ -71,14 +64,12 @@ void    free_shell_data(t_shell *shell)
    	free_command_line(&shell->cmd_line);
 	free_history(&shell->history);
 	// TODO:
-    // free_all_env_var_lists(3 lists);
+    // free_env_var_list();
 }
 
 int		main(void)
 // int     main(int ac, char **av, char **envp)
 {
-	t_shell			shell;
-    
     init_shell(&shell);
     if (shell_event_loop(&shell) == ERROR)
     {
