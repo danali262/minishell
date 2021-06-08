@@ -7,6 +7,8 @@
 #include "term_cap/init_terminal_data.h"
 #include "redirection/redirection.h"
 
+t_shell *g_shell = NULL;
+
 int shell_event_loop(t_shell *shell)
 {
     struct termios	origin_attr;
@@ -70,12 +72,18 @@ void    free_shell_data(t_shell *shell)
 int		main(void)
 // int     main(int ac, char **av, char **envp)
 {
+    t_shell shell;
+
+    g_shell = &shell;
+    ft_bzero(&shell, sizeof(t_shell));
     init_shell(&shell);
     if (shell_event_loop(&shell) == ERROR)
     {
+        g_shell = NULL;
         free_shell_data(&shell);
         return (1);
     }
+    g_shell = NULL;
     free_shell_data(&shell);
     return (0);
 }
