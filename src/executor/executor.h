@@ -27,7 +27,7 @@ t_envlist	*ft_env_lstnew(char *name, char *value);
 void	    ft_env_lstadd_back(t_envlist **lst, t_envlist *new);
 void	ft_env_lstadd_before_last_node(t_envlist **lst, t_envlist *new);
 void	ft_env_lstdelone(t_envlist **lst);
-
+void	free_env_list(t_envlist *lst, void (*f)(t_envlist **));
 
 /*
 ** utilities:

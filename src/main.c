@@ -3,6 +3,7 @@
 #include "reader/read_command_line.h"
 #include "parser/parser.h"
 #include "executor/executor.h"
+#include "executor/environment/environment.h"
 #include "term_cap/init_terminal_data.h"
 #include "redirection/redirection.h"
 
@@ -63,8 +64,7 @@ void    free_shell_data(t_shell *shell)
     free(shell->term_buffer);
    	free_command_line(&shell->cmd_line);
 	free_history(&shell->history);
-	// TODO:
-    // free_env_var_list();
+    free_env_list(shell->env_list, ft_env_lstdelone);
 }
 
 int		main(void)
