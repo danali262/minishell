@@ -74,16 +74,18 @@ void	ft_env_lstdelone(t_envlist **lst)
 
 void	free_env_list(t_envlist *lst, void (*f)(t_envlist **))
 {
-	t_envlist	*current;
+    t_envlist    *current;
+    t_envlist   *temp;
 
-	if (lst == NULL)
-	{
-		return ;
-	}
-	current = lst;
-	while (current != NULL)
-	{
-		f(&current);
-		current = current->next;
-	}
+    if (lst == NULL)
+    {
+        return ;
+    }
+    current = lst;
+    while (current != NULL)
+    {
+        temp = current->next;
+        f(&current);
+        current = temp;
+    }
 }
