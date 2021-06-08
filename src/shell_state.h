@@ -42,8 +42,10 @@ typedef struct  s_shell
     t_envlist		*env_list;
     int				is_command_executed;
     int             exit_code;
-    int             minishell_exits;
+	int             minishell_exits;
 }               t_shell;
+
+t_shell shell;
 
 typedef	enum
 {
@@ -62,7 +64,5 @@ typedef	enum
 int		parse_command_line(t_shell *shell);
 int		parser(t_lexer_state *lex_state, t_shell *shell);
 void    init_tree(t_shell *syntax_tree);
-
-t_shell *get_shell_state(void);
 
 #endif
