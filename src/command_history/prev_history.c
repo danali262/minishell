@@ -3,7 +3,8 @@
 #include "libft.h"
 
 /*
-** ft_strncmp comparing if what is saved in cmd buffer is the same as in cmd_line now
+** ft_strncmp comparing if what is saved in cmd buffer is the same
+** as in cmd_line now
 */
 
 int	static	can_get_prev_history(t_history *history, t_line *cmd_line)

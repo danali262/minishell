@@ -1,6 +1,6 @@
 #include "command_line_state.h"
 #include "read_command_line.h"
-#include "handle_keys.h"
+// #include "handle_keys.h"
 
 #include "libft.h"
 
@@ -32,7 +32,7 @@ void	clear_command_line(t_line *cmd_line)
 void	free_command_line(t_line *cmd_line)
 {
 	free(cmd_line->buf);
-    cmd_line->buf = NULL;
+	cmd_line->buf = NULL;
 	cmd_line->size = 0;
 }
 
