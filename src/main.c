@@ -20,7 +20,6 @@ int shell_event_loop(t_shell *shell)
 	{
         shell->syntax_tree = &tree;
         shell->redir = &redir;
-
         init_tree(shell);
 		write(STDOUT_FILENO, "\r", 1);
         ft_putstr_fd(PROMPT, STDOUT_FILENO);
@@ -69,11 +68,16 @@ void    free_shell_data(t_shell *shell)
     free_env_list(shell->env_list, ft_env_lstdelone);
 }
 
-int		main(void)
-// int     main(int ac, char **av, char **envp)
+int     main(int argc, char **argv)
 {
     t_shell shell;
 
+    (void)argv;
+    if (argc > 1)
+    {
+        printf("Error.Too many arguments.\n");
+        return (1);   
+    }
     g_shell = &shell;
     ft_bzero(&shell, sizeof(t_shell));
     init_shell(&shell);
