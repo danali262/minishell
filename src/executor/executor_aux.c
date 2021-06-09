@@ -12,7 +12,6 @@ char	*concat_path(char *left, char *right)
 
 	left_len = ft_strlen(left);
 	right_len = ft_strlen(right);
-
 	path = malloc(sizeof(char) * (left_len + right_len) + 2);
 	if (!path)
 	{
@@ -22,6 +21,6 @@ char	*concat_path(char *left, char *right)
 	ft_memmove(path, left, left_len);
 	path[left_len] = '/';
 	ft_memmove(path + left_len + 1, right, right_len);
-	path[left_len + right_len + 2] = '\0';
+	path[left_len + right_len + 1] = '\0';
 	return (path);
 }

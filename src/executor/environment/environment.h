@@ -1,5 +1,5 @@
-#ifndef ENVIRONMENT
-# define ENVIRONMENT
+#ifndef ENVIRONMENT_H
+# define ENVIRONMENT_H
 
 # define NOT_IN_ENVLIST -1
 

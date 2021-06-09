@@ -1,91 +1,56 @@
 #include "environment.h"
+#include "../executor.h"
 
 #include "libft.h"
 
 #include <stdlib.h>
+#include <stdbool.h>
 
-t_envlist	*ft_env_lstnew(char *name, char *value)
+int	has_alpha_char(char *name, int	length)
 {
-	t_envlist	*element;
+	int	i;
 
-	element = (t_envlist*)malloc(sizeof(t_envlist));
-	if (element == NULL)
+	i = 0;
+	while (name[i] > length)
 	{
-		return (NULL);
+		if (ft_isalpha(name[i]))
+			return (true);
+		i++;
 	}
-	element->name = name;
-	element->value = value;
-	element->next = NULL;
-	return (element);
+	return (false);
 }
 
-void	ft_env_lstadd_back(t_envlist **lst, t_envlist *new)
+void	update_old_pwd(char	*envar_value, t_shell *shell)
 {
-	t_envlist	*ptr;
+	t_envlist	*envar_node;
+	size_t		name_len;
 
-	if (*lst == NULL)
-		*lst = new;
-	else
+	name_len = ft_strlen("OLD_PWD");
+	envar_node = shell->env_list;
+	while (envar_node != NULL)
 	{
-		ptr = *lst;
-		while (ptr->next != NULL)
+		if (ft_strncmp(envar_node->name, "OLD_PWD", name_len + 1) == 0)
 		{
-			ptr = ptr->next;
+			free(envar_node->value);
+			envar_node->value = envar_value;
+			break ;
 		}
-		ptr->next = new;
+		envar_node = envar_node->next;
 	}
 }
 
-/*
-** need to add the new environment variable to the last but one position
-** as the last one in env is reserved for "_"
-*/
-
-void	ft_env_lstadd_before_last_node(t_envlist **lst, t_envlist *new)
+t_envlist	*get_node_to_change(t_shell *shell, char *var_name)
 {
-	t_envlist	*ptr;
+	size_t		name_len;
+	t_envlist	*envar_node;
 
-	if (*lst == NULL)
-		*lst = new;
-	else
+	name_len = ft_strlen(var_name);
+	envar_node = shell->env_list;
+	while (envar_node != NULL)
 	{
-		ptr = *lst;
-		while (ft_strncmp(ptr->next->name, "_", 2) != 0)
-		{
-			ptr = ptr->next;
-		}
-		new->next = ptr->next;
-		ptr->next = new;
+		if (ft_strncmp(envar_node->name, var_name, name_len + 1) == 0)
+			return (envar_node);
+		envar_node = envar_node->next;
 	}
-}
-
-
-void	ft_env_lstdelone(t_envlist **lst)
-{
-	if (*lst == NULL)
-		return ;
-	free((*lst)->name);
-	(*lst)->name = NULL;
-	free((*lst)->value);
-	(*lst)->value = NULL;
-	free(*lst);
-	*lst = NULL;
-}
-
-void	free_env_list(t_envlist *lst, void (*f)(t_envlist **))
-{
-    t_envlist    *current;
-    t_envlist   *temp;
-
-    if (lst == NULL)
-    {
-        return ;
-    }
-    current = lst;
-    while (current != NULL)
-    {
-        temp = current->next;
-        f(&current);
-        current = temp;
-    }
+	return (NULL);
 }

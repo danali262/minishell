@@ -2,26 +2,33 @@
 
 #include "libft.h"
 
-char    *replace_dollar_question(t_treenode *arg_node, t_shell *shell)
+char	*get_envar_name(char *argument)
 {
-	char	*value;
-	char	*exit_code_str;
-	size_t	data_len;
+	char	*name;
+	int		i;
 
-	value = NULL;
-	exit_code_str = ft_itoa(shell->exit_code);
-	data_len = ft_strlen(arg_node->data);
-	if (data_len == 2)
-		value = exit_code_str;
+	name = NULL;
+	i = 0;
+	while (argument[i] != '\0')
+	{
+		if (argument[i] == '=')
+			break ;
+		i++;
+	}
+	if (i == 0 || !has_alpha_char(argument, i))
+		printf("minishell: \'%s\': not a valid identifier\n\r", argument);
 	else
 	{
-		value = ft_strjoin(exit_code_str, arg_node->data + 2);
-		free(exit_code_str);
+		name = malloc(sizeof(char) * i + 1);
+		if (!name)
+			return (NULL);
+		ft_memmove(name, argument, i);
+		name[i] = '\0';
 	}
-	return (value);
+	return (name);
 }
 
-char    *get_envar_value(char *command, t_shell *shell)
+char	*get_envar_value(char *command, t_shell *shell)
 {
 	t_envlist	*envar_node;
 	char		*value;
@@ -40,6 +47,33 @@ char    *get_envar_value(char *command, t_shell *shell)
 	return (value);
 }
 
+int	change_env_value(t_shell *shell, char *var_name, char *new_value)
+{
+	char		*updated_value;
+	t_envlist	*envar_node;
+
+	updated_value = NULL;
+	envar_node = get_node_to_change(shell, var_name);
+	if (envar_node == NULL)
+		return (NOT_IN_ENVLIST);
+	else
+	{
+		if (ft_strncmp(envar_node->value, new_value,
+				ft_strlen(envar_node->value)) != 0)
+		{
+			updated_value = ft_strtrim(new_value, "'\"");
+			if (!updated_value)
+				return (ERROR);
+			if (ft_strncmp(var_name, "PWD", 4) == 0)
+				update_old_pwd(envar_node->value, shell);
+			else
+				free(envar_node->value);
+			envar_node->value = updated_value;
+		}
+	}
+	return (SUCCESS);
+}
+
 int	is_envar(t_treenode *arg_node)
 {
 	if (arg_node->data[0] == '$' && arg_node->left == NULL)
@@ -47,7 +81,7 @@ int	is_envar(t_treenode *arg_node)
 	return (0);
 }
 
-char    *replace_envar(t_treenode *arg_node, t_shell *shell)
+char	*replace_name_with_value(t_treenode *arg_node, t_shell *shell)
 {
 	char	*value;
 

@@ -23,23 +23,24 @@ static char	*append_cmd_to_dir(char *directory, char *cmd_alias)
 	return (cmd_path);
 }
 
+/*
+** stat() retrieves information about the file, in the buffer
+**     pointed to by buffer 
+*/
+
 static int	is_valid_path(char *cmd_location)
 {
-	struct stat buffer;
+	struct stat	buffer;
 
-	int exist = stat(cmd_location, &buffer);
-    if(exist == 0)
-	{
+	if (stat(cmd_location, &buffer) == 0)
 		return (1);
-	}
 	return (0);
 }
 
-static char	**get_directories_list()
+static char	**get_directories_list(void)
 {
 	int			j;
 	char		*path_str;
-
 
 	path_str = getenv("PATH");
 	j = 0;
@@ -50,20 +51,18 @@ static char	**get_directories_list()
 
 char	*locate_executable_path(t_treenode *simple_cmd_node)
 {
-	char 		**dir_list;
-	char		*cmd_location;
-	int			i;
+	char	**dir_list;
+	char	*cmd_location;
+	int		i;
 
-    dir_list = get_directories_list();
+	dir_list = get_directories_list();
 	i = 0;
 	cmd_location = NULL;
 	while (dir_list[i] != NULL)
 	{
 		cmd_location = append_cmd_to_dir(dir_list[i], simple_cmd_node->data);
 		if (is_valid_path(cmd_location))
-		{
-			break;
-		}
+			break ;
 		i++;
 		cmd_location = NULL;
 	}
@@ -71,4 +70,3 @@ char	*locate_executable_path(t_treenode *simple_cmd_node)
 	dir_list = NULL;
 	return (cmd_location);
 }
-

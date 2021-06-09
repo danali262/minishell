@@ -13,15 +13,27 @@ int		run_simple_command(t_treenode *simple_cmd_node, t_shell *shell);
 ** environment:
 */ 
 
-int	        create_env_list(t_shell *shell);
 int         is_envar(t_treenode *arg_node);
-char        *replace_envar(t_treenode *arg_node, t_shell *shell);
+char        *replace_name_with_value(t_treenode *arg_node, t_shell *shell);
+char		*replace_dollar_question(t_treenode *arg_node, t_shell *shell);
 int		    change_env_value(t_shell *shell, char *var_name, char *new_value);
 char		*get_envar_name(char *argument);
-t_envlist	*get_node_to_change(t_shell *shell, char *var_name);
+
+/*
+**	environment list:
+*/
+
+int	        create_env_list(t_shell *shell);
 int			add_to_env_list(char *envar_name, char *envar_value,
 					t_envlist **env_list);
+int	update_env_list(t_shell *shell, char *envar_name, char *value_start);
 
+/*
+** environment aux:
+*/ 
+int			has_alpha_char(char *name, int	length);
+void		update_old_pwd(char	*envar_value, t_shell *shell);
+t_envlist	*get_node_to_change(t_shell *shell, char *var_name);
 
 t_envlist	*ft_env_lstnew(char *name, char *value);
 void	    ft_env_lstadd_back(t_envlist **lst, t_envlist *new);
