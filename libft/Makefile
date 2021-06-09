@@ -14,6 +14,7 @@ SRC = src/ft_memset.c \
 	src/ft_strchr.c \
 	src/ft_strrchr.c \
 	src/ft_strnstr.c \
+	src/ft_strcmp.c \
 	src/ft_strncmp.c \
 	src/ft_atoi.c \
 	src/ft_isalpha.c \
