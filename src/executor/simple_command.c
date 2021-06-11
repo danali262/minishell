@@ -11,7 +11,7 @@
 #include <signal.h>
 #include <string.h>
 
-char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path)
+char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path, t_shell *shell)
 {
 	t_treenode	*arg_node;
 	int			arg_counter;
@@ -32,7 +32,10 @@ char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path)
 	arg_node = simple_cmd_node->left;
 	while (arg_node != NULL)
 	{
-		arguments[i] = ft_strdup(arg_node->data);
+		if (ft_strchr(arg_node->data, '$') == NULL)
+			arguments[i] = ft_strdup(arg_node->data);
+		else
+			arguments[i] = handle_argument_with_envvars(arg_node, shell);
 		i++;
 		arg_node = arg_node->left;
 	}
@@ -92,7 +95,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 		executable_path = locate_executable_path(simple_cmd_node);
 	if (executable_path != NULL)
 	{
-		argv = fill_args_list(simple_cmd_node, executable_path);
+		argv = fill_args_list(simple_cmd_node, executable_path, shell);
 		create_child_process(argv, shell);
 		free_array_memory(argv);
 		argv = NULL;
@@ -106,7 +109,6 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 	return (SUCCESS);
 }
 
-
 int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	int		builtin_result;
@@ -119,7 +121,7 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 		simple_cmd_node = simple_cmd_node->left;						
 	if (is_envar(simple_cmd_node))
 	{
-		command = replace_name_with_value(simple_cmd_node, shell);
+		command = replace_name_with_value(simple_cmd_node->data, shell, NULL, false);
 		if (command != NULL)
 			simple_cmd_node->data = command;
 	}
