@@ -5,19 +5,26 @@
 #include <fcntl.h>
 #include "environment/environment.h"
 
+#include <stdbool.h>
+
 void	execute_command_line(t_treenode *top_node, t_shell *shell);
 char	*locate_executable_path(t_treenode *simple_cmd_node);
 int		run_simple_command(t_treenode *simple_cmd_node, t_shell *shell);
 
 /*
-** environment:
+** environment variables:
 */ 
 
 int         is_envar(t_treenode *arg_node);
-char        *replace_name_with_value(t_treenode *arg_node, t_shell *shell);
-char		*replace_dollar_question(t_treenode *arg_node, t_shell *shell);
+char		*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell);
+char		*replace_name_with_value(char *envvar_start, t_shell *shell, size_t *envvar_len,
+			bool is_in_str);
+char		*replace_dollar_question(char *envvar, t_shell *shell, bool is_in_str);
 int		    change_env_value(t_shell *shell, char *var_name, char *new_value);
 char		*get_envar_name(char *argument);
+char 	*update_argument(char *new_arg_value, char *temp);
+char	*create_substring(char *start, size_t len);
+char	*create_new_argument_string(char *search_start, t_shell *shell);
 
 /*
 **	environment list:

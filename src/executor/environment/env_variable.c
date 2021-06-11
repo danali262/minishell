@@ -74,21 +74,43 @@ int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 	return (SUCCESS);
 }
 
-int	is_envar(t_treenode *arg_node)
-{
-	if (arg_node->data[0] == '$' && arg_node->left == NULL)
-		return (1);
-	return (0);
-}
 
-char	*replace_name_with_value(t_treenode *arg_node, t_shell *shell)
+char	*replace_name_with_value(char *envvar_start, t_shell *shell, size_t *envvar_len,
+		bool is_in_str)
 {
 	char	*value;
+	char	*envvar_name;
+	int		i;
 
 	value = NULL;
-	if (arg_node->data[1] == '?')
-		value = replace_dollar_question(arg_node, shell);
+	envvar_name = NULL;
+	if (envvar_start[1] == '?')
+	{
+		value = replace_dollar_question(envvar_start, shell, is_in_str);
+		*envvar_len = 2;
+	}
 	else
-		value = get_envar_value(arg_node->data + 1, shell);
+	{
+		if (!is_in_str)
+			envvar_name = envvar_start;
+		else		
+		{
+			i = 1;
+			while (ft_isalnum(envvar_start[i]))
+				i++;
+			*envvar_len = i;
+			envvar_name = create_substring(envvar_start + 1, i - 1);
+			value = get_envar_value(envvar_name, shell);
+		}
+	}
 	return (value);
+}
+
+char	*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell)
+{
+	char	*new_arg_value;
+
+	new_arg_value = NULL;
+		new_arg_value = create_new_argument_string(arg_node->data, shell);
+	return (new_arg_value);
 }

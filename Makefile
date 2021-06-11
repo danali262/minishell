@@ -35,6 +35,7 @@ SRC = \
 	src/executor/executor_aux.c \
 	src/executor/environment/environment_aux.c \
 	src/executor/environment/env_variable.c \
+	src/executor/environment/env_variable_aux.c \
 	src/executor/environment/dollar_question.c \
 	src/executor/environment/env_list.c \
 	src/executor/environment/env_list_aux.c \
