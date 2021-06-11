@@ -45,8 +45,6 @@ typedef struct  s_shell
 	int             minishell_exits;
 }               t_shell;
 
-t_shell shell;
-
 typedef	enum
 {
 	NODE_SEMI,							/* 0. ; */

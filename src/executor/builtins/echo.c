@@ -14,8 +14,9 @@ static int	is_n_option(t_treenode *arg_node)
 
 int	execute_echo(t_treenode *simple_cmd_node, t_shell *shell)
 {
-	t_treenode *arg_node;
+	t_treenode	*arg_node;
 	int			n_option;
+	char		*data_to_print;
 
 	arg_node = simple_cmd_node->left;
 	n_option = is_n_option(arg_node);
@@ -23,15 +24,16 @@ int	execute_echo(t_treenode *simple_cmd_node, t_shell *shell)
 		arg_node = arg_node->left;
 	while (arg_node != NULL)
 	{
-		if (arg_node->type == NODE_VAR)
-			arg_node->data = replace_envar(arg_node, shell);
-		ft_putstr_fd(arg_node->data, STDOUT_FILENO);
+		data_to_print = NULL;
+		if (ft_strchr(arg_node->data, '$') != NULL)
+			data_to_print = handle_argument_with_envvars(arg_node, shell);
+		ft_putstr_fd(data_to_print, STDOUT_FILENO);
 		if (arg_node->left != NULL && arg_node->type != NODE_VAR)
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		arg_node = arg_node->left;
 	}
 	if (!n_option)
 		ft_putstr_fd("\n\r", STDOUT_FILENO);
-    shell->exit_code = 0;
+	shell->exit_code = 0;
 	return (SUCCESS);
 }

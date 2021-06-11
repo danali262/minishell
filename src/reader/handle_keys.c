@@ -1,5 +1,3 @@
-#include "handle_keys.h"
-#include "keys.h"
 #include "read_command_line.h"
 
 #include "libft.h"
@@ -8,10 +6,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 void	handle_backspace(t_line *cmd_line)
 {
-	size_t i;
+	size_t	i;
 
 	i = cmd_line->size - 1;
 	if (cmd_line->size != 0)

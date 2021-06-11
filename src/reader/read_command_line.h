@@ -1,12 +1,27 @@
 #ifndef READ_COMMAND_LINE_H
 # define READ_COMMAND_LINE_H
 
-#include "../command_history/command_history.h"
-#include "../command_history/history_state.h"
-#include "command_line_state.h"
-#include "../shell_state.h"
+# include "../command_history/command_history.h"
+# include "../command_history/history_state.h"
+# include "command_line_state.h"
+# include "../shell_state.h"
 
 # include <termios.h>
+
+// /*
+// ** Keycodes for keys:
+// */
+# define ARROW_UP 'A'
+# define ARROW_DOWN 'B'
+
+//  ANSI escape sequences, which extend the functions available with the control
+// codes:
+# define ESC '\x1b'
+# define ENTER '\x0a'
+# define CARRIAGE_RETURN '\x0d'
+# define BACKSPACE '\x7f'
+# define CTRL_C '\x03'
+# define CTRL_D '\x04'
 
 /*
 ** Set input mode with the termios struct:
@@ -28,5 +43,15 @@ int		read_input(t_shell *shell, struct termios *origin_attr);
 int		read_command_line(int fd, t_shell *shell);
 void	capture_keystrokes(int fd, char ch, t_shell *shell);
 
+/*
+** Handle keys:
+*/
+char	get_keycode(int fd, char *sequence);
+void	handle_key_action(t_shell *shell, char keycode);
+
+int		handle_enter(t_shell *shell);
+void	handle_backspace(t_line *cmd_line);
+int		handle_eot(t_shell *shell);
+void	handle_interrupt(t_shell *shell);
 
 #endif

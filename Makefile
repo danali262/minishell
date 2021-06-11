@@ -33,9 +33,12 @@ SRC = \
 	src/parser/parser_error.c\
 	src/parser/astree.c \
 	src/executor/executor_aux.c \
-	src/executor/environment/environment.c \
-	src/executor/environment/env_variable.c \
 	src/executor/environment/environment_aux.c \
+	src/executor/environment/env_variable.c \
+	src/executor/environment/env_variable_aux.c \
+	src/executor/environment/dollar_question.c \
+	src/executor/environment/env_list.c \
+	src/executor/environment/env_list_aux.c \
 	src/executor/execute_cmd_line.c \
 	src/executor/simple_command.c \
 	src/executor/executable_path.c \

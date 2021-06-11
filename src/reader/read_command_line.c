@@ -1,5 +1,5 @@
 #include "read_command_line.h"
-#include "keys.h"
+// #include "keys.h"
 #include "../parser/parser.h"
 #include "../term_cap/init_terminal_data.h"
 #include "../shell_state.h"
@@ -43,17 +43,17 @@ int	read_command_line(int fd, t_shell *shell)
 
 void	capture_keystrokes(int fd, char ch, t_shell *shell)
 {
-		char	keycode;
-		char	sequence[2];
+	char	keycode;
+	char	sequence[2];
 
-		keycode = 0;
-		if (ch == ESC)
+	keycode = 0;
+	if (ch == ESC)
+	{
+		keycode = get_keycode(fd, sequence);
+		if (keycode != 0)
 		{
-			keycode = get_keycode(fd, sequence);
-			if (keycode != 0)
-			{
-				ch = keycode;
-			}
+			ch = keycode;
 		}
-		handle_key_action(shell, ch);
+	}
+	handle_key_action(shell, ch);
 }

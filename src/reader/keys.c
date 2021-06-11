@@ -1,5 +1,5 @@
-#include "keys.h"
-#include "handle_keys.h"
+// #include "keys.h"
+#include "read_command_line.h"
 
 #include "libft.h"
 
@@ -21,12 +21,6 @@ void	handle_key_action(t_shell *shell, char keycode)
 		show_prev_history(&shell->history, &shell->cmd_line);
 	else if (keycode == ARROW_DOWN)
 		show_next_history(&shell->history, &shell->cmd_line);
-	// else if (keycode == shell->termcap_codes.keyup[0]
-	// 		&& shell->termcap_codes.keyup[1] == '\0')
-	// 	show_prev_history(&shell->history, &shell->cmd_line);
-	// else if (keycode == shell->termcap_codes.keydown[0]
-	// 		&& shell->termcap_codes.keydown[1] == '\0')
-	// 	show_next_history(&shell->history, &shell->cmd_line);
 }
 
 char	get_keycode(int fd, char *sequence)

@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 15:27:38 by osamara       #+#    #+#                 */
-/*   Updated: 2021/05/20 14:30:01 by osamara       ########   odam.nl         */
+/*   Updated: 2021/06/09 15:42:41 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ char			*ft_strrchr(const char *s, int c);
 char			*ft_strnstr(const char *haystack, const char *needle,
 					size_t len);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+int				ft_strcmp(const char *s1, const char *s2);
 int				ft_atoi(const char *str);
 int				ft_printf_atoi(const char *start, int *num);
 int				ft_isalpha(int c);

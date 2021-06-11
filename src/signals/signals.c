@@ -6,13 +6,17 @@
 #include <signal.h>
 #include <stdio.h>
 
+extern t_shell *g_shell;
+
 void	termination_handler(int signum)
 {
+	if (!g_shell)
+		return ;
 	if (signum == SIGINT)
 	{
-		shell.exit_code = 1;
-		shell.is_command_executed = 1;
-		clear_command_line(&shell.cmd_line);
+		g_shell->exit_code = 1;
+		g_shell->is_command_executed = 1;
+		clear_command_line(&g_shell->cmd_line);
 		ft_putstr_fd("\n\r", STDOUT_FILENO);
 		ft_putstr_fd(PROMPT, STDOUT_FILENO);
 	}
@@ -20,10 +24,12 @@ void	termination_handler(int signum)
 
 void	quit_execution(int signum)
 {
+	if (!g_shell)
+		return ;
 	if (signum == SIGQUIT)
 	{
-		shell.exit_code = 131;
-		clear_command_line(&shell.cmd_line);
+		g_shell->exit_code = 131;
+		clear_command_line(&g_shell->cmd_line);
 		ft_putstr_fd("Quit: 3\n\r", STDOUT_FILENO);
 	}
 }

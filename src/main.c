@@ -3,8 +3,11 @@
 #include "reader/read_command_line.h"
 #include "parser/parser.h"
 #include "executor/executor.h"
+#include "executor/environment/environment.h"
 #include "term_cap/init_terminal_data.h"
 #include "redirection/redirection.h"
+
+t_shell *g_shell = NULL;
 
 int shell_event_loop(t_shell *shell)
 {
@@ -17,7 +20,6 @@ int shell_event_loop(t_shell *shell)
 	{
         shell->syntax_tree = &tree;
         shell->redir = &redir;
-
         init_tree(shell);
 		write(STDOUT_FILENO, "\r", 1);
         ft_putstr_fd(PROMPT, STDOUT_FILENO);
@@ -63,19 +65,29 @@ void    free_shell_data(t_shell *shell)
     free(shell->term_buffer);
    	free_command_line(&shell->cmd_line);
 	free_history(&shell->history);
-	// TODO:
-    // free_env_var_list();
+    free_env_list(shell->env_list, ft_env_lstdelone);
 }
 
-int		main(void)
-// int     main(int ac, char **av, char **envp)
+int     main(int argc, char **argv)
 {
+    t_shell shell;
+
+    (void)argv;
+    if (argc > 1)
+    {
+        printf("Error.Too many arguments.\n");
+        return (1);   
+    }
+    g_shell = &shell;
+    ft_bzero(&shell, sizeof(t_shell));
     init_shell(&shell);
     if (shell_event_loop(&shell) == ERROR)
     {
+        g_shell = NULL;
         free_shell_data(&shell);
         return (1);
     }
+    g_shell = NULL;
     free_shell_data(&shell);
     return (0);
 }
