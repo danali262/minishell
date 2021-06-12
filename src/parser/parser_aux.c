@@ -29,7 +29,7 @@ bool	term(int tokentype, char **buffer, t_curtok *curtok, t_treenode *node)
 
 int	handle_vars_and_args(char *arg)
 {
-	int		arg_len;
+	size_t	arg_len;
 	int		i;
 
 	arg_len = ft_strlen(arg);

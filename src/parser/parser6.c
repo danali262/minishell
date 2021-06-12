@@ -32,14 +32,14 @@ t_treenode	*redirection_create_root(t_treenode *root, t_treenode *simplecmd,
 
 void	handle_node_arg(t_treenode *root, t_treenode *tokenlist, char *arg)
 {
-	arg = strip_quotes(arg, root);
+//	arg = strip_quotes(arg, root);
 	set_node_data_type(root, arg, NODE_ARG);
 	attach_tree_branch(root, tokenlist, NULL);
 }
 
 void	handle_node_var(t_treenode *root, t_treenode *tokenlist, char *arg)
 {
-	arg = strip_quotes(arg, root);
+//	arg = strip_quotes(arg, root);
 	set_node_data_type(root, arg, NODE_VAR);
 	attach_tree_branch(root, tokenlist, NULL);
 }
