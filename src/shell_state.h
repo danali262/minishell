@@ -22,12 +22,15 @@ typedef struct s_redirection
 	int     redirect_in;
 	int     redirect_out;
 	int		redirect_app;
+	int		pipe;
 	char	*filename_in;
 	char	*filename_out;
 	char	*filename_app;
 	int		fd;
 	int		stdoutfd;
 	int		stdinfd;
+	int		pipe_read;
+	int		pipe_write;
 }			t_redirection;
 
 
@@ -62,5 +65,6 @@ typedef	enum
 int		parse_command_line(t_shell *shell);
 int		parser(t_lexer_state *lex_state, t_shell *shell);
 void    init_tree(t_shell *syntax_tree);
+void	handle_pipeline(t_treenode *node, t_shell *shell);
 
 #endif

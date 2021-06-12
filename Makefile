@@ -50,7 +50,8 @@ SRC = \
 	src/executor/builtins/export_unset.c\
 	src/redirection/check_for_redirection.c\
 	src/redirection/implement_redirection.c\
-	src/redirection/redirection_error.c
+	src/redirection/redirection_error.c\
+	src/redirection/pipes.c
 
 
 OBJS = $(SRC:.c=.o)

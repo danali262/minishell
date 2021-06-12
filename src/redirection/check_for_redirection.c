@@ -20,13 +20,18 @@ void	restore_stdio(t_shell *shell)
 		}
 		dup2(shell->redir->stdoutfd, STDOUT_FILENO);
 	}
-	if (shell->redir->redirect_app)
+	if (shell->redir->redirect_app == 1)
 	{
 		if (shell->redir->filename_app)
 		{
 			free(shell->redir->filename_app);
 			shell->redir->filename_app = NULL;
 		}
+		dup2(shell->redir->stdoutfd, STDOUT_FILENO);
+	}
+	if (shell->redir->pipe == 1)
+	{
+		dup2(shell->redir->stdinfd, STDIN_FILENO);
 		dup2(shell->redir->stdoutfd, STDOUT_FILENO);
 	}
 }
