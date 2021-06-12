@@ -1,32 +1,55 @@
 #include "parser.h"
 
+#include <stdbool.h>
+
+
+
 char	*strip_quotes(char *arg, t_treenode *node)
 {
-	int		i;
-	int		token_len;
+	size_t	token_len;
 	char	*temp;
-	int		temp_len;
-
+	char	quote;
+	int		i;
+	int		j;
+	int		between_quotes_len;
+	bool	is_quote_found;
+	
 	token_len = ft_strlen(arg);
-	temp_len = token_len - 2;
-	temp = malloc(sizeof(char) * (temp_len + 1));
+	temp = ft_calloc(token_len + 1, sizeof(char);)
 	if (!temp)
 		parser_error(node);
 	i = 0;
-	if ((arg[i] == '\'' && arg[token_len - 1] == '\'') || (arg[i] == '\"'
-			&& arg[token_len - 1] == '\"'))
+	j = 0;
+	between_quotes_len = 0;
+	is_quote_found = false;
+	while (arg[i] != '\0')
 	{
-		while (i < temp_len)
+		if (arg[i] == '\'' || arg[i] == '"')
 		{
-			temp[i] = arg[i + 1];
-			i++;
+			is_quote_found = true;
+			quote = arg[i];
+			pairing_quote_pos = ft_strchr(arg + i + 1, quote);
+			if (pairing_quote_pos != NULL)
+			{
+				between_quotes_len = pairing_quote_pos - arg + i - 1;
+				ft_memcpy(temp + j, arg + i + 1, between_quotes_len);
+				i += between_quotes + 2;
+				j += between_quotes;
+			}
+			else
+			{
+				ft_memcpy(temp + j, arg + i, token_len + 1 - i);
+				break ;
+			}
 		}
-		temp[i] = '\0';
-		free(arg);
-		arg = ft_strdup(temp);
-		free(temp);
 	}
-	return (arg);
+	if (is_quote_found == false)
+	{
+		free(temp);
+		return (arg);
+	}
+	free(arg);
+	return (temp);
 }
 
 char	*create_arg(char *arg, t_treenode *node)
