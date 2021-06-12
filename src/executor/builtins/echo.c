@@ -18,15 +18,17 @@ int	execute_echo(t_treenode *simple_cmd_node, t_shell *shell)
 	int			n_option;
 	char		*data_to_print;
 
+	data_to_print = NULL;
 	arg_node = simple_cmd_node->left;
 	n_option = is_n_option(arg_node);
 	if (n_option)
 		arg_node = arg_node->left;
 	while (arg_node != NULL)
 	{
-		data_to_print = NULL;
 		if (ft_strchr(arg_node->data, '$') != NULL)
 			data_to_print = handle_argument_with_envvars(arg_node, shell);
+		else
+			data_to_print = arg_node->data;
 		ft_putstr_fd(data_to_print, STDOUT_FILENO);
 		if (arg_node->left != NULL && arg_node->type != NODE_VAR)
 			ft_putstr_fd(" ", STDOUT_FILENO);
