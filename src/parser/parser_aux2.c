@@ -11,11 +11,12 @@ char	*strip_quotes(char *arg, t_treenode *node)
 	char	quote;
 	int		i;
 	int		j;
-	int		between_quotes_len;
+	char	*pairing_quote_pos;
+	size_t	between_quotes_len;
 	bool	is_quote_found;
 	
 	token_len = ft_strlen(arg);
-	temp = ft_calloc(token_len + 1, sizeof(char);)
+	temp = ft_calloc(token_len + 1, sizeof(char));
 	if (!temp)
 		parser_error(node);
 	i = 0;
@@ -31,17 +32,23 @@ char	*strip_quotes(char *arg, t_treenode *node)
 			pairing_quote_pos = ft_strchr(arg + i + 1, quote);
 			if (pairing_quote_pos != NULL)
 			{
-				between_quotes_len = pairing_quote_pos - arg + i - 1;
+				between_quotes_len = pairing_quote_pos - (arg + i) - 1;
 				ft_memcpy(temp + j, arg + i + 1, between_quotes_len);
-				i += between_quotes + 2;
-				j += between_quotes;
+				i += between_quotes_len + 2;
+				j += between_quotes_len;
 			}
 			else
 			{
-				ft_memcpy(temp + j, arg + i, token_len + 1 - i);
+				ft_memcpy(temp + j, arg + i, token_len - i);
 				break ;
 			}
 		}
+        else
+        {
+            temp[j] = arg[i];
+            i++;
+            j++;
+        }
 	}
 	if (is_quote_found == false)
 	{
@@ -55,7 +62,7 @@ char	*strip_quotes(char *arg, t_treenode *node)
 char	*create_arg(char *arg, t_treenode *node)
 {
 	char	*temp;
-	int		arg_len;
+	size_t	arg_len;
 	int		i;
 	int		j;
 
