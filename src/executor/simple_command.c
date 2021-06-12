@@ -121,7 +121,7 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 		simple_cmd_node = simple_cmd_node->left;						
 	if (is_envar(simple_cmd_node))
 	{
-		command = replace_name_with_value(simple_cmd_node->data, shell, NULL, false);
+		command = handle_argument_with_envvars(simple_cmd_node, shell);
 		if (command != NULL)
 			simple_cmd_node->data = command;
 	}
