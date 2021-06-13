@@ -2,61 +2,69 @@
 
 #include <stdbool.h>
 
+static char	*handle_data_with_quote(char *arg, char *temp, int *i, int *j)
+{
+    char    quote;
+	char	*pairing_quote_pos;
+	size_t	between_quotes_len;
+	size_t	token_len;
 
+    quote = arg[*i];
+	token_len = ft_strlen(arg);
+	between_quotes_len = 0;
+	pairing_quote_pos = ft_strchr(arg + *i + 1, quote);
+	if (pairing_quote_pos != NULL)
+	{
+		between_quotes_len = pairing_quote_pos - (arg + *i) - 1;
+		ft_memcpy(temp + *j, arg + *i + 1, between_quotes_len);
+		*i += between_quotes_len + 2;
+		*j += between_quotes_len;
+	}
+	else
+		ft_memcpy(temp + *j, arg + *i, token_len - *i);
+	return (temp);
+}
+
+static char	*copy_value_iterate_index(char c, char *temp, int *i, int *j)
+{
+	temp[*j] = c;
+	*i += 1;
+	*j += 1;
+	return (temp);
+}
+
+static char	*free_and_return(char *str_to_free, char *str_to_return)
+{
+	free(str_to_free);
+	return (str_to_return);
+}
 
 char	*strip_quotes(char *arg, t_treenode *node)
 {
-	size_t	token_len;
 	char	*temp;
-	char	quote;
 	int		i;
 	int		j;
-	char	*pairing_quote_pos;
-	size_t	between_quotes_len;
 	bool	is_quote_found;
 	
-	token_len = ft_strlen(arg);
-	temp = ft_calloc(token_len + 1, sizeof(char));
+	temp = ft_calloc(ft_strlen(arg) + 1, sizeof(char));
 	if (!temp)
 		parser_error(node);
 	i = 0;
 	j = 0;
-	between_quotes_len = 0;
 	is_quote_found = false;
 	while (arg[i] != '\0')
 	{
 		if (arg[i] == '\'' || arg[i] == '"')
 		{
 			is_quote_found = true;
-			quote = arg[i];
-			pairing_quote_pos = ft_strchr(arg + i + 1, quote);
-			if (pairing_quote_pos != NULL)
-			{
-				between_quotes_len = pairing_quote_pos - (arg + i) - 1;
-				ft_memcpy(temp + j, arg + i + 1, between_quotes_len);
-				i += between_quotes_len + 2;
-				j += between_quotes_len;
-			}
-			else
-			{
-				ft_memcpy(temp + j, arg + i, token_len - i);
-				break ;
-			}
+			temp = handle_data_with_quote(arg, temp, &i, &j);
 		}
         else
-        {
-            temp[j] = arg[i];
-            i++;
-            j++;
-        }
+			temp = copy_value_iterate_index(arg[i], temp,  &i, &j);
 	}
 	if (is_quote_found == false)
-	{
-		free(temp);
-		return (arg);
-	}
-	free(arg);
-	return (temp);
+		return (free_and_return(temp, arg));
+	return (free_and_return(arg, temp));
 }
 
 char	*create_arg(char *arg, t_treenode *node)
