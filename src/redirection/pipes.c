@@ -25,12 +25,15 @@ void    handle_pipeline(t_treenode *node, t_shell *shell)
     }
     else if (pid == 0)
     {
-        printf("I am in child2 PID : %d\n", getpid());
+        if (node->right->type == NODE_PIPE)
+            handle_pipeline(node->right, shell);
+        // printf("I am in child2 PID : %d\n", getpid());
         dup2(shell->redir->pipe_read, 0);
         close(shell->redir->pipe_write);
         // close(shell->redir->pipe_read);
         // shell->redir->stdout_pipe = 0;
-        run_simple_command(node->right, shell);
+        if (node->right->type != NODE_PIPE)
+            run_simple_command(node->right, shell);
     }
     else
     {
@@ -39,11 +42,12 @@ void    handle_pipeline(t_treenode *node, t_shell *shell)
             printf("Child exited with status %d\n", WEXITSTATUS(status));
         else
             printf("Child terminated abnormally. Code : %d\n", WEXITSTATUS(status));
-        printf("I am in parent2 PID : %d\n", getpid());
+        // printf("I am in parent2 PID : %d\n", getpid());
         dup2(shell->redir->pipe_write, 1);
         close(shell->redir->pipe_read);
         // close(shell->redir->pipe_write);
         // shell->redir->stdout_pipe = 1;
-        run_simple_command(node->left, shell);
+        if (node->left->type != NODE_PIPE)
+            run_simple_command(node->left, shell);
     }
 }
