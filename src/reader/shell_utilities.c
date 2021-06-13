@@ -9,7 +9,7 @@ void	init_tree(t_shell *shell)
 	shell->redir->redirect_in = 0;
 	shell->redir->redirect_out = 0;
 	shell->redir->redirect_app = 0;
-	shell->redir->pipe = 0;
+	shell->redir->pipes_nbr = 0;
 	shell->redir->filename_in = NULL;
 	shell->redir->filename_out = NULL;
 	shell->redir->filename_app = NULL;
