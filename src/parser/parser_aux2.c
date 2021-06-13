@@ -64,7 +64,7 @@ char	*create_arg(char *arg, t_treenode *node)
 	char	*temp;
 	size_t	arg_len;
 	int		i;
-	int		j;
+	size_t	j;
 
 	arg_len = ft_strlen(arg);
 	temp = malloc(sizeof(char) * (arg_len - 1));

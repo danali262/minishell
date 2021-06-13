@@ -49,7 +49,7 @@ void	handle_both_nodes(t_treenode *root, char *arg)
 	t_treenode	*argNode;
 	char		*var_arg;
 
-	arg = strip_quotes(arg, root);
+	// arg = strip_quotes(arg, root);
 	set_node_data_type(root, "$?", NODE_VAR);
 	argNode = malloc(sizeof(*argNode));
 	if (!argNode)
