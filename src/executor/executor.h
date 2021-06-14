@@ -54,4 +54,6 @@ void	free_env_list(t_envlist *lst, void (*f)(t_envlist **));
 
 char	*concat_path(char *left, char *right);
 
+char		*strip_quotes(char *arg);
+
 #endif
