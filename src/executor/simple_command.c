@@ -32,10 +32,9 @@ char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path, t_shel
 	arg_node = simple_cmd_node->left;
 	while (arg_node != NULL)
 	{
-		if (ft_strchr(arg_node->data, '$') == NULL)
+		arg_node->data = check_envars_and_quotes(arg_node, shell);
+		if (arg_node->data != NULL)
 			arguments[i] = ft_strdup(arg_node->data);
-		else
-			arguments[i] = handle_argument_with_envvars(arg_node, shell);
 		i++;
 		arg_node = arg_node->left;
 	}
@@ -116,12 +115,13 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 	char	*command;
 
 	signal(SIGQUIT, quit_execution);
+	simple_cmd_node->data = strip_quotes(simple_cmd_node->data);
 	res = implement_redirection(simple_cmd_node, shell);
 	if (res)
 		simple_cmd_node = simple_cmd_node->left;						
 	if (is_envar(simple_cmd_node))
 	{
-		command = replace_name_with_value(simple_cmd_node->data, shell, NULL, false);
+		command = handle_argument_with_envvars(simple_cmd_node, shell);
 		if (command != NULL)
 			simple_cmd_node->data = command;
 	}

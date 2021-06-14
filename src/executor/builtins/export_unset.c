@@ -17,6 +17,9 @@ int	execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 		arg_node = simple_cmd_node->left;
 		while (arg_node != NULL)
 		{
+			arg_node->data = check_envars_and_quotes(arg_node, shell);
+			if (arg_node->data == NULL)
+				return (ERROR);
 			envar_name = get_envar_name(arg_node->data);
 			if (envar_name == NULL)
 				return (ERROR);
@@ -43,6 +46,7 @@ int	execute_unset(t_treenode *simple_cmd_node, t_shell *shell)
 		arg_node = simple_cmd_node->left;
 		while (arg_node != NULL)
 		{
+			arg_node->data = strip_quotes(arg_node->data);
 			envar_node = shell->env_list;
 			while (envar_node->next != NULL)
 			{

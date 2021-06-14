@@ -6,7 +6,7 @@
 /*   By: osamara <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 20:22:35 by osamara       #+#    #+#                 */
-/*   Updated: 2021/05/26 19:22:54 by osamara       ########   odam.nl         */
+/*   Updated: 2021/06/14 14:45:43 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,48 @@ int	ft_printf_atoi(const char *start, int *num)
 	}
 	if (accumulator > 2147483647 || index >= start_index + 10
 		|| start[index] != '\0')
+	{
+		*num = 0;
+		return (0);
+	}
+	else
+		*num = index;
+	return ((int)accumulator);
+}
+
+// static int	handle_accumulator(long long accumulator, int *num, int is_minus, int index)
+// {
+// 	
+// }
+
+static int	handle_negative_num(char c, int *index)
+{
+	if (c== '-')
+    {
+		*index = *index + 1;
+		return (1);
+	}
+	return (0);
+}
+
+int	ft_minishell_atoi(char *start, int *num)
+{
+	int			index;
+	int			is_minus;
+	long long	accumulator;
+
+	index = 0;
+	accumulator = 0;
+	is_minus = handle_negative_num(start[index], &index);
+	while (start[index] >= '0' && start[index] <= '9')
+	{
+		accumulator = accumulator * 10 + start[index] - '0';
+		index++;
+	}
+	if (is_minus)
+		accumulator = -accumulator;
+	if (accumulator > 2147483647 || start[index] != '\0'
+		|| (is_minus && index == 1))
 	{
 		*num = 0;
 		return (0);

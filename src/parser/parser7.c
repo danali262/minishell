@@ -61,14 +61,12 @@ t_treenode	*simple_redirection_create_root(t_treenode *root, t_treenode *simplec
 
 void	handle_node_arg(t_treenode *root, t_treenode *tokenlist, char *arg)
 {
-	arg = strip_quotes(arg, root);
 	set_node_data_type(root, arg, NODE_ARG);
 	attach_tree_branch(root, tokenlist, NULL);
 }
 
 void	handle_node_var(t_treenode *root, t_treenode *tokenlist, char *arg)
 {
-	arg = strip_quotes(arg, root);
 	set_node_data_type(root, arg, NODE_VAR);
 	attach_tree_branch(root, tokenlist, NULL);
 }
@@ -78,7 +76,6 @@ void	handle_both_nodes(t_treenode *root, char *arg)
 	t_treenode	*argNode;
 	char		*var_arg;
 
-	arg = strip_quotes(arg, root);
 	set_node_data_type(root, "$?", NODE_VAR);
 	argNode = malloc(sizeof(*argNode));
 	if (!argNode)
