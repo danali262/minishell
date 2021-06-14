@@ -112,7 +112,9 @@ char	*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell)
 	char	*string_without_quotes;
 
 	new_arg_value = NULL;
+	string_without_quotes = NULL;
 	new_arg_value = create_new_argument_string(arg_node->data, shell);
-	string_without_quotes = strip_quotes(new_arg_value);
+	if (new_arg_value != NULL)
+		string_without_quotes = strip_quotes(new_arg_value);
 	return (string_without_quotes);
 }

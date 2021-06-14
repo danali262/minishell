@@ -31,19 +31,19 @@ int	execute_pwd(t_treenode *simple_cmd_node, t_shell *shell)
 	return (SUCCESS);
 }
 
-char 	*change_directory(t_treenode *simple_cmd_node, int *cd_result)
+char 	*change_directory(t_treenode *arg_node, int *cd_result, t_shell *shell)
 {
-	t_treenode	*arg_node;
 	char		*updated_cwd;
 	char		pwd_value[256];
 
 	updated_cwd = NULL;
-	arg_node = NULL;
-	if (simple_cmd_node->left == NULL)
+	if (arg_node == NULL)
 		updated_cwd = getenv("HOME");
 	else
 	{
-		arg_node = simple_cmd_node->left;
+		arg_node->data = check_envars_and_quotes(arg_node, shell);
+		if (arg_node->data == NULL)
+			return (NULL);
 		if (arg_node->data[0] == '/')
 			updated_cwd = arg_node->data;
 		else
@@ -64,8 +64,8 @@ int	execute_cd(t_treenode *simple_cmd_node, t_shell *shell)
 	char		*updated_cwd;
 
 	cd_result = -1;
-	updated_cwd = change_directory(simple_cmd_node, &cd_result);
-	if (cd_result != 0)
+	updated_cwd = change_directory(simple_cmd_node->left, &cd_result, shell);
+	if (cd_result != 0 || updated_cwd == NULL)
 	{
 		printf("minishell: cd: %s: %s\n\r", simple_cmd_node->left->data,
 			strerror(errno));

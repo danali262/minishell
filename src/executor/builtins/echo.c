@@ -23,10 +23,9 @@ int	execute_echo(t_treenode *simple_cmd_node, t_shell *shell)
 		arg_node = arg_node->left;
 	while (arg_node != NULL)
 	{
-		if (ft_strchr(arg_node->data, '$') != NULL)
-			arg_node->data = handle_argument_with_envvars(arg_node, shell);
-		else
-		arg_node->data = strip_quotes(arg_node->data);
+		arg_node->data = check_envars_and_quotes(arg_node, shell);
+		if (arg_node->data == NULL)
+			return (ERROR);
 		ft_putstr_fd(arg_node->data, STDOUT_FILENO);
 		if (arg_node->left != NULL && arg_node->type != NODE_VAR)
 			ft_putstr_fd(" ", STDOUT_FILENO);

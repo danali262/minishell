@@ -32,10 +32,9 @@ char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path, t_shel
 	arg_node = simple_cmd_node->left;
 	while (arg_node != NULL)
 	{
-		if (ft_strchr(arg_node->data, '$') == NULL)
+		arg_node->data = check_envars_and_quotes(arg_node, shell);
+		if (arg_node->data != NULL)
 			arguments[i] = ft_strdup(arg_node->data);
-		else
-			arguments[i] = handle_argument_with_envvars(arg_node, shell);
 		i++;
 		arg_node = arg_node->left;
 	}
