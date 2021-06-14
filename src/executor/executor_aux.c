@@ -91,3 +91,17 @@ char	*strip_quotes(char *arg)
 		return (free_and_return(temp, arg));
 	return (free_and_return(arg, temp));
 }
+
+char *check_envars_and_quotes(t_treenode *arg_node, t_shell *shell)
+{
+	
+	if (is_envar(arg_node))
+	{
+		arg_node->data = handle_argument_with_envvars(arg_node, shell);
+		if (arg_node->data == NULL)
+			return (NULL);
+	}
+	else
+		arg_node->data = strip_quotes(arg_node->data);
+	return (arg_node->data);
+}
