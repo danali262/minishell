@@ -55,7 +55,6 @@ t_treenode	*redirlist1(t_curtok *curtok)	/* <redirection> <redirection list> */
 
 t_treenode	*redirlist2(t_curtok *curtok)	/* <redirection> <filenames> */
 {
-<<<<<<< HEAD
 	t_treenode	*root;
 	t_treenode	*fileNode_right;
 	char		*operator;
@@ -91,35 +90,9 @@ t_treenode	*redirlist2(t_curtok *curtok)	/* <redirection> <filenames> */
 	else
 		root = multiple_redirection_create_root(root, fileNode_right, filename_left, 3);
 	return (root);
-=======
-//	arg = strip_quotes(arg, root);
-	set_node_data_type(root, arg, NODE_ARG);
-	attach_tree_branch(root, tokenlist, NULL);
-}
-
-void	handle_node_var(t_treenode *root, t_treenode *tokenlist, char *arg)
-{
-//	arg = strip_quotes(arg, root);
-	set_node_data_type(root, arg, NODE_VAR);
-	attach_tree_branch(root, tokenlist, NULL);
->>>>>>> lexer_quotes
 }
 
 t_treenode	*redirlist3(void)
 {
-<<<<<<< HEAD
 	return (NULL);
-=======
-	t_treenode	*argNode;
-	char		*var_arg;
-
-	// arg = strip_quotes(arg, root);
-	set_node_data_type(root, "$?", NODE_VAR);
-	argNode = malloc(sizeof(*argNode));
-	if (!argNode)
-		parser_error(argNode);
-	var_arg = create_arg(arg, argNode);
-	set_node_data_type(argNode, var_arg, NODE_ARG);
-	attach_tree_branch(root, argNode, NULL);
->>>>>>> lexer_quotes
 }
