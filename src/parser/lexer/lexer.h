@@ -46,6 +46,7 @@ enum	e_tokentype
 	CHAR_LESSER = '<',
 	CHAR_APPEND, 
 	CHAR_EMPTY = '\0',
+	CHAR_REDIR,
 	TOKEN = -1
 };
 

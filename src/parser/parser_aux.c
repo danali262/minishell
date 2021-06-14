@@ -4,7 +4,7 @@ bool	term(int tokentype, char **buffer, t_curtok *curtok, t_treenode *node)
 {
 	if (curtok->current_token == NULL)
 		return (false);
-	if (curtok->current_token->type == tokentype)
+	if ((curtok->current_token->type == tokentype) || (tokentype == CHAR_REDIR && (curtok->current_token->type == CHAR_GREATER || curtok->current_token->type == CHAR_LESSER || curtok->current_token->type == CHAR_APPEND)))
 	{
 		if (buffer != NULL)
 		{
