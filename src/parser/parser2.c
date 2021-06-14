@@ -22,7 +22,7 @@ t_treenode	*command_line(t_curtok *curtok)
 	return (NULL);
 }
 
-t_treenode	*command_line1(t_curtok *curtok)
+t_treenode	*command_line1(t_curtok *curtok)	/* <job>';'<command line> */
 {
 	t_treenode	*jobNode;
 	t_treenode	*cmdlineNode;
@@ -50,7 +50,7 @@ t_treenode	*command_line1(t_curtok *curtok)
 	return (root);
 }
 
-t_treenode	*command_line2(t_curtok *curtok)
+t_treenode	*command_line2(t_curtok *curtok)	/* <job> ';' */
 {
 	t_treenode	*jobNode;
 	t_treenode	*root;
@@ -71,7 +71,7 @@ t_treenode	*command_line2(t_curtok *curtok)
 	return (root);
 }
 
-t_treenode	*command_line3(t_curtok *curtok)
+t_treenode	*command_line3(t_curtok *curtok)	/* <job> */
 {
 	return (job(curtok));
 }

@@ -1,7 +1,7 @@
 #include "lexer/lexer.h"
 #include "parser.h"
 
-t_treenode	*redirection_create_root(t_treenode *root, t_treenode *right_node,
+t_treenode	*multiple_redirection_create_root(t_treenode *root, t_treenode *right_node,
 				char *filename, int opt)
 {
 	t_treenode	*filenameNode;
@@ -26,6 +26,35 @@ t_treenode	*redirection_create_root(t_treenode *root, t_treenode *right_node,
 		set_node_data_type(root, ">>", NODE_APPEND);
 		set_node_data_type(filenameNode,filename, NODE_FILE);
 		attach_tree_branch(root, filenameNode, right_node);
+	}
+	return (root);
+}
+
+t_treenode	*simple_redirection_create_root(t_treenode *root, t_treenode *simplecmdNode,
+				char *filename, int opt)
+{
+	t_treenode	*filenameNode;
+
+	filenameNode = malloc(sizeof(*filenameNode));
+	if (!filenameNode)
+		parser_error(filenameNode);
+	if (opt == 1)
+	{
+		set_node_data_type(root, "<", NODE_REDIRECT_IN);
+		set_node_data_type(filenameNode, filename, NODE_FILE);
+		attach_tree_branch(root, simplecmdNode, filenameNode);
+	}
+	else if (opt == 2)
+	{
+		set_node_data_type(root, ">", NODE_REDIRECT_OUT);
+		set_node_data_type(filenameNode, filename, NODE_FILE);
+		attach_tree_branch(root, simplecmdNode, filenameNode);
+	}
+	else
+	{
+		set_node_data_type(root, ">>", NODE_APPEND);
+		set_node_data_type(filenameNode,filename, NODE_FILE);
+		attach_tree_branch(root, simplecmdNode, filenameNode);
 	}
 	return (root);
 }

@@ -25,6 +25,7 @@ t_treenode	*job2(t_curtok *curtok);
 t_treenode	*cmd(t_curtok *curtok);
 t_treenode	*cmd1(t_curtok *curtok);
 t_treenode	*cmd2(t_curtok *curtok);
+t_treenode	*cmd3(t_curtok *curtok);
 t_treenode	*simplecmd(t_curtok *curtok);
 t_treenode	*tokenlist(t_curtok *curtok);
 t_treenode	*tokenlist1(t_curtok *curtok);
@@ -44,7 +45,9 @@ char		*strip_quotes(char *arg, t_treenode *node);
 int			handle_vars_and_args(char *arg);
 char		*create_arg(char *arg, t_treenode *node);
 
-t_treenode	*redirection_create_root(t_treenode *root, t_treenode *right_node,
+t_treenode	*multiple_redirection_create_root(t_treenode *root, t_treenode *right_node,
+				char *filename, int opt);
+t_treenode	*simple_redirection_create_root(t_treenode *root, t_treenode *simplecmdNode,
 				char *filename, int opt);
 void		handle_node_arg(t_treenode *root, t_treenode *tokenlist, char *arg);
 void		handle_node_var(t_treenode *root, t_treenode *tokenlist, char *arg);
