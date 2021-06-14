@@ -29,7 +29,7 @@ void	restore_stdio(t_shell *shell)
 		}
 		dup2(shell->redir->stdoutfd, STDOUT_FILENO);
 	}
-	if (shell->redir->pipes_nbr > 0)
+	if (shell->redir->pipes_nbr  > 0)
 	{
 		dup2(shell->redir->stdinfd, STDIN_FILENO);
 		dup2(shell->redir->stdoutfd, STDOUT_FILENO);
