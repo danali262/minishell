@@ -116,6 +116,7 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 	char	*command;
 
 	signal(SIGQUIT, quit_execution);
+	simple_cmd_node->data = strip_quotes(simple_cmd_node->data);
 	res = implement_redirection(simple_cmd_node, shell);
 	if (res)
 		simple_cmd_node = simple_cmd_node->left;						

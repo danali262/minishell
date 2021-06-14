@@ -109,8 +109,10 @@ char	*replace_name_with_value(char *envvar_start, t_shell *shell, size_t *envvar
 char	*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell)
 {
 	char	*new_arg_value;
+	char	*string_without_quotes;
 
 	new_arg_value = NULL;
-		new_arg_value = create_new_argument_string(arg_node->data, shell);
-	return (new_arg_value);
+	new_arg_value = create_new_argument_string(arg_node->data, shell);
+	string_without_quotes = strip_quotes(new_arg_value);
+	return (string_without_quotes);
 }
