@@ -19,95 +19,73 @@ t_treenode	*cmd(t_curtok *curtok)
 	node = cmd3(curtok);
 	if (node != NULL)
 		return (node);
-	curtok->current_token = save;
-	node = cmd4(curtok);
-	if (node != NULL)
-		return (node);
 	return (NULL);
 }
 
-t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> '<' <filename> */
+t_treenode	*cmd1(t_curtok *curtok)		/* <simple command> <redirection list> */
 {
 	t_treenode	*simplecmdNode;
 	t_treenode	*root;
-	char		*filename;
+	t_treenode	*redirNode;
+	char		*operator;
 
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
 		return (NULL);
-	if (!term(CHAR_LESSER, NULL, curtok, simplecmdNode))
+	if (!term(CHAR_REDIR, &operator, curtok, simplecmdNode))
 	{
 		delete_node(&simplecmdNode);
 		return (NULL);
 	}
-	if (!term(TOKEN, &filename, curtok, simplecmdNode))
-	{
-		free(filename);
-		delete_node(&simplecmdNode);
+	redirNode = redirlist(curtok);
+	if (redirNode == NULL)
 		return (NULL);
-	}
 	root = malloc(sizeof(*root));
 	if (!root)
 		parser_error(root);
-	root = redirection_create_root(root, simplecmdNode, filename, 1);
+	if (ft_strcmp(operator, ">") == 0)
+		set_node_data_type(root, operator, NODE_REDIRECT_OUT);
+	else if (ft_strcmp(operator, "<") == 0)
+		set_node_data_type(root, operator, NODE_REDIRECT_IN);
+	else
+		set_node_data_type(root, operator, NODE_APPEND);
+	attach_tree_branch(root, simplecmdNode, redirNode);
 	return (root);
 }
 
-t_treenode	*cmd2(t_curtok *curtok)		/* <simple command> '>' <filename> */
+t_treenode *cmd2(t_curtok *curtok)	/* <simple command> 'operator' <filename> */
 {
 	t_treenode	*simplecmdNode;
 	t_treenode	*root;
 	char		*filename;
+	char		*operator;
 
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
 		return (NULL);
-	if (!term(CHAR_GREATER, NULL, curtok, simplecmdNode))
+	if (!term(CHAR_REDIR, &operator, curtok, simplecmdNode))
 	{
 		delete_node(&simplecmdNode);
-		return (NULL);
+		return(NULL);
 	}
 	if (!term(TOKEN, &filename, curtok, simplecmdNode))
 	{
-		free(filename);
 		delete_node(&simplecmdNode);
-		return (NULL);
+		return(NULL);
 	}
 	root = malloc(sizeof(*root));
 	if (!root)
 		parser_error(root);
-	root = redirection_create_root(root, simplecmdNode, filename, 2);
+	if (ft_strcmp(operator, "<") == 0)
+		root = simple_redirection_create_root(root, simplecmdNode, filename, 1);
+	else if (ft_strcmp(operator, ">") == 0)
+		root = simple_redirection_create_root(root, simplecmdNode, filename, 2);
+	else
+		root = simple_redirection_create_root(root, simplecmdNode, filename, 3);
 	return (root);
 }
 
-t_treenode	*cmd3(t_curtok *curtok)		/* <simple command> '>>' <filename> */
-{
-	t_treenode	*simplecmdNode;
-	t_treenode	*root;
-	char		*filename;
-
-	simplecmdNode = simplecmd(curtok);
-	if (simplecmdNode == NULL)
-		return (NULL);
-	if (!term(CHAR_APPEND, NULL, curtok, simplecmdNode))
-	{
-		delete_node(&simplecmdNode);
-		return (NULL);
-	}
-	if (!term(TOKEN, &filename, curtok, simplecmdNode))
-	{
-		free(filename);
-		delete_node(&simplecmdNode);
-		return (NULL);
-	}
-	root = malloc(sizeof(*root));
-	if (!root)
-		parser_error(root);
-	root = redirection_create_root(root, simplecmdNode, filename, 3);
-	return (root);
-}
-
-t_treenode	*cmd4(t_curtok *curtok)
+t_treenode	*cmd3(t_curtok *curtok)		/* <simple command> */
 {
 	return (simplecmd(curtok));
 }

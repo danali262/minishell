@@ -9,7 +9,7 @@ void	redirection_error(t_shell *shell, int opt)
 		free(shell->redir->filename_in);
 	else if (opt == 2)
 		free(shell->redir->filename_out);
-	else
+	else if (opt == 3)
 		free(shell->redir->filename_app);
 	exit(1);
 }

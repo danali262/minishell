@@ -28,6 +28,7 @@ SRC = \
 	src/parser/parser4.c\
 	src/parser/parser5.c\
 	src/parser/parser6.c\
+	src/parser/parser7.c\
 	src/parser/parser_aux.c\
 	src/parser/parser_aux2.c\
 	src/parser/parser_error.c\
@@ -50,7 +51,8 @@ SRC = \
 	src/executor/builtins/export_unset.c\
 	src/redirection/check_for_redirection.c\
 	src/redirection/implement_redirection.c\
-	src/redirection/redirection_error.c
+	src/redirection/redirection_error.c\
+	src/redirection/pipes.c
 
 
 OBJS = $(SRC:.c=.o)

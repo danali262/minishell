@@ -1,13 +1,18 @@
 #include "redirection.h"
 
-static void	implement_node_redirect_in(t_shell *shell)
+static int	implement_node_redirect_in(t_shell *shell)
 {
 	shell->redir->stdinfd = dup(STDIN_FILENO);
 	shell->redir->fd = open(shell->redir->filename_in, O_RDONLY);
-	if ((shell->redir->fd < 0) || (dup2(shell->redir->fd, STDIN_FILENO)
-			< 0))
+	if (shell->redir->fd < 0)
+	{
+		ft_putstr_fd("No such file or directory\n", STDOUT_FILENO);
+		return (-1);
+	}
+	if (dup2(shell->redir->fd, STDIN_FILENO) < 0)
 		redirection_error(shell, 1);
 	close(shell->redir->fd);
+	return (1);
 }
 
 static void	implement_node_redirect_out(t_shell *shell)
@@ -34,10 +39,12 @@ static void	implement_node_redirect_app(t_shell *shell)
 
 int	implement_redirection(t_treenode *node, t_shell *shell)
 {
+	int res;
+
 	if (node->type == NODE_REDIRECT_IN)
 	{
-		implement_node_redirect_in(shell);
-		return (1);
+		res = implement_node_redirect_in(shell);
+		return (res);
 	}
 	if (node->type == NODE_REDIRECT_OUT)
 	{

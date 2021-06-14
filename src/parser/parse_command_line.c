@@ -35,6 +35,19 @@ static void	check_for_append(t_lexer_state *lex_state)
 	}
 }
 
+static void	count_pipes(t_lexer_state *lex_state, t_shell *shell)
+{
+	t_token *head;
+
+	head = lex_state->tokens_list;
+	while (head != NULL)
+	{
+		if (head->type == '|')
+			shell->redir->pipes_nbr++;
+		head = head->next;
+	}
+}
+
 int	parse_command_line(t_shell *shell)
 {
 	t_lexer_state	lex_state;
@@ -50,6 +63,7 @@ int	parse_command_line(t_shell *shell)
 	// printf("tokens with quotes:\n");
 	// print_tokens(lex_state.tokens_list);        /* to be deleted */
 	// printf("number of tokens is %d\n", lex_state.tokens_nbr);
+	count_pipes(&lex_state, shell);
 	parser(&lex_state, shell);
 	lexer_destroy(&lex_state);
 	return (1);

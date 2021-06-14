@@ -18,7 +18,7 @@ t_treenode	*job(t_curtok *curtok)
 	return (NULL);
 }
 
-t_treenode	*job1(t_curtok *curtok)
+t_treenode	*job1(t_curtok *curtok)		/* <command> '|' <job> */
 {
 	t_treenode	*cmdNode;
 	t_treenode	*jobNode;
@@ -46,7 +46,7 @@ t_treenode	*job1(t_curtok *curtok)
 	return (root);
 }
 
-t_treenode	*job2(t_curtok *curtok)
+t_treenode	*job2(t_curtok *curtok)	/* <command> */
 {
 	return (cmd(curtok));
 }
