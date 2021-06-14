@@ -54,4 +54,7 @@ void	free_env_list(t_envlist *lst, void (*f)(t_envlist **));
 
 char	*concat_path(char *left, char *right);
 
+char		*strip_quotes(char *arg);
+char *check_envars_and_quotes(t_treenode *arg_node, t_shell *shell);
+
 #endif

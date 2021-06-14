@@ -41,7 +41,6 @@ void		set_node_data_type(t_treenode *node, char *data,
 void		attach_tree_branch(t_treenode *root, t_treenode *leftNode,
 				t_treenode *rightNode);
 
-char		*strip_quotes(char *arg, t_treenode *node);
 int			handle_vars_and_args(char *arg);
 char		*create_arg(char *arg, t_treenode *node);
 
