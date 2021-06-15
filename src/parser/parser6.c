@@ -32,15 +32,9 @@ t_treenode	*redirlist1(t_curtok *curtok)	/* <redirection> <redirection list> */
 	if (!root)
 		parser_error(root);
 	if (!term(TOKEN, &filename, curtok, root))
-	{
-		delete_node(&root);
 		return (NULL);
-	}
 	if (!term(CHAR_REDIR, &operator, curtok, root))
-	{
-		delete_node(&root);
 		return (NULL);
-	}
 	redirlistNode = redirlist(curtok);
 	if (redirlistNode == NULL)
 		return (NULL);
@@ -65,20 +59,11 @@ t_treenode	*redirlist2(t_curtok *curtok)	/* <redirection> <filenames> */
 	if (!root)
 		parser_error(root);
 	if (!term(TOKEN, &filename_left, curtok, root))
-	{
-		delete_node(&root);
 		return (NULL);
-	}
 	if (!term(CHAR_REDIR, &operator, curtok, root))
-	{
-		delete_node(&root);
 		return (NULL);
-	}
 	if (!term(TOKEN, &filename_right, curtok, root))
-	{
-		delete_node(&root);
 		return (NULL);
-	}
 	fileNode_right = malloc(sizeof(*fileNode_right));
 	if (!fileNode_right)
 		parser_error(fileNode_right);
