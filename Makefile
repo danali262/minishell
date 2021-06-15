@@ -3,6 +3,7 @@ NAME = minishell
 SRC = \
 	src/main.c \
 	src/signals/signals.c \
+	src/reader/reader_aux.c \
 	src/reader/read_command_line.c \
 	src/reader/command_line_aux.c \
 	src/reader/set_term_attr.c \
