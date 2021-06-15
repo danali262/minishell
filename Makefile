@@ -57,8 +57,8 @@ SRC = \
 
 OBJS = $(SRC:.c=.o)
 # remove the flags for amd processor and debugging
-# CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12 -fsanitize=address
-CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12
+CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12 -fsanitize=address
+# CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12
 
 INCLUDES =	./libft
 
