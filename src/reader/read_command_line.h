@@ -8,12 +8,6 @@
 
 # include <termios.h>
 
-// /*
-// ** Keycodes for keys:
-// */
-# define ARROW_UP 'A'
-# define ARROW_DOWN 'B'
-
 //  ANSI escape sequences, which extend the functions available with the control
 // codes:
 # define ESC '\x1b'

@@ -43,7 +43,7 @@ int	init_terminal_data(t_shell *shell)
 		printf("The terminal type is not defined.");
 		return (0);
 	}
-	if (!get_termcap_codes(&term_buffer))
+	if (!get_termcap_codes(&term_buffer, shell))
 		return (0);
 	return (1);
 }
@@ -52,13 +52,11 @@ int	init_terminal_data(t_shell *shell)
 **	tgetstr will return code value or 0 if it is not available
 */
 
-int	get_termcap_codes(char **term_buffer)
-{
-	t_termcap_codes	termcap_codes;
-	
-	termcap_codes.keyup = tgetstr("ku", term_buffer);
-	termcap_codes.keydown = tgetstr("kd", term_buffer);
-	if (termcap_codes.keyup == 0 || termcap_codes.keydown == 0)
+int	get_termcap_codes(char **term_buffer, t_shell *shell)
+{	
+	shell->termcap_codes.keyup = tgetstr("ku", term_buffer);
+	shell->termcap_codes.keydown = tgetstr("kd", term_buffer);
+	if (shell->termcap_codes.keyup  == 0 || shell->termcap_codes.keydown == 0)
 	{
 		ft_putstr_fd("Error. Terminal capabilities unavailable.\n", STDOUT_FILENO);
 		return (0);
