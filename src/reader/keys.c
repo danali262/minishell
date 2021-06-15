@@ -1,4 +1,3 @@
-// #include "keys.h"
 #include "read_command_line.h"
 
 #include "libft.h"
@@ -17,9 +16,9 @@ void	handle_key_action(t_shell *shell, char keycode)
 		handle_eot(shell);
 	else if (keycode == CTRL_C)
 		handle_interrupt(shell);
-	else if (keycode == ARROW_UP)
+	else if (keycode == shell->termcap_codes.keyup[2])
 		show_prev_history(&shell->history, &shell->cmd_line);
-	else if (keycode == ARROW_DOWN)
+	else if (keycode == shell->termcap_codes.keydown[2])
 		show_next_history(&shell->history, &shell->cmd_line);
 }
 

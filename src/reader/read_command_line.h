@@ -8,12 +8,6 @@
 
 # include <termios.h>
 
-// /*
-// ** Keycodes for keys:
-// */
-# define ARROW_UP 'A'
-# define ARROW_DOWN 'B'
-
 //  ANSI escape sequences, which extend the functions available with the control
 // codes:
 # define ESC '\x1b'
@@ -22,6 +16,8 @@
 # define BACKSPACE '\x7f'
 # define CTRL_C '\x03'
 # define CTRL_D '\x04'
+
+void	write_prompt(void);
 
 /*
 ** Set input mode with the termios struct:
