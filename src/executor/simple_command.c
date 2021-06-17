@@ -11,36 +11,9 @@
 #include <signal.h>
 #include <string.h>
 
-char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path, t_shell *shell)
-{
-	t_treenode	*arg_node;
-	int			arg_counter;
-	char 		**arguments;
-
-	arg_node = simple_cmd_node->left;
-	arg_counter = 1;
-	while (arg_node != NULL)
-	{
-		arg_counter++;
-		arg_node = arg_node->left;
-	}
-	arguments = malloc(sizeof(char*) * arg_counter + 1);
-	if (arguments == NULL)
-		return (NULL);
-	arguments[0] = executable_path;
-	int i = 1;
-	arg_node = simple_cmd_node->left;
-	while (arg_node != NULL)
-	{
-		arg_node->data = check_envars_and_quotes(arg_node, shell);
-		if (arg_node->data != NULL)
-			arguments[i] = ft_strdup(arg_node->data);
-		i++;
-		arg_node = arg_node->left;
-	}
-	arguments[arg_counter] = NULL;
-	return (arguments);
-}
+/*
+** WIFEXITED  valuates to nonzero if status was returned by a normally terminated child process. 
+*/
 
 void	wait_for_child(pid_t pid, t_shell *shell)
 {
@@ -50,44 +23,20 @@ void	wait_for_child(pid_t pid, t_shell *shell)
 	status = 0;
 	wait_return = 0;
 	wait_return = wait(&status);
-		if (wait_return != pid)
-		{
-			restore_stdio(shell);
-			ft_putstr_fd("wait error\n\r", STDOUT_FILENO);	
-		}
-		if (WIFEXITED(status))
-		{
-			shell->exit_code = WEXITSTATUS(status);
-			// printf("child exited\n\r"); //remove. for debug
-			// printf("exit code: %d\n\r", shell->exit_code); //remove. for debug
-		}
+	if (wait_return != pid)
+		restore_stdio(shell);
+	if (WIFEXITED(status))
+		shell->exit_code = WEXITSTATUS(status);
 }
-
-
-/*
-** WIFEXITED  valuates to nonzero if status was returned by a normally terminated child process. 
-*/
 
 void	create_child_process(char **argv, t_shell *shell)
 {
 	pid_t 		pid;
-	extern char	**environ;
 
 	pid = fork();
-	if (pid < 0)
-	{
-		restore_stdio(shell);
-		ft_putstr_fd("Error. Unable to create the child process.\n\r", STDOUT_FILENO);
-		exit(errno);
-	}
-	else if (pid == 0)
-	{
-		if (execve(argv[0], argv, environ) == -1)
-		{
-			printf("minishell: %s\n\r", strerror(errno));
-			exit(126);
-		}
-	}
+	check_fork_error(pid, shell);
+	if (pid == 0)
+		execute_system_function(argv, shell);
 	else
 		wait_for_child(pid, shell);
 }
@@ -96,9 +45,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	char		*executable_path;
 	char		**argv;
-	extern char	**environ;
 	
-
 	executable_path = NULL;
 	if (simple_cmd_node != NULL)
 		executable_path = locate_executable_path(simple_cmd_node);
@@ -108,14 +55,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 		if (shell->redir->pipes_nbr == 0)
 			create_child_process(argv, shell);
 		else
-		{
-			if (execve(argv[0], argv, environ) == -1)
-			{
-				restore_stdio(shell);
-				printf("minishell: %s\n\r", strerror(errno));
-				shell->exit_code = 126;
-			}
-		}
+			execute_system_function(argv, shell);
 		free_array_memory(argv);
 		argv = NULL;
 	}

@@ -11,6 +11,8 @@ void	execute_command_line(t_treenode *top_node, t_shell *shell);
 char	*locate_executable_path(t_treenode *simple_cmd_node);
 int		run_simple_command(t_treenode *simple_cmd_node, t_shell *shell);
 void	wait_for_child(pid_t pid, t_shell *shell);
+void	execute_system_function(char **argv, t_shell *shell);
+char 	**fill_args_list(t_treenode *simple_cmd_node, char *executable_path, t_shell *shell);
 
 /*
 ** environment variables:
@@ -55,7 +57,8 @@ void	free_env_list(t_envlist *lst, void (*f)(t_envlist **));
 
 char	*concat_path(char *left, char *right);
 
-char		*strip_quotes(char *arg);
-char *check_envars_and_quotes(t_treenode *arg_node, t_shell *shell);
+char	*strip_quotes(char *arg);
+char 	*check_envars_and_quotes(t_treenode *arg_node, t_shell *shell);
+void	check_fork_error(pid_t pid, t_shell *shell);
 
 #endif

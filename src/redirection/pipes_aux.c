@@ -1,4 +1,5 @@
-#include "redirection.h"
+#include "pipes.h"
+#include "../executor/executor.h"
 
 #include <sys/errno.h>
 
@@ -44,21 +45,11 @@ bool	is_first_command(int i)
 	return (false);
 }
 
-void	create_copy_of_file_descriptor(int **pipes_fd, int index, int pipe_end, t_shell *shell)
+void	create_pipeline(int **fd_for_pipeline)
 {
-	int	dup_result;
-	int	newfd;
-
-	newfd = 0;
-	if (pipe_end == READ)
-		newfd = STDIN_FILENO;
-	else if (pipe_end == WRITE)
-		newfd = STDOUT_FILENO;
-		dup_result = dup2(pipes_fd[index][pipe_end], newfd);
-	if (dup_result < 0)
+	if (pipe(*fd_for_pipeline) != 0)
 	{
-		printf("Error creating copy of file descriptor\n");
-		shell->exit_code = errno;
-		exit(shell->exit_code);
-	}
+		printf("Error creating pipe\n");
+		exit(-1);
+	}	
 }

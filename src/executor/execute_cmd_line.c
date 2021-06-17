@@ -1,4 +1,5 @@
 #include "executor.h"
+#include "../redirection/pipes.h"
 
 #include "../parser/parser.h"
 

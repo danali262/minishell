@@ -45,6 +45,7 @@ SRC = \
 	src/executor/execute_cmd_line.c \
 	src/executor/simple_command.c \
 	src/executor/executable_path.c \
+	src/executor/execute_system_function.c \
 	src/executor/builtins/builtins.c \
 	src/executor/builtins/echo.c \
 	src/executor/builtins/cd_pwd.c \
@@ -55,6 +56,7 @@ SRC = \
 	src/redirection/implement_redirection.c\
 	src/redirection/redirection_error.c\
 	src/redirection/pipes_aux.c\
+	src/redirection/pipes_aux2.c\
 	src/redirection/pipes.c
 
 

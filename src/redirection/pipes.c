@@ -1,23 +1,24 @@
-#include "redirection.h"
+#include "pipes.h"
 #include "../executor/executor.h"
 #include "libft.h"
 
 #include <sys/errno.h>
 #include <string.h>
 
-void	handle_child_process(t_treenode *node, int **pipes_fd, int i, t_shell *shell)
+void	handle_child_process(t_treenode *node, int **pipes_fd, int i,
+		t_shell *shell)
 {
 	int pipes_num;
 
 	pipes_num = shell->redir->pipes_nbr;
 	if (!is_first_command(i))
 	{
-		create_copy_of_file_descriptor(pipes_fd, i - 1, READ, shell); //need -1 to reach the pipe in the pipes array, and it is always less by 1
+		create_copy_of_fd_for_pipes(pipes_fd, i - 1, READ, shell); //need -1 to reach the pipe in the pipes array, and it is always less by 1
 		close_both_pipe_ends(pipes_fd, i - 1);
 	}
 	if (!is_last_command(i, pipes_num))
 	{
-		create_copy_of_file_descriptor(pipes_fd, i, WRITE, shell); 
+		create_copy_of_fd_for_pipes(pipes_fd, i, WRITE, shell); 
 		close_both_pipe_ends(pipes_fd, i);
 		node = node->left;
 	}
@@ -27,6 +28,12 @@ void	handle_child_process(t_treenode *node, int **pipes_fd, int i, t_shell *shel
 		shell->exit_code = 126;
 	}
 	exit(shell->exit_code);
+}
+
+void	handle_parent_process(int **pipes_fd, int i)
+{
+	if (!is_first_command(i))
+		close_both_pipe_ends(pipes_fd, i - 1);
 }
 
 pid_t	*loop_through_pipes(t_treenode *node, int **pipes_fd, t_shell *shell)
@@ -44,28 +51,14 @@ pid_t	*loop_through_pipes(t_treenode *node, int **pipes_fd, t_shell *shell)
 	while (i <= pipes_num)
 	{
 		if (!is_last_command(i, pipes_num))
-		{
-			if (pipe(pipes_fd[i]) != 0)
-			{
-				printf("Error creating pipe\n");
-				exit(-1);
-			}	
-		}
+			create_pipeline(&pipes_fd[i]);
 		pid = fork();
 		pid_array[i] = pid;
-		if (pid < 0)
-		{
-			restore_stdio(shell);
-			printf("Error creating child process.\n\r");
-			exit(errno);
-		}
+		check_fork_error(pid, shell);
 		if (pid == 0)
 			handle_child_process(node, pipes_fd, i, shell);
 		else
-		{
-			if (!is_first_command(i))
-				close_both_pipe_ends(pipes_fd, i - 1);
-		}
+			handle_parent_process(pipes_fd, i);
 		i++;
 		node = node->right;
 	}

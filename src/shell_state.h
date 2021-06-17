@@ -66,6 +66,5 @@ typedef	enum
 int		parse_command_line(t_shell *shell);
 int		parser(t_lexer_state *lex_state, t_shell *shell);
 void    init_tree(t_shell *syntax_tree);
-int		handle_pipeline(t_treenode *node, t_shell *shell);
 
 #endif
