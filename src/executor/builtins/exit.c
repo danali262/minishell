@@ -13,16 +13,19 @@ int	exit_with_code(t_treenode *arg_node, t_shell *shell)
 	if (arg_node->data == NULL)
 		return (ERROR);
 	shell->exit_code = ft_minishell_atoi(arg_node->data,
-			&is_numeric_arg);
-	printf("exit\n\r");
+		&is_numeric_arg);
 	if (!is_numeric_arg)
 	{
 		printf("minishell: exit: %s: numeric argument required\n\r",
 			arg_node->data);
 		shell->exit_code = 255;
 	}
-	shell->minishell_exits = true;
-	return (SUCCESS);
+	if (shell->redir->pipes_nbr == 0)
+	{
+		printf("exit\n\r");
+		shell->minishell_exits = true;
+	}
+	return (shell->exit_code);
 }
 
 int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
@@ -33,7 +36,6 @@ int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
 	if (arg_num == 0)
 	{
 		printf("exit\n\r");
-		shell->exit_code = 0;
 		shell->minishell_exits = true;
 	}
 	else if (arg_num > 1)
@@ -45,5 +47,5 @@ int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
 	else
 		if (exit_with_code(simple_cmd_node->left, shell) == ERROR)
 			return (ERROR);
-	return (SUCCESS);
+	return (shell->exit_code);
 }
