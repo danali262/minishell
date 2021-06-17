@@ -86,8 +86,10 @@ void	create_child_process(char **argv, t_shell *shell)
 
 int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 {
-	char	*executable_path;
-	char	**argv;
+	char		*executable_path;
+	char		**argv;
+	extern char	**environ;
+	
 
 	executable_path = NULL;
 	if (simple_cmd_node != NULL)
@@ -95,7 +97,16 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 	if (executable_path != NULL)
 	{
 		argv = fill_args_list(simple_cmd_node, executable_path, shell);
-		create_child_process(argv, shell);
+		if (shell->redir->pipes_nbr == 0)
+			create_child_process(argv, shell);
+		else
+		{
+			if (execve(argv[0], argv, environ) == -1)
+			{
+				printf("minishell: %s\n\r", strerror(errno));
+				shell->exit_code = 126;
+			}
+		}
 		free_array_memory(argv);
 		argv = NULL;
 	}
