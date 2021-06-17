@@ -29,7 +29,7 @@ int	execute_builtin(t_treenode *simple_cmd, t_builtins_map	*builtins_map,
 		if (ft_strcmp(builtins_map[i].cmd_name, simple_cmd->data) == 0)
 		{
 			shell->exit_code = builtins_map[i].cmd_executor(simple_cmd,
-					shell);
+				shell);
 			return (shell->exit_code);
 		}
 		i++;
