@@ -38,15 +38,14 @@ static char	*handle_data_with_quote(char *arg, char *temp, int *i, int *j)
 	token_len = ft_strlen(arg);
 	between_quotes_len = 0;
 	pairing_quote_pos = ft_strchr(arg + *i + 1, quote);
-	if (pairing_quote_pos != NULL)
-	{
-		between_quotes_len = pairing_quote_pos - (arg + *i) - 1;
-		ft_memcpy(temp + *j, arg + *i + 1, between_quotes_len);
-		*i += between_quotes_len + 2;
-		*j += between_quotes_len;
-	}
+	if (pairing_quote_pos == NULL)
+		between_quotes_len = (arg + token_len) - (arg + *i) - 1;
 	else
-		ft_memcpy(temp + *j, arg + *i, token_len - *i);
+		between_quotes_len = pairing_quote_pos - (arg + *i) - 1;
+	ft_memcpy(temp + *j, arg + *i + 1, between_quotes_len);
+	*i += between_quotes_len + 2;
+	*j += between_quotes_len;
+
 	return (temp);
 }
 
@@ -74,7 +73,7 @@ char	*strip_quotes(char *arg)
 	temp = ft_calloc(ft_strlen(arg) + 1, sizeof(char));
 	if (!temp)
 		return (NULL);
-		i = 0;
+	i = 0;
 	j = 0;
 	is_quote_found = false;
 	while (arg[i] != '\0')
