@@ -19,12 +19,8 @@ int	execute_pwd(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	char	pwd_value[256];
 
-	if (shell->env_list != NULL) // will need shell-> later on in pipes
-	{
-	}
-	if (simple_cmd_node) // need to think of what to do with this parameter
-	{
-	}
+    (void)simple_cmd_node;
+    (void)shell;
 	if (getcwd(pwd_value, sizeof(pwd_value)) == NULL)
 		printf("pwd: %s\n\r", strerror(errno));
 	printf("%s\n\r", pwd_value);
