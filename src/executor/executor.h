@@ -10,6 +10,7 @@
 void	execute_command_line(t_treenode *top_node, t_shell *shell);
 char	*locate_executable_path(t_treenode *simple_cmd_node);
 int		run_simple_command(t_treenode *simple_cmd_node, t_shell *shell);
+void	wait_for_child(pid_t pid, t_shell *shell);
 
 /*
 ** environment variables:

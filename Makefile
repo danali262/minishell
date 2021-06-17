@@ -35,6 +35,7 @@ SRC = \
 	src/parser/parser_error.c\
 	src/parser/astree.c \
 	src/executor/executor_aux.c \
+	src/executor/strip_quotes.c \
 	src/executor/environment/environment_aux.c \
 	src/executor/environment/env_variable.c \
 	src/executor/environment/env_variable_aux.c \
@@ -53,6 +54,7 @@ SRC = \
 	src/redirection/check_for_redirection.c\
 	src/redirection/implement_redirection.c\
 	src/redirection/redirection_error.c\
+	src/redirection/pipes_aux.c\
 	src/redirection/pipes.c
 
 

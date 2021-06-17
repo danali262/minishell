@@ -42,6 +42,28 @@ char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path, t_shel
 	return (arguments);
 }
 
+void	wait_for_child(pid_t pid, t_shell *shell)
+{
+	int wait_return;
+	int status;
+
+	status = 0;
+	wait_return = 0;
+	wait_return = wait(&status);
+		if (wait_return != pid)
+		{
+			restore_stdio(shell);
+			ft_putstr_fd("wait error\n\r", STDOUT_FILENO);	
+		}
+		if (WIFEXITED(status))
+		{
+			shell->exit_code = WEXITSTATUS(status);
+			// printf("child exited\n\r"); //remove. for debug
+			// printf("exit code: %d\n\r", shell->exit_code); //remove. for debug
+		}
+}
+
+
 /*
 ** WIFEXITED  valuates to nonzero if status was returned by a normally terminated child process. 
 */
@@ -50,7 +72,6 @@ void	create_child_process(char **argv, t_shell *shell)
 {
 	pid_t 		pid;
 	extern char	**environ;
-	int 		status;
 
 	pid = fork();
 	if (pid < 0)
@@ -68,20 +89,7 @@ void	create_child_process(char **argv, t_shell *shell)
 		}
 	}
 	else
-	{
-		int wait_return = wait(&status);
-		if (wait_return != pid)
-		{
-			restore_stdio(shell);
-			ft_putstr_fd("wait error\n\r", STDOUT_FILENO);	
-		}
-		if (WIFEXITED(status))
-		{
-			shell->exit_code = WEXITSTATUS(status);
-			// printf("child exited\n\r"); //remove. for debug
-			// printf("exit code: %d\n\r", shell->exit_code); //remove. for debug
-		}
-	}
+		wait_for_child(pid, shell);
 }
 
 int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
