@@ -6,7 +6,7 @@ int	tok_init(t_token *tok, int datasize, t_lexer_state *lex_state)
 	if (!tok->data)
 		return (-1);
 	tok->data[0] = '\0';
-	tok->type = 0;
+	tok->type = CHAR_EMPTY;
 	tok->next = NULL;
 	lex_state->tokens_nbr++;
 	return (0);
@@ -29,6 +29,7 @@ static void	tok_destroy(t_token *token)
 	{
 		free(token->data);
 		token->data = NULL;
+		token->type = CHAR_EMPTY;
 		tok_destroy(token->next);
 		free(token);
 		token = NULL;

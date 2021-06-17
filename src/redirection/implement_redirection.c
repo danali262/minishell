@@ -37,24 +37,16 @@ static void	implement_node_redirect_app(t_shell *shell)
 	close(shell->redir->fd);
 }
 
-int	implement_redirection(t_treenode *node, t_shell *shell)
+int	implement_redirection(t_shell *shell)
 {
 	int res;
 
-	if (node->type == NODE_REDIRECT_IN)
-	{
+	res = 1;
+	if (shell->redir->redirect_in)
 		res = implement_node_redirect_in(shell);
-		return (res);
-	}
-	if (node->type == NODE_REDIRECT_OUT)
-	{
+	if (shell->redir->redirect_out)
 		implement_node_redirect_out(shell);
-		return (1);
-	}
-	if (node->type == NODE_APPEND)
-	{
+	if (shell->redir->redirect_app)
 		implement_node_redirect_app(shell);
-		return (1);
-	}
-	return (0);
+	return (res);
 }

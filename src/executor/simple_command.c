@@ -103,6 +103,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 		{
 			if (execve(argv[0], argv, environ) == -1)
 			{
+				restore_stdio(shell);
 				printf("minishell: %s\n\r", strerror(errno));
 				shell->exit_code = 126;
 			}
@@ -127,10 +128,10 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 
 	signal(SIGQUIT, quit_execution);
 	simple_cmd_node->data = strip_quotes(simple_cmd_node->data);
-	res = implement_redirection(simple_cmd_node, shell);
+	res = implement_redirection(shell);
 	if (res == -1)
 		return (ERROR);
-	else if (res)
+	else if (shell->redir->redir_nbr > 0)
 		simple_cmd_node = simple_cmd_node->left;
 	if (is_envar(simple_cmd_node))
 	{

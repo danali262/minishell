@@ -22,6 +22,7 @@ typedef struct s_redirection
 	int     redirect_in;
 	int     redirect_out;
 	int		redirect_app;
+	int		redir_nbr;
 	int		pipes_nbr;
 	char	*filename_in;
 	char	*filename_out;
