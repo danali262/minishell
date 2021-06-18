@@ -3,9 +3,8 @@
 
 typedef struct s_termcap_codes
 {
-	char *keyup;
-	char *keydown;
+	char	*keyup;
+	char	*keydown;
 }				t_termcap_codes;
 
 #endif
-
