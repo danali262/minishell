@@ -7,7 +7,9 @@
 
 #include <stdbool.h>
 
+void	run_executor(t_shell *shell);
 void	execute_command_line(t_treenode *top_node, t_shell *shell);
+void	execute_job(t_treenode *job_node, t_shell *shell);
 char	*locate_executable_path(t_treenode *simple_cmd_node);
 int		run_simple_command(t_treenode *simple_cmd_node, t_shell *shell);
 void	wait_for_child(pid_t pid, t_shell *shell);

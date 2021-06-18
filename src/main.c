@@ -16,7 +16,7 @@ int shell_event_loop(t_shell *shell)
     t_treenode      tree;
     t_redirection   redir;
 
-    while (1)
+    while (shell->minishell_exits != true)
 	{
         shell->syntax_tree = &tree;
         shell->redir = &redir;
@@ -24,23 +24,14 @@ int shell_event_loop(t_shell *shell)
         write_prompt();
         catch_signals();
         while (shell->is_command_executed != 1)
-        {
             if (read_input(shell, &origin_attr) == ERROR)
                 return (ERROR);
-        }
         reset_input_mode(&origin_attr, 0);
         parser_result = parse_command_line(shell);
         if (parser_result == -1)
             return (ERROR);
         else if (parser_result != 0)
-        {
-            check_for_redirection(shell->syntax_tree, shell);
-            execute_command_line(shell->syntax_tree, shell);
-            delete_node(&shell->syntax_tree);
-            restore_stdio(shell);
-        }
-        if (shell->minishell_exits == true)
-            return(SUCCESS);
+            run_executor(shell);
         shell->is_command_executed = 0;
 	}
 	return (SUCCESS);
@@ -48,9 +39,9 @@ int shell_event_loop(t_shell *shell)
 
 int init_shell(t_shell *shell)
 {
-    init_terminal_data(shell);
     if (init_command_line(&shell->cmd_line) == ERROR
-            ||  create_env_list(shell) == ERROR)
+        || init_terminal_data(shell) == ERROR
+        || create_env_list(shell) == ERROR)
         return (ERROR);
     init_history(&shell->history);
     shell->is_command_executed = 0;
@@ -70,6 +61,7 @@ void    free_shell_data(t_shell *shell)
 int     main(int argc, char **argv)
 {
     t_shell shell;
+
 
     (void)argv;
     if (argc > 1)
