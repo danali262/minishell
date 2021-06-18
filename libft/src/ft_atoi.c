@@ -6,7 +6,7 @@
 /*   By: osamara <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/09/23 20:22:35 by osamara       #+#    #+#                 */
-/*   Updated: 2021/06/14 14:45:43 by osamara       ########   odam.nl         */
+/*   Updated: 2021/06/18 08:08:03 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,10 @@ int	ft_printf_atoi(const char *start, int *num)
 	return ((int)accumulator);
 }
 
-// static int	handle_accumulator(long long accumulator, int *num, int is_minus, int index)
-// {
-// 	
-// }
-
 static int	handle_negative_num(char c, int *index)
 {
-	if (c== '-')
-    {
+	if (c == '-')
+	{
 		*index = *index + 1;
 		return (1);
 	}
