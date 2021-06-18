@@ -69,7 +69,7 @@ int	get_termcap_codes(char **term_buffer, t_shell *shell)
 	if (shell->termcap_codes.keyup == 0 || shell->termcap_codes.keydown == 0)
 	{
 		printf("Error. Terminal capabilities unavailable.\n");
-		return (0);
+		return (ERROR);
 	}
-	return (1);
+	return (SUCCESS);
 }
