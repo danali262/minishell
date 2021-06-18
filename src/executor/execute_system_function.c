@@ -18,7 +18,7 @@ void	execute_system_function(char **argv, t_shell *shell)
 
 static int	count_system_function_arguments(t_treenode *simple_cmd_node)
 {
-	int	arg_counter;
+	int			arg_counter;
 	t_treenode	*arg_node;
 
 	arg_node = simple_cmd_node->left;
@@ -31,16 +31,16 @@ static int	count_system_function_arguments(t_treenode *simple_cmd_node)
 	return (arg_counter);
 }
 
-char **fill_args_list(t_treenode *simple_cmd_node, char *executable_path,
+char	**fill_args_list(t_treenode *simple_cmd_node, char *executable_path,
 		t_shell *shell)
 {
 	t_treenode	*arg_node;
 	int			arg_counter;
-	char 		**arguments;
-	int 		i;
+	char		**arguments;
+	int			i;
 
 	arg_counter = count_system_function_arguments(simple_cmd_node);
-	arguments = malloc(sizeof(char*) * arg_counter + 1);
+	arguments = malloc(sizeof(char *) * arg_counter + 1);
 	if (arguments == NULL)
 		return (NULL);
 	arguments[0] = executable_path;

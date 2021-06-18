@@ -6,12 +6,12 @@
 
 static char	*handle_data_with_quote(char *arg, char *temp, int *i, int *j)
 {
-    char    quote;
+	char	quote;
 	char	*pairing_quote_pos;
 	size_t	between_quotes_len;
 	size_t	token_len;
 
-    quote = arg[*i];
+	quote = arg[*i];
 	token_len = ft_strlen(arg);
 	between_quotes_len = 0;
 	pairing_quote_pos = ft_strchr(arg + *i + 1, quote);
@@ -22,7 +22,6 @@ static char	*handle_data_with_quote(char *arg, char *temp, int *i, int *j)
 	ft_memcpy(temp + *j, arg + *i + 1, between_quotes_len);
 	*i += between_quotes_len + 2;
 	*j += between_quotes_len;
-
 	return (temp);
 }
 
@@ -46,7 +45,7 @@ char	*strip_quotes(char *arg)
 	int		i;
 	int		j;
 	bool	is_quote_found;
-	
+
 	temp = ft_calloc(ft_strlen(arg) + 1, sizeof(char));
 	if (!temp)
 		return (NULL);
@@ -60,8 +59,8 @@ char	*strip_quotes(char *arg)
 			is_quote_found = true;
 			temp = handle_data_with_quote(arg, temp, &i, &j);
 		}
-        else
-			temp = copy_value_iterate_index(arg[i], temp,  &i, &j);
+		else
+			temp = copy_value_iterate_index(arg[i], temp, &i, &j);
 	}
 	if (is_quote_found == false)
 		return (free_and_return(temp, arg));

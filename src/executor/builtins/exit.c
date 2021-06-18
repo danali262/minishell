@@ -13,7 +13,7 @@ int	exit_with_code(t_treenode *arg_node, t_shell *shell)
 	if (arg_node->data == NULL)
 		return (ERROR);
 	shell->exit_code = ft_minishell_atoi(arg_node->data,
-		&is_numeric_arg);
+			&is_numeric_arg);
 	if (!is_numeric_arg)
 	{
 		printf("minishell: exit: %s: numeric argument required\n\r",

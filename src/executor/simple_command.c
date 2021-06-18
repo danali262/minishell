@@ -12,13 +12,14 @@
 #include <string.h>
 
 /*
-** WIFEXITED  valuates to nonzero if status was returned by a normally terminated child process. 
+** WIFEXITED  valuates to nonzero if status was returned
+** by a normally terminated child process.
 */
 
 void	wait_for_child(pid_t pid, t_shell *shell)
 {
-	int wait_return;
-	int status;
+	int	wait_return;
+	int	status;
 
 	status = 0;
 	wait_return = 0;
@@ -31,7 +32,7 @@ void	wait_for_child(pid_t pid, t_shell *shell)
 
 void	create_child_process(char **argv, t_shell *shell)
 {
-	pid_t 		pid;
+	pid_t	pid;
 
 	pid = fork();
 	check_fork_error(pid, shell);
@@ -45,7 +46,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	char		*executable_path;
 	char		**argv;
-	
+
 	executable_path = NULL;
 	if (simple_cmd_node != NULL)
 		executable_path = locate_executable_path(simple_cmd_node);

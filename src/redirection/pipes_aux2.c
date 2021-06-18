@@ -13,7 +13,7 @@ void	create_copy_of_fd_for_pipes(int **pipes_fd, int index, int pipe_end,
 		newfd = STDIN_FILENO;
 	else if (pipe_end == WRITE)
 		newfd = STDOUT_FILENO;
-		dup_result = dup2(pipes_fd[index][pipe_end], newfd);
+	dup_result = dup2(pipes_fd[index][pipe_end], newfd);
 	if (dup_result < 0)
 	{
 		printf("Error creating copy of file descriptor\n");

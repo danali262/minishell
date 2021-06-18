@@ -27,9 +27,8 @@ char	*concat_path(char *left, char *right)
 	return (path);
 }
 
-char *check_envars_and_quotes(t_treenode *arg_node, t_shell *shell)
+char	*check_envars_and_quotes(t_treenode *arg_node, t_shell *shell)
 {
-	
 	if (is_envar(arg_node))
 	{
 		arg_node->data = handle_argument_with_envvars(arg_node, shell);
@@ -44,9 +43,9 @@ char *check_envars_and_quotes(t_treenode *arg_node, t_shell *shell)
 void	check_fork_error(pid_t pid, t_shell *shell)
 {
 	if (pid < 0)
-		{
-			restore_stdio(shell);
-			printf("Error creating child process.\n\r");
-			exit(errno);
-		}
+	{
+		restore_stdio(shell);
+		printf("Error creating child process.\n\r");
+		exit(errno);
+	}
 }

@@ -5,20 +5,24 @@
 #include <sys/errno.h>
 #include <string.h>
 
+/*
+** need i - 1 to reach the pipe in the pipes array, and it is always less by 1
+**
+*/
+
 void	handle_child_process(t_treenode *node, int **pipes_fd, int i,
 		t_shell *shell)
 {
-	int pipes_num;
+	int	pipes_num;
 
 	pipes_num = shell->redir->pipes_nbr;
 	if (!is_first_command(i))
 	{
-		create_copy_of_fd_for_pipes(pipes_fd, i - 1, READ, shell); //need -1 to reach the pipe in the pipes array, and it is always less by 1
-		close_both_pipe_ends(pipes_fd, i - 1);
+		create_copy_of_fd_for_pipes(pipes_fd, i - 1, READ, shell);
 	}
 	if (!is_last_command(i, pipes_num))
 	{
-		create_copy_of_fd_for_pipes(pipes_fd, i, WRITE, shell); 
+		create_copy_of_fd_for_pipes(pipes_fd, i, WRITE, shell);
 		close_both_pipe_ends(pipes_fd, i);
 		node = node->left;
 	}
@@ -39,12 +43,12 @@ void	handle_parent_process(int **pipes_fd, int i)
 pid_t	*loop_through_pipes(t_treenode *node, int **pipes_fd, t_shell *shell)
 {
 	int		pipes_num;
-    pid_t	*pid_array;
-    pid_t	pid;
-	int 	i;
+	pid_t	*pid_array;
+	pid_t	pid;
+	int		i;
 
 	pipes_num = shell->redir->pipes_nbr;
-	pid_array = (int *)malloc(sizeof(int) * pipes_num + 1);	
+	pid_array = (int *)malloc(sizeof(int) * pipes_num + 1);
 	if (!pid_array)
 		return (NULL);
 	i = 0;
@@ -67,10 +71,10 @@ pid_t	*loop_through_pipes(t_treenode *node, int **pipes_fd, t_shell *shell)
 
 int	handle_pipeline(t_treenode *node, t_shell *shell)
 {
-    pid_t *pid_array;
-	int	**pipes_fd;
-	int pipes_num;
-	int i;
+	pid_t	*pid_array;
+	int		**pipes_fd;
+	int		pipes_num;
+	int		i;
 
 	shell->redir->stdoutfd = dup(STDOUT_FILENO);
 	shell->redir->stdinfd = dup(STDIN_FILENO);
@@ -82,7 +86,7 @@ int	handle_pipeline(t_treenode *node, t_shell *shell)
 	i = 0;
 	while (i <= pipes_num)
 	{
-		wait_for_child(pid_array[i],shell);
+		wait_for_child(pid_array[i], shell);
 		i++;
 	}
 	free_int_array_memory(pipes_fd);

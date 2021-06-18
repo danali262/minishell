@@ -5,6 +5,20 @@
 
 #include <stdlib.h>
 
+int	can_update_env_list(t_shell *shell, char *envar_name, char *string)
+{
+	char		*value_start;
+
+	value_start = NULL;
+	if (ft_strcmp(envar_name, string) != 0)
+	{
+		value_start = string + ft_strlen(envar_name) + 1;
+		if (update_env_list(shell, envar_name, value_start) == ERROR)
+			return (ERROR);
+	}
+	return (SUCCESS);
+}
+
 /*
 **  + 1 in envar_value is needed to skip the '=' sign
 */
