@@ -47,6 +47,7 @@ typedef struct  s_shell
     int				is_command_executed;
     int             exit_code;
 	int             minishell_exits;
+	int				is_newline;
 }               t_shell;
 
 typedef	enum

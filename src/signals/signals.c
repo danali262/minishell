@@ -18,7 +18,7 @@ void	termination_handler(int signum)
 		g_shell->is_command_executed = 1;
 		clear_command_line(&g_shell->cmd_line);
 		ft_putstr_fd("\n\r", STDOUT_FILENO);
-		write_prompt();
+		write_prompt(g_shell);
 	}
 }
 

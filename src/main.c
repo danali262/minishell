@@ -21,7 +21,7 @@ int shell_event_loop(t_shell *shell)
         shell->syntax_tree = &tree;
         shell->redir = &redir;
         init_tree(shell);
-        write_prompt();
+        write_prompt(shell);
         catch_signals();
         while (shell->is_command_executed != 1)
             if (read_input(shell, &origin_attr) == ERROR)
@@ -47,6 +47,7 @@ int init_shell(t_shell *shell)
     shell->is_command_executed = 0;
     shell->exit_code = 0;
     shell->minishell_exits = false;
+    shell->is_newline = true;
     return (SUCCESS);
 }
 
