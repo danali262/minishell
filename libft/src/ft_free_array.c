@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/04/26 10:01:05 by osamara       #+#    #+#                 */
-/*   Updated: 2021/06/18 08:08:17 by osamara       ########   odam.nl         */
+/*   Updated: 2021/06/19 20:44:07 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_array_memory(char **array)
 	while (array[i] != NULL)
 	{
 		free(array[i]);
+		array[i] = NULL;
 		i++;
 	}
 	free(array);

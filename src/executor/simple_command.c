@@ -53,6 +53,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 	if (executable_path != NULL)
 	{
 		argv = fill_args_list(simple_cmd_node, executable_path, shell);
+		executable_path = NULL;
 		if (shell->redir->pipes_nbr == 0)
 			create_child_process(argv, shell);
 		else

@@ -15,11 +15,11 @@ static char	*append_cmd_to_dir(char *directory, char *cmd_alias)
 
 	dir_len = ft_strlen(directory);
 	if (directory[dir_len] != '/')
-	{
 		cmd_path = concat_path(directory, cmd_alias);
-	}
 	else
 		cmd_path = ft_strjoin(directory, cmd_alias);
+	if (cmd_path == NULL)
+		return (NULL);
 	return (cmd_path);
 }
 
@@ -55,15 +55,22 @@ char	*locate_executable_path(t_treenode *simple_cmd_node)
 	char	*cmd_location;
 	int		i;
 
+	if (is_valid_path(simple_cmd_node->data))
+		return (ft_strdup(simple_cmd_node->data));
 	dir_list = get_directories_list();
+	if (dir_list == NULL)
+		return (NULL);
 	i = 0;
 	cmd_location = NULL;
 	while (dir_list[i] != NULL)
 	{
 		cmd_location = append_cmd_to_dir(dir_list[i], simple_cmd_node->data);
+		if (cmd_location == NULL)
+			return (NULL);
 		if (is_valid_path(cmd_location))
 			break ;
 		i++;
+		free(cmd_location);
 		cmd_location = NULL;
 	}
 	free_array_memory(dir_list);
