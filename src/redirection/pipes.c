@@ -19,6 +19,7 @@ void	handle_child_process(t_treenode *node, int **pipes_fd, int i,
 	if (!is_first_command(i))
 	{
 		create_copy_of_fd_for_pipes(pipes_fd, i - 1, READ, shell);
+		close_both_pipe_ends(pipes_fd, i - 1);
 	}
 	if (!is_last_command(i, pipes_num))
 	{
