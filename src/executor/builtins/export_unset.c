@@ -22,7 +22,10 @@ int	execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 			if (envar_name == NULL)
 				return (ERROR);
 			if (can_update_env_list(shell, envar_name, arg_node->data) == ERROR)
+			{
+				free(envar_name);
 				return (ERROR);
+			}
 			arg_node = arg_node->left;
 		}
 	}
