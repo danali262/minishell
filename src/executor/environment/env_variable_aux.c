@@ -33,9 +33,8 @@ char	*create_substring(char *start, size_t len)
 	char	*temp;
 
     temp = NULL;
-    if (len == 0)
-        return (temp);
-	temp = malloc(len + 1);
+    if (len != 0)
+		temp = malloc(len + 1);
 	if (!temp)
 		return (NULL);
 	ft_memmove(temp, start, len);
