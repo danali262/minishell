@@ -21,7 +21,7 @@ t_treenode	*redirlist(t_curtok *curtok)
 	return (NULL);
 }
 
-t_treenode	*redirlist1(t_curtok *curtok)	/* <redirection> <redirection list> */
+t_treenode	*redirlist1(t_curtok *curtok)
 {
 	t_treenode	*redirlistNode;
 	t_treenode	*root;
@@ -38,16 +38,12 @@ t_treenode	*redirlist1(t_curtok *curtok)	/* <redirection> <redirection list> */
 	redirlistNode = redirlist(curtok);
 	if (redirlistNode == NULL)
 		return (NULL);
-	if (ft_strcmp(operator, "<") == 0)
-		root = multiple_redirection_create_root(root, redirlistNode, filename, 1);
-	else if (ft_strcmp(operator, ">") == 0)
-		root = multiple_redirection_create_root(root, redirlistNode, filename, 2);
-	else
-		root = multiple_redirection_create_root(root, redirlistNode, filename, 3);
+	root = handle_root_redirection_multiple(root, redirlistNode, operator,
+			filename);
 	return (root);
 }
 
-t_treenode	*redirlist2(t_curtok *curtok)	/* <redirection> <filenames> */
+t_treenode	*redirlist2(t_curtok *curtok)
 {
 	t_treenode	*root;
 	t_treenode	*fileNode_right;
@@ -68,12 +64,8 @@ t_treenode	*redirlist2(t_curtok *curtok)	/* <redirection> <filenames> */
 	if (!fileNode_right)
 		parser_error(fileNode_right);
 	set_node_data_type(fileNode_right, filename_right, NODE_FILE);
-	if (ft_strcmp(operator, "<") == 0)
-		root = multiple_redirection_create_root(root, fileNode_right, filename_left, 1);
-	else if (ft_strcmp(operator, ">") == 0)
-		root = multiple_redirection_create_root(root, fileNode_right, filename_left, 2);
-	else
-		root = multiple_redirection_create_root(root, fileNode_right, filename_left, 3);
+	root = handle_root_redirection_multiple(root, fileNode_right, operator,
+			filename_left);
 	return (root);
 }
 

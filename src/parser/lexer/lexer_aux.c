@@ -39,6 +39,6 @@ static void	tok_destroy(t_token *token)
 void	lexer_destroy(t_lexer_state *lex_state)
 {
 	if (lex_state == NULL)
-		return;
+		return ;
 	tok_destroy(lex_state->tokens_list);
 }

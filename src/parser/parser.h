@@ -40,14 +40,35 @@ void		set_node_data_type(t_treenode *node, char *data,
 				t_nodetype nodetype);
 void		attach_tree_branch(t_treenode *root, t_treenode *leftNode,
 				t_treenode *rightNode);
+t_treenode	*create_node(t_treenode *root, char *operator);
+t_treenode	*handle_root_redirection(t_treenode *root, t_treenode
+				*simplecmd, char *operator, char *filename);
+t_treenode	*handle_root_redirection_multiple(t_treenode *root, t_treenode
+				*node, char *operator, char *filename);
+t_treenode	*handle_redirect_in_single(t_treenode *root, t_treenode *left_node,
+				t_treenode *right_node, char *filename);
+t_treenode	*handle_redirect_out_single(t_treenode *root, t_treenode *left_node,
+				t_treenode *right_node, char *filename);
+t_treenode	*handle_append_single(t_treenode *root, t_treenode *left_node,
+				t_treenode *right_node, char *filename);
+t_treenode	*handle_rhombus_single(t_treenode *root, t_treenode *left_node,
+				t_treenode *right_node, char *filename);
+t_treenode	*handle_redirect_in_multiple(t_treenode *root, t_treenode *left_node,
+				t_treenode *right_node, char *filename);
+t_treenode	*handle_redirect_out_multiple(t_treenode *root, t_treenode *left_node,
+				t_treenode *right_node, char *filename);
+t_treenode	*handle_append_multiple(t_treenode *root, t_treenode *left_node,
+				t_treenode *right_node, char *filename);
+t_treenode	*handle_rhombus_multiple(t_treenode *root, t_treenode *left_node,
+				t_treenode *right_node, char *filename);
 
 int			handle_vars_and_args(char *arg);
 char		*create_arg(char *arg, t_treenode *node);
 
-t_treenode	*multiple_redirection_create_root(t_treenode *root, t_treenode *right_node,
-				char *filename, int opt);
-t_treenode	*simple_redirection_create_root(t_treenode *root, t_treenode *simplecmdNode,
-				char *filename, int opt);
+t_treenode	*multiple_redirection_create_root(t_treenode *root, t_treenode
+				*right_node, char *filename, int opt);
+t_treenode	*simple_redirection_create_root(t_treenode *root, t_treenode
+				*simplecmdNode, char *filename, int opt);
 void		handle_node_arg(t_treenode *root, t_treenode *tokenlist, char *arg);
 void		handle_node_var(t_treenode *root, t_treenode *tokenlist, char *arg);
 void		handle_both_nodes(t_treenode *root, char *arg);

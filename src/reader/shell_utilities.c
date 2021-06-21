@@ -14,4 +14,5 @@ void	init_tree(t_shell *shell)
 	shell->redir->filename_in = NULL;
 	shell->redir->filename_out = NULL;
 	shell->redir->filename_app = NULL;
+	shell->redir->saved_nodetype = NODE_EMPTY;
 }
