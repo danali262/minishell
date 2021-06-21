@@ -9,17 +9,21 @@ int	is_envar(t_treenode *arg_node)
 	return (true);
 }
 
-char 	*update_argument(char *new_arg_value, char *temp)
+char	*update_argument(char *new_arg_value, char *temp)
 {
 	char	*temp_arg_value;
 
 	temp_arg_value = NULL;
 	if (new_arg_value == NULL)
-		temp_arg_value = ft_strdup(temp);
+		temp_arg_value = temp;
 	else
 		temp_arg_value = ft_strjoin(new_arg_value, temp);
 	if (!temp_arg_value)
+	{
+		free(temp);
+		free(new_arg_value);
 		return (NULL);
+	}
 	free(new_arg_value);
 	return (temp_arg_value);
 }
@@ -28,6 +32,9 @@ char	*create_substring(char *start, size_t len)
 {
 	char	*temp;
 
+    temp = NULL;
+    if (len == 0)
+        return (temp);
 	temp = malloc(len + 1);
 	if (!temp)
 		return (NULL);
@@ -35,6 +42,10 @@ char	*create_substring(char *start, size_t len)
 	temp[len] = '\0';
 	return (temp);
 }
+
+/*
+** environment variables cannot be non-alphanum except for $?
+*/
 
 char	*create_substr_with_envar_value(char *search_start, char *envvar_start,
 		size_t	*offset, t_shell *shell)
@@ -61,6 +72,7 @@ char	*create_substr_with_envar_value(char *search_start, char *envvar_start,
 	return (temp);
 }
 
+
 char	*create_new_argument_string(char *search_start, t_shell *shell)
 {
 	char	*envvar_start;
@@ -80,11 +92,17 @@ char	*create_new_argument_string(char *search_start, t_shell *shell)
 		temp = create_substr_with_envar_value(search_start, envvar_start,
 				&offset, shell);
 		if (temp != NULL)
+		{
 			new_arg_value = update_argument(new_arg_value, temp);
+			if (new_arg_value == NULL)
+				return (NULL);
+		}
 		search_start += offset;
-		free(temp);
 	}
-	temp = create_substring(search_start, ft_strlen(search_start));
-	new_arg_value = update_argument(new_arg_value, temp);
+    if (*search_start != '\0')
+    {
+		temp = create_substring(search_start, ft_strlen(search_start));
+		new_arg_value = update_argument(new_arg_value, temp);
+    }
 	return (new_arg_value);
 }
