@@ -37,7 +37,7 @@ char	*get_envar_value(char *command, t_shell *shell)
 	value = NULL;
 	while (envar_node->next != NULL)
 	{
-		if (ft_strncmp(envar_node->name, command, ft_strlen(command) + 1) == 0)
+		if (ft_strcmp(envar_node->name, command) == 0)
 		{
 			value = ft_strdup(envar_node->value);
 			break ;
@@ -74,9 +74,8 @@ int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 	return (SUCCESS);
 }
 
-
-char	*replace_name_with_value(char *envvar_start, t_shell *shell, size_t *envvar_len,
-		bool is_in_str)
+char	*replace_name_with_value(char *envvar_start, t_shell *shell,
+			size_t *envvar_len)
 {
 	char	*value;
 	char	*envvar_name;
@@ -86,22 +85,17 @@ char	*replace_name_with_value(char *envvar_start, t_shell *shell, size_t *envvar
 	envvar_name = NULL;
 	if (envvar_start[1] == '?')
 	{
-		value = replace_dollar_question(envvar_start, shell, is_in_str);
+		value = replace_dollar_question(shell);
 		*envvar_len = 2;
 	}
 	else
 	{
-		if (!is_in_str)
-			envvar_name = envvar_start;
-		else		
-		{
-			i = 1;
-			while (ft_isalnum(envvar_start[i]))
-				i++;
-			*envvar_len = i;
-			envvar_name = create_substring(envvar_start + 1, i - 1);
-			value = get_envar_value(envvar_name, shell);
-		}
+		i = 1;
+		while (ft_isalnum(envvar_start[i]))
+			i++;
+		*envvar_len = i;
+		envvar_name = create_substring(envvar_start + 1, i - 1);
+		value = get_envar_value(envvar_name, shell);
 	}
 	return (value);
 }

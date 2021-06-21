@@ -7,9 +7,7 @@ int	execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	t_treenode	*arg_node;
 	char		*envar_name;
-	char		*value_start;
 
-	value_start = NULL;
 	if (simple_cmd_node->left == NULL)
 		execute_env(simple_cmd_node, shell);
 	else
@@ -23,11 +21,10 @@ int	execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 			envar_name = get_envar_name(arg_node->data);
 			if (envar_name == NULL)
 				return (ERROR);
-			if (ft_strcmp(envar_name, arg_node->data) != 0)
+			if (can_update_env_list(shell, envar_name, arg_node->data) == ERROR)
 			{
-				value_start = arg_node->data + ft_strlen(envar_name) + 1;
-				if (update_env_list(shell, envar_name, value_start) == ERROR)
-					return (ERROR);
+				free(envar_name);
+				return (ERROR);
 			}
 			arg_node = arg_node->left;
 		}
