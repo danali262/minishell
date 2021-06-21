@@ -27,6 +27,7 @@ typedef struct s_redirection
 	char	*filename_in;
 	char	*filename_out;
 	char	*filename_app;
+	int		saved_nodetype;
 	int		fd;
 	int		stdoutfd;
 	int		stdinfd;
@@ -56,11 +57,12 @@ typedef	enum
 	NODE_REDIRECT_IN,					/* 2. < */
 	NODE_REDIRECT_OUT,					/* 3. > */
 	NODE_APPEND,						/* 4. >> */
-	NODE_FILE,							/* 5. filename */
-	NODE_PATH,							/* 6. pathname */
-	NODE_ARG,							/* 7 argument */
-	NODE_VAR,							/* 8. variable */
-	NODE_EMPTY							/* 9. empty */
+	NODE_RHOMBUS,						/* 5. <> */
+	NODE_FILE,							/* 6. filename */
+	NODE_PATH,							/* 7. pathname */
+	NODE_ARG,							/* 8. argument */
+	NODE_VAR,							/* 9. variable */
+	NODE_EMPTY							/* 10. empty */
 }		t_nodetype;
 
 int		parse_command_line(t_shell *shell);

@@ -130,7 +130,10 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 	simple_cmd_node->data = strip_quotes(simple_cmd_node->data);
 	res = implement_redirection(shell);
 	if (res == -1)
+	{
+		restore_stdio(shell);
 		return (ERROR);
+	}
 	else if (shell->redir->redir_nbr > 0)
 		simple_cmd_node = simple_cmd_node->left;
 	if (is_envar(simple_cmd_node))

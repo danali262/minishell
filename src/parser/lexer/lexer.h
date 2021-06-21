@@ -44,7 +44,8 @@ enum	e_tokentype
 	CHAR_NEWLINE = '\n',
 	CHAR_GREATER = '>',
 	CHAR_LESSER = '<',
-	CHAR_APPEND, 
+	CHAR_APPEND,
+	CHAR_RHOMBUS,
 	CHAR_EMPTY = '\0',
 	CHAR_REDIR,
 	TOKEN = -1
@@ -76,6 +77,5 @@ t_token	*process_dquote_state(t_lexer_state *lex_state, t_token *token,
 t_token	*process_quote_state(t_lexer_state *lex_state,
 			t_token *token, t_counters *count);
 void	lexer_destroy(t_lexer_state *lex_state);
-
 
 #endif

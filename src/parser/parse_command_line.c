@@ -15,8 +15,8 @@
 
 static void	check_for_append(t_lexer_state *lex_state)
 {
-	t_token *head;
-	t_token *temp;
+	t_token	*head;
+	t_token	*temp;
 
 	head = lex_state->tokens_list;
 	while (head != NULL)
@@ -31,18 +31,41 @@ static void	check_for_append(t_lexer_state *lex_state)
 			lex_state->tokens_nbr--;
 		}
 		else
-			head = head->next; 
+			head = head->next;
+	}
+}
+
+static void	check_for_rhombus(t_lexer_state *lex_state)
+{
+	t_token	*head;
+	t_token	*temp;
+
+	head = lex_state->tokens_list;
+	while (head != NULL)
+	{
+		if (head->type == '<' && head->next->type == '>')
+		{
+			free(head->data);
+			head->data = ft_strdup("<>");
+			head->type = CHAR_RHOMBUS;
+			temp = head->next->next;
+			head->next = temp;
+			lex_state->tokens_nbr--;
+		}
+		else
+			head = head->next;
 	}
 }
 
 static void	count_redir(t_lexer_state *lex_state, t_shell *shell)
 {
-	t_token *head;
+	t_token	*head;
 
 	head = lex_state->tokens_list;
 	while (head != NULL)
 	{
-		if (head->type == CHAR_GREATER || head->type == CHAR_LESSER || head->type == CHAR_APPEND)
+		if (head->type == CHAR_GREATER || head->type == CHAR_LESSER
+			|| head->type == CHAR_APPEND || head->type == CHAR_RHOMBUS)
 			shell->redir->redir_nbr++;
 		head = head->next;
 	}
@@ -50,7 +73,7 @@ static void	count_redir(t_lexer_state *lex_state, t_shell *shell)
 
 static void	count_pipes(t_lexer_state *lex_state, t_shell *shell)
 {
-	t_token *head;
+	t_token	*head;
 
 	head = lex_state->tokens_list;
 	while (head != NULL)
@@ -73,12 +96,14 @@ int	parse_command_line(t_shell *shell)
 	else if (lexer_result == 0)
 		return (0);
 	check_for_append(&lex_state);
+	check_for_rhombus(&lex_state);
 	// printf("tokens with quotes:\n");
 	// print_tokens(lex_state.tokens_list);        /* to be deleted */
 	// printf("number of tokens is %d\n", lex_state.tokens_nbr);
 	count_redir(&lex_state, shell);
 	count_pipes(&lex_state, shell);
-	parser(&lex_state, shell);
+	if (parser(&lex_state, shell) == -1)
+		return (0);
 	lexer_destroy(&lex_state);
 	return (1);
 }
