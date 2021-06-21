@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 16:27:42 by osamara       #+#    #+#                 */
-/*   Updated: 2021/03/02 13:27:30 by osamara       ########   odam.nl         */
+/*   Updated: 2021/06/18 08:06:07 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ char	*ft_strchr(const char *s, int c)
 		}
 		else
 		{
-			return ((char*)s);
+			return ((char *)s);
 		}
 	}
 	if (c == '\0')
 	{
-		return ((char*)s);
+		return ((char *)s);
 	}
 	return (NULL);
 }

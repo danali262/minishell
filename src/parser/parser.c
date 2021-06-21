@@ -22,7 +22,8 @@ int	parser(t_lexer_state *lex_state, t_shell *shell)
 		ft_putstr_fd("Syntax Error near: ", STDOUT_FILENO);
 		ft_putstr_fd(curtok.current_token->data, STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
-		return (-1);
+		shell->exit_code = 258;
+		return (ERROR);
 	}
 	// if (shell->syntax_tree == NULL) /* to be deleted */
 	// 	printf("syntax tree is NULL\n");
@@ -31,5 +32,5 @@ int	parser(t_lexer_state *lex_state, t_shell *shell)
 	// 	printf("syntax tree is:\n");
 	// 	print_tree(shell->syntax_tree);
 	// }
-	return (1);
+	return (SUCCESS);
 }

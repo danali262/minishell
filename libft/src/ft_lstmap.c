@@ -6,7 +6,7 @@
 /*   By: osamara <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/06 14:42:47 by osamara       #+#    #+#                 */
-/*   Updated: 2021/03/02 13:25:58 by osamara       ########   odam.nl         */
+/*   Updated: 2021/06/18 08:06:27 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	ptr = lst;
 	while (ptr != NULL)
 	{
-		*nptr = (t_list*)malloc(sizeof(t_list));
+		*nptr = (t_list *)malloc(sizeof(t_list));
 		if (*nptr == NULL)
 		{
 			ft_lstclear(&new_lst, del);

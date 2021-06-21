@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/29 17:23:46 by osamara       #+#    #+#                 */
-/*   Updated: 2021/03/02 13:24:12 by osamara       ########   odam.nl         */
+/*   Updated: 2021/06/18 08:06:50 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*ft_strrchr(const char *s, int c)
 	ptr = s + ft_strlen(s);
 	if (((char)c) == '\0')
 	{
-		return (((char*)ptr));
+		return (((char *)ptr));
 	}
 	while (ptr != s - 1)
 	{
@@ -29,7 +29,7 @@ char	*ft_strrchr(const char *s, int c)
 		}
 		else
 		{
-			return (((char*)ptr));
+			return (((char *)ptr));
 		}
 	}
 	return (NULL);

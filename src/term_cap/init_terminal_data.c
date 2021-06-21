@@ -24,28 +24,38 @@ int	init_terminal_data(t_shell *shell)
 
 	term_buffer = malloc(2048);
 	if (!term_buffer)
-		return (0);
+		return (ERROR);
 	shell->term_buffer = term_buffer;
 	term_type = getenv("TERM");
 	if (term_type == NULL)
 	{
 		printf("The terminal type is not defined.");
-		return (0);
+		return (ERROR);
 	}
+	result = find_term_type_description(term_type, term_buffer);
+	if (result == ERROR)
+		return (ERROR);
+	if (get_termcap_codes(&term_buffer, shell) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
+}
+
+int	find_term_type_description(char *term_type, char *term_buffer)
+{
+	int	result;
+
 	result = tgetent(term_buffer, term_type);
 	if (result < 0)
 	{
 		printf("The termcap database cannot be found.");
-		return (0);
+		return (ERROR);
 	}
 	else if (result == 0)
 	{
 		printf("The terminal type is not defined.");
-		return (0);
+		return (ERROR);
 	}
-	if (!get_termcap_codes(&term_buffer, shell))
-		return (0);
-	return (1);
+	return (SUCCESS);
 }
 
 /*
@@ -56,10 +66,10 @@ int	get_termcap_codes(char **term_buffer, t_shell *shell)
 {	
 	shell->termcap_codes.keyup = tgetstr("ku", term_buffer);
 	shell->termcap_codes.keydown = tgetstr("kd", term_buffer);
-	if (shell->termcap_codes.keyup  == 0 || shell->termcap_codes.keydown == 0)
+	if (shell->termcap_codes.keyup == 0 || shell->termcap_codes.keydown == 0)
 	{
-		ft_putstr_fd("Error. Terminal capabilities unavailable.\n", STDOUT_FILENO);
-		return (0);
+		printf("Error. Terminal capabilities unavailable.\n");
+		return (ERROR);
 	}
-	return (1);
+	return (SUCCESS);
 }
