@@ -102,5 +102,7 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 		if (run_cmd_executable(simple_cmd_node, shell) == ERROR)
 			return (ERROR);
 	}
+	if (shell->redir->semi_nbr > 0 || shell->redir->pipes_nbr > 0)
+		restore_stdio(shell);
 	return (SUCCESS);
 }
