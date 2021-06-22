@@ -21,7 +21,7 @@ static void	redirect_rhombus(t_treenode *syntax_tree)
 	free(filename);
 }
 
-static void	simple_redirection(t_treenode *syntax_tree, t_shell *shell)
+void	simple_redirection(t_treenode *syntax_tree, t_shell *shell)
 {
 	if (!syntax_tree)
 		return ;

@@ -80,6 +80,8 @@ static void	count_pipes(t_lexer_state *lex_state, t_shell *shell)
 	{
 		if (head->type == CHAR_PIPE)
 			shell->redir->pipes_nbr++;
+		if (head->type == CHAR_SEMICOLON)
+			shell->redir->semi_nbr++;
 		head = head->next;
 	}
 }

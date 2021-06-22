@@ -18,7 +18,7 @@ static int	implement_node_redirect_in(t_shell *shell)
 static void	implement_node_redirect_out(t_shell *shell)
 {
 	shell->redir->fd = open(shell->redir->filename_out, O_WRONLY | O_CREAT
-			| O_TRUNC, 0666);
+			| O_TRUNC, 0777);
 	if ((shell->redir->fd < 0) || (dup2(shell->redir->fd, STDOUT_FILENO)
 			< 0))
 		redirection_error(shell, 2);
@@ -28,7 +28,7 @@ static void	implement_node_redirect_out(t_shell *shell)
 static void	implement_node_redirect_app(t_shell *shell)
 {
 	shell->redir->fd = open(shell->redir->filename_app, O_WRONLY | O_CREAT
-			| O_APPEND, 0666);
+			| O_APPEND, 0777);
 	if ((shell->redir->fd < 0) || (dup2(shell->redir->fd, STDOUT_FILENO)
 			< 0))
 		redirection_error(shell, 3);

@@ -11,6 +11,7 @@ void	init_tree(t_shell *shell)
 	shell->redir->redirect_app = 0;
 	shell->redir->redir_nbr = 0;
 	shell->redir->pipes_nbr = 0;
+	shell->redir->semi_nbr = 0;
 	shell->redir->filename_in = NULL;
 	shell->redir->filename_out = NULL;
 	shell->redir->filename_app = NULL;

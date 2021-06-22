@@ -11,7 +11,8 @@
 
 void	run_executor(t_shell *shell)
 {
-	check_for_redirection(shell->syntax_tree, shell);
+	if (shell->redir->semi_nbr == 0 && shell->redir->pipes_nbr == 0)
+		check_for_redirection(shell->syntax_tree, shell);
 	execute_command_line(shell->syntax_tree, shell);
 	delete_node(&shell->syntax_tree);
 	restore_stdio(shell);

@@ -76,6 +76,8 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 	int		res;
 	char	*command;
 
+	if (shell->redir->semi_nbr > 0 || shell->redir->pipes_nbr > 0)
+		simple_redirection(simple_cmd_node, shell);
 	signal(SIGQUIT, quit_execution);
 	simple_cmd_node->data = strip_quotes(simple_cmd_node->data);
 	res = implement_redirection(shell);
