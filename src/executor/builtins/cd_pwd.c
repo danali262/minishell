@@ -27,10 +27,27 @@ int	execute_pwd(t_treenode *simple_cmd_node, t_shell *shell)
 	return (SUCCESS);
 }
 
+static char	*get_path_to_new_working_directory(char	*path)
+{
+	char		*updated_path;
+	char		pwd_value[256];
+
+	updated_path = NULL;
+	if (path[0] == '/')
+		updated_path = ft_strdup(path);
+	else
+	{
+		updated_path = concat_path(getcwd(pwd_value, sizeof(pwd_value)),
+				path);
+		if (updated_path == NULL)
+			return (NULL);
+	}
+	return (updated_path);
+}
+
 static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 {
 	char		*updated_cwd;
-	char		pwd_value[256];
 
 	updated_cwd = NULL;
 	if (arg_node == NULL)
@@ -40,15 +57,9 @@ static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 		arg_node->data = check_envars_and_quotes(arg_node, shell);
 		if (arg_node->data == NULL)
 			return (NULL);
-		if (arg_node->data[0] == '/')
-			updated_cwd = ft_strdup(arg_node->data);
-		else
-		{
-			updated_cwd = concat_path(getcwd(pwd_value, sizeof(pwd_value)),
-					arg_node->data);
-			if (updated_cwd == NULL)
-				return (NULL);
-		}
+		updated_cwd = get_path_to_new_working_directory(arg_node->data);
+		if (updated_cwd == NULL)
+			return (NULL);
 	}
 	if (chdir(updated_cwd) != 0)
 	{

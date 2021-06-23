@@ -9,18 +9,18 @@
 # define ERROR 1
 # define SUCCESS 0
 
-typedef struct  s_treenode
+typedef struct s_treenode
 {
-    int						type;
-    char					*data;
-    struct	s_treenode		*left;
-    struct	s_treenode		*right;
-}               t_treenode;
+	int						type;
+	char					*data;
+	struct s_treenode		*left;
+	struct s_treenode		*right;
+}				t_treenode;
 
 typedef struct s_redirection
 {
-	int     redirect_in;
-	int     redirect_out;
+	int		redirect_in;
+	int		redirect_out;
 	int		redirect_app;
 	int		redir_nbr;
 	int		pipes_nbr;
@@ -36,39 +36,48 @@ typedef struct s_redirection
 	int		pipe_write;
 }			t_redirection;
 
-
-typedef struct  s_shell
+typedef struct s_shell
 {
-    t_treenode		*syntax_tree;
+	t_treenode		*syntax_tree;
 	t_history		history;
-    t_line			cmd_line;
-    t_termcap_codes	termcap_codes;
-    t_redirection   *redir;
-    char            *term_buffer;
-    t_envlist		*env_list;
-    int				is_command_executed;
-    int             exit_code;
-	int             minishell_exits;
+	t_line			cmd_line;
+	t_termcap_codes	termcap_codes;
+	t_redirection	*redir;
+	char			*term_buffer;
+	t_envlist		*env_list;
+	int				is_command_executed;
+	int				exit_code;
+	int				minishell_exits;
 	int				is_newline;
-}               t_shell;
+}				t_shell;
+
+/* 0. ; */
+/* 1. | */
+/* 2. < */
+/* 3. > */
+/* 4. >> */
+/* 5. <> */
+/* 6. filename */
+/* 7. pathname */
+/* 9. variable */
+/* 10. empty */
 
 typedef	enum
 {
-	NODE_SEMI,							/* 0. ; */
-	NODE_PIPE,							/* 1. | */
-	NODE_REDIRECT_IN,					/* 2. < */
-	NODE_REDIRECT_OUT,					/* 3. > */
-	NODE_APPEND,						/* 4. >> */
-	NODE_RHOMBUS,						/* 5. <> */
-	NODE_FILE,							/* 6. filename */
-	NODE_PATH,							/* 7. pathname */
-	NODE_ARG,							/* 8. argument */
-	NODE_VAR,							/* 9. variable */
-	NODE_EMPTY							/* 10. empty */
+	NODE_SEMI,
+	NODE_PIPE,
+	NODE_REDIRECT_IN,
+	NODE_REDIRECT_OUT,
+	NODE_APPEND,
+	NODE_RHOMBUS,
+	NODE_FILE,
+	NODE_PATH,
+	NODE_ARG,
+	NODE_VAR,
+	NODE_EMPTY		
 }		t_nodetype;
 
 int		parse_command_line(t_shell *shell);
 int		parser(t_lexer_state *lex_state, t_shell *shell);
-void    init_tree(t_shell *syntax_tree);
 
 #endif

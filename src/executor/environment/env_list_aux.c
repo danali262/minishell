@@ -29,9 +29,7 @@ void	ft_env_lstadd_back(t_envlist **lst, t_envlist *new)
 	{
 		ptr = *lst;
 		while (ptr->next != NULL)
-		{
 			ptr = ptr->next;
-		}
 		ptr->next = new;
 	}
 }
