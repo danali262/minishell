@@ -2,13 +2,6 @@
 
 #include "libft.h"
 
-int	is_envar(t_treenode *arg_node)
-{
-	if (ft_strchr(arg_node->data, '$') == NULL)
-		return (false);
-	return (true);
-}
-
 char	*update_argument(char *new_arg_value, char *temp)
 {
 	char	*temp_arg_value;
@@ -74,6 +67,7 @@ char	*create_substr_with_envar_value(char *search_start, char *envvar_start,
 static char	*concat_non_envar_chunk(char *search_start, char *new_arg_value)
 {
 	char	*temp;
+
 	if (*search_start != '\0')
 	{
 		temp = create_substring(search_start, ft_strlen(search_start));

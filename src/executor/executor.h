@@ -19,11 +19,11 @@ void		ft_env_lstadd_back(t_envlist **lst, t_envlist *new);
 void		ft_env_lstadd_before_last_node(t_envlist **lst, t_envlist *new);
 void		ft_env_lstdelone(t_envlist **lst);
 void		free_env_list(t_envlist *lst, void (*f)(t_envlist **));
-
 void		run_executor(t_shell *shell);
 void		execute_command_line(t_treenode *top_node, t_shell *shell);
 void		execute_job(t_treenode *job_node, t_shell *shell);
-char		*locate_executable_path(t_treenode *simple_cmd_node, t_shell *shell);
+char		*locate_executable_path(t_treenode *simple_cmd_node,
+				t_shell *shell);
 int			run_simple_command(t_treenode *simple_cmd_node, t_shell *shell);
 void		wait_for_child(pid_t pid, t_shell *shell);
 void		execute_system_function(char **argv, t_shell *shell);
