@@ -21,6 +21,16 @@ static void	check_node_type(t_treenode *node, t_shell *shell)
 		shell->redir->redirect_app = 1;
 }
 
+static void turn_off_redirect_flag(t_treenode *node, t_shell *shell)
+{
+	if (node->type == NODE_REDIRECT_IN)
+		shell->redir->redirect_in = 0;
+	if (node->type == NODE_REDIRECT_OUT)
+		shell->redir->redirect_out = 0;
+	if (node->type == NODE_APPEND)
+		shell->redir->redirect_app = 0;
+}
+
 static void	handle_multiple_append(t_treenode *node, int saved_type, t_shell
 	*shell)
 {
@@ -39,6 +49,15 @@ static void	handle_multiple_append(t_treenode *node, int saved_type, t_shell
 
 static void	execute_multiple_redirection(t_treenode *node, t_shell *shell)
 {
+	int fd;
+
+	if (shell->redir->redir_nbr > 2)
+	{
+		fd = open(node->left->data, O_WRONLY | O_CREAT,
+			0666);
+		close(fd);
+		assign_file_multiple(node->right, shell, node->type);
+	}
 	if (shell->redir->saved_nodetype == NODE_APPEND || node->type == NODE_APPEND)
 		handle_multiple_append(node, shell->redir->saved_nodetype, shell);
 	else
@@ -51,6 +70,7 @@ static void	execute_multiple_redirection(t_treenode *node, t_shell *shell)
 void	multiple_redirection(t_treenode *syntax_tree, t_shell *shell)
 {
 	int	i;
+	int fd;
 
 	i = 0;
 	check_node_type(syntax_tree, shell);
@@ -65,6 +85,10 @@ void	multiple_redirection(t_treenode *syntax_tree, t_shell *shell)
 			|| syntax_tree->right->type == NODE_REDIRECT_OUT
 			|| syntax_tree->right->type == NODE_APPEND)
 		{
+			fd = open(syntax_tree->left->data, O_WRONLY | O_CREAT,
+				0666);
+			close(fd);
+			turn_off_redirect_flag(syntax_tree, shell);
 			syntax_tree = syntax_tree->right;
 			continue ;
 		}

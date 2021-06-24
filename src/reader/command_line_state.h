@@ -5,7 +5,7 @@
 # include <limits.h>
 
 # define BUF_SIZE ARG_MAX
-# define PROMPT "minishell-0.90$ "
+# define PROMPT "minishell-0.91$ "
 // # define PROMPT "bash-3.2$ "
 
 typedef struct s_line
