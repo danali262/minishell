@@ -36,10 +36,7 @@ int	create_env_list(t_shell *shell)
 	while (environ[i] != NULL)
 	{
 		envar_name = get_envar_name(environ[i]);
-		if (ft_strncmp(envar_name, "_", 2) == 0)
-			envar_value = ft_strdup("");
-		else
-			envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
+		envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
 		if (!envar_name || !envar_value)
 			return (ERROR);
 		add_to_env_list(envar_name, envar_value, &shell->env_list);
