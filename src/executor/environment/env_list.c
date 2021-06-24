@@ -35,11 +35,8 @@ int	create_env_list(t_shell *shell)
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		envar_name = get_envar_name(environ[i]);
-		if (ft_strncmp(envar_name, "_", 2) == 0)
-			envar_value = ft_strdup("");
-		else
-			envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
+		envar_name = create_envar_name(environ[i]);
+		envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
 		if (!envar_name || !envar_value)
 			return (ERROR);
 		add_to_env_list(envar_name, envar_value, &shell->env_list);
@@ -65,12 +62,13 @@ int	update_env_list(t_shell *shell, char *envar_name, char *value_start)
 	char		*envar_value;
 	t_envlist	*envar_node;
 
+	envar_value = NULL;
 	change_value_res = change_env_value(shell, envar_name, value_start);
 	if (change_value_res == ERROR)
 		return (ERROR);
 	else if (change_value_res == NOT_IN_ENVLIST)
 	{
-		envar_value = ft_strtrim(value_start, "'\"");
+		envar_value = ft_strdup(value_start);
 		if (envar_value == NULL)
 			return (ERROR);
 		envar_node = ft_env_lstnew(envar_name, envar_value);

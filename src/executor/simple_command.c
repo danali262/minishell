@@ -49,7 +49,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 
 	executable_path = NULL;
 	if (simple_cmd_node != NULL)
-		executable_path = locate_executable_path(simple_cmd_node);
+		executable_path = locate_executable_path(simple_cmd_node, shell);
 	if (executable_path != NULL)
 	{
 		argv = fill_args_list(simple_cmd_node, executable_path, shell);
@@ -76,9 +76,9 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 	int		res;
 	char	*command;
 
+	signal(SIGQUIT, quit_execution);
 	if (shell->redir->semi_nbr > 0 || shell->redir->pipes_nbr > 0)
 		simple_redirection(simple_cmd_node, shell);
-	signal(SIGQUIT, quit_execution);
 	simple_cmd_node->data = strip_quotes(simple_cmd_node->data);
 	res = implement_redirection(shell);
 	if (res == -1)

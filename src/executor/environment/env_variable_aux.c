@@ -2,13 +2,6 @@
 
 #include "libft.h"
 
-int	is_envar(t_treenode *arg_node)
-{
-	if (ft_strchr(arg_node->data, '$') == NULL)
-		return (false);
-	return (true);
-}
-
 char	*update_argument(char *new_arg_value, char *temp)
 {
 	char	*temp_arg_value;
@@ -32,8 +25,8 @@ char	*create_substring(char *start, size_t len)
 {
 	char	*temp;
 
-    temp = NULL;
-    if (len != 0)
+	temp = NULL;
+	if (len != 0)
 		temp = malloc(len + 1);
 	if (!temp)
 		return (NULL);
@@ -71,6 +64,24 @@ char	*create_substr_with_envar_value(char *search_start, char *envvar_start,
 	return (temp);
 }
 
+static char	*concat_non_envar_chunk(char *search_start, char *new_arg_value)
+{
+	char	*temp;
+
+	if (*search_start != '\0')
+	{
+		temp = create_substring(search_start, ft_strlen(search_start));
+		if (temp != NULL)
+		{
+			new_arg_value = update_argument(new_arg_value, temp);
+			if (new_arg_value == NULL)
+				return (NULL);
+		}
+		else
+			return (NULL);
+	}
+	return (new_arg_value);
+}
 
 char	*create_new_argument_string(char *search_start, t_shell *shell)
 {
@@ -79,12 +90,9 @@ char	*create_new_argument_string(char *search_start, t_shell *shell)
 	char	*temp;
 	size_t	offset;
 
-	envvar_start = NULL;
 	new_arg_value = NULL;
-	offset = 0;
 	while (*search_start != '\0')
 	{
-		temp = NULL;
 		envvar_start = ft_strchr(search_start, '$');
 		if (envvar_start == NULL)
 			break ;
@@ -98,10 +106,8 @@ char	*create_new_argument_string(char *search_start, t_shell *shell)
 		}
 		search_start += offset;
 	}
-    if (*search_start != '\0')
-    {
-		temp = create_substring(search_start, ft_strlen(search_start));
-		new_arg_value = update_argument(new_arg_value, temp);
-    }
+	new_arg_value = concat_non_envar_chunk(search_start, new_arg_value);
+	if (new_arg_value == NULL)
+		return (NULL);
 	return (new_arg_value);
 }
