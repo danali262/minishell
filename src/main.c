@@ -41,6 +41,7 @@ int	shell_event_loop(t_shell *shell)
 int	main(int argc, char **argv)
 {
 	t_shell	shell;
+	int		exit_code;
 
 	(void)argv;
 	if (argc > 1)
@@ -54,10 +55,12 @@ int	main(int argc, char **argv)
 	if (shell_event_loop(&shell) == ERROR)
 	{
 		g_shell = NULL;
+		exit_code = shell.exit_code;
 		free_shell_data(&shell);
-		return (1);
+		return (exit_code);
 	}
 	g_shell = NULL;
+	exit_code = shell.exit_code;
 	free_shell_data(&shell);
-	return (0);
+	return (exit_code);
 }
