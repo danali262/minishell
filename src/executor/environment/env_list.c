@@ -35,16 +35,8 @@ int	create_env_list(t_shell *shell)
 	i = 0;
 	while (environ[i] != NULL)
 	{
-<<<<<<< Updated upstream
-		envar_name = get_envar_name(environ[i]);
-		envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
-=======
 		envar_name = create_envar_name(environ[i]);
-		if (ft_strncmp(envar_name, "_", 2) == 0)
-			envar_value = ft_strdup("");
-		else
-			envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
->>>>>>> Stashed changes
+		envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
 		if (!envar_name || !envar_value)
 			return (ERROR);
 		add_to_env_list(envar_name, envar_value, &shell->env_list);
