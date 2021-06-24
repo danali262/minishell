@@ -96,6 +96,7 @@ char	*replace_name_with_value(char *envvar_start, t_shell *shell,
 		*envvar_len = i;
 		envvar_name = create_substring(envvar_start + 1, i - 1);
 		value = get_envar_value(envvar_name, shell);
+		free(envvar_name);
 	}
 	return (value);
 }
