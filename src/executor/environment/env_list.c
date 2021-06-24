@@ -62,14 +62,19 @@ int	add_to_env_list(char *envar_name, char *envar_value, t_envlist	**env_list)
 int	update_env_list(t_shell *shell, char *envar_name, char *value_start)
 {
 	int			change_value_res;
+	char		*envar_value;
 	t_envlist	*envar_node;
 
+   envar_value = NULL;
     change_value_res = change_env_value(shell, envar_name, value_start);
 	if (change_value_res == ERROR)
 		return (ERROR);
 	else if (change_value_res == NOT_IN_ENVLIST)
 	{
-		envar_node = ft_env_lstnew(envar_name, value_start);
+		envar_value = ft_strdup(value_start);
+		if (envar_value == NULL)
+			return (ERROR);
+		envar_node = ft_env_lstnew(envar_name, envar_value);
 		if (!envar_node)
 			return (ERROR);
 		ft_env_lstadd_before_last_node(&(shell->env_list), envar_node);
