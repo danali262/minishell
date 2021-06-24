@@ -2,7 +2,7 @@
 
 #include "libft.h"
 
-char	*get_envar_name(char *argument)
+char	*create_envar_name(char *argument)
 {
 	char	*name;
 	int		i;

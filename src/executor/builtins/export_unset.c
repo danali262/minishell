@@ -18,7 +18,7 @@ int	execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 			arg_node->data = check_envars_and_quotes(arg_node, shell);
 			if (arg_node->data == NULL)
 				return (ERROR);
-			envar_name = get_envar_name(arg_node->data);
+			envar_name = create_envar_name(arg_node->data);
 			if (envar_name == NULL)
 				return (ERROR);
 			if (can_update_env_list(shell, envar_name, arg_node->data) == ERROR)

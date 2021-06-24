@@ -23,7 +23,7 @@ void		free_env_list(t_envlist *lst, void (*f)(t_envlist **));
 void		run_executor(t_shell *shell);
 void		execute_command_line(t_treenode *top_node, t_shell *shell);
 void		execute_job(t_treenode *job_node, t_shell *shell);
-char		*locate_executable_path(t_treenode *simple_cmd_node);
+char		*locate_executable_path(t_treenode *simple_cmd_node, t_shell *shell);
 int			run_simple_command(t_treenode *simple_cmd_node, t_shell *shell);
 void		wait_for_child(pid_t pid, t_shell *shell);
 void		execute_system_function(char **argv, t_shell *shell);
@@ -40,10 +40,11 @@ char		*replace_name_with_value(char *envvar_start, t_shell *shell,
 				size_t *envvar_len);
 char		*replace_dollar_question(t_shell *shell);
 int			change_env_value(t_shell *shell, char *var_name, char *new_value);
-char		*get_envar_name(char *argument);
+char		*create_envar_name(char *argument);
 char		*update_argument(char *new_arg_value, char *temp);
 char		*create_substring(char *start, size_t len);
 char		*create_new_argument_string(char *search_start, t_shell *shell);
+char		*get_envar_value(char *command, t_shell *shell);
 
 /*
 **	environment list:

@@ -37,19 +37,22 @@ static int	is_valid_path(char *cmd_location)
 	return (0);
 }
 
-static char	**get_directories_list(void)
+static char	**get_directories_list(t_shell *shell)
 {
 	int			j;
 	char		*path_str;
 
-	path_str = getenv("PATH");
-	j = 0;
+	// path_str = getenv("PATH");
+	path_str = get_envar_value("PATH", shell);
+	if (path_str == NULL)
+		return (NULL);
+		j = 0;
 	while (path_str[j] != '/')
 		j++;
 	return (ft_split(path_str + j, ':'));
 }
 
-char	*locate_executable_path(t_treenode *simple_cmd_node)
+char	*locate_executable_path(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	char	**dir_list;
 	char	*cmd_location;
@@ -57,7 +60,7 @@ char	*locate_executable_path(t_treenode *simple_cmd_node)
 
 	if (is_valid_path(simple_cmd_node->data))
 		return (ft_strdup(simple_cmd_node->data));
-	dir_list = get_directories_list();
+	dir_list = get_directories_list(shell);
 	if (dir_list == NULL)
 		return (NULL);
 	i = 0;

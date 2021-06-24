@@ -49,7 +49,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 
 	executable_path = NULL;
 	if (simple_cmd_node != NULL)
-		executable_path = locate_executable_path(simple_cmd_node);
+		executable_path = locate_executable_path(simple_cmd_node, shell);
 	if (executable_path != NULL)
 	{
 		argv = fill_args_list(simple_cmd_node, executable_path, shell);
