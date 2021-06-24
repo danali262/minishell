@@ -36,12 +36,15 @@ t_treenode	*redirlist1(t_curtok *curtok)
 	if (!term(TOKEN, &filename, curtok, root))
 	{
 		free(root);
-		free(filename);
 		return (NULL);
 	}
 	if (!term(CHAR_REDIR, &operator, curtok, root))
 	{
+<<<<<<< Updated upstream
 		free(operator);
+=======
+		free(filename);
+>>>>>>> Stashed changes
 		return (NULL);
 	}
 	redirlistNode = redirlist(curtok);
@@ -49,6 +52,8 @@ t_treenode	*redirlist1(t_curtok *curtok)
 		return (NULL);
 	root = handle_root_redirection_multiple(root, redirlistNode, operator,
 			filename);
+	free(filename);
+	free(operator);
 	return (root);
 }
 
@@ -69,19 +74,20 @@ t_treenode	*redirlist2(t_curtok *curtok)
 	if (!term(TOKEN, &filename_left, curtok, root))
 	{
 		free(root);
-		free(filename_left);
 		return (NULL);
 	}
 	if (!term(CHAR_REDIR, &operator, curtok, root))
 	{
 		free(operator);
 		free(root);
+		free(filename_left);
 		return (NULL);
 	}
 	if (!term(TOKEN, &filename_right, curtok, root))
 	{
 		free(root);
-		free(filename_right);
+		free(filename_left);
+		free(operator);
 		return (NULL);
 	}
 	fileNode_right = malloc(sizeof(*fileNode_right));
@@ -90,6 +96,9 @@ t_treenode	*redirlist2(t_curtok *curtok)
 	set_node_data_type(fileNode_right, filename_right, NODE_FILE);
 	root = handle_root_redirection_multiple(root, fileNode_right, operator,
 			filename_left);
+	free(filename_right);
+	free(filename_left);
+	free(operator);
 	return (root);
 }
 
