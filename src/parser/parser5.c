@@ -7,6 +7,7 @@ t_treenode	*simplecmd(t_curtok *curtok)
 	t_treenode	*root;
 	char		*pathname;
 
+	pathname = NULL;
 	root = malloc(sizeof(*root));
 	if (!root)
 		parser_error(root);
@@ -46,11 +47,13 @@ t_treenode	*tokenlist1(t_curtok *curtok)
 	char		*arg;
 	int			handle_node_result;
 
+	arg = NULL;
 	root = malloc(sizeof(*root));
 	if (!root)
 		parser_error(root);
 	if (!term(TOKEN, &arg, curtok, root))
 	{
+		free(arg);
 		free(root);
 		return (NULL);
 	}

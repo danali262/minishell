@@ -29,11 +29,13 @@ t_treenode	*cmd1(t_curtok *curtok)
 	t_treenode	*redirNode;
 	char		*operator;
 
+	operator = NULL;
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
 		return (NULL);
 	if (!term(CHAR_REDIR, &operator, curtok, simplecmdNode))
 	{
+		free(operator);
 		delete_node(&simplecmdNode);
 		return (NULL);
 	}
@@ -55,11 +57,14 @@ t_treenode	*cmd2(t_curtok *curtok)
 	char		*filename;
 	char		*operator;
 
+	operator = NULL;
+	filename = NULL;
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
 		return (NULL);
 	if (!term(CHAR_REDIR, &operator, curtok, simplecmdNode))
 	{
+		free(operator);
 		delete_node(&simplecmdNode);
 		return (NULL);
 	}
