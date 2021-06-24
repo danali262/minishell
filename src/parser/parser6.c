@@ -40,11 +40,7 @@ t_treenode	*redirlist1(t_curtok *curtok)
 	}
 	if (!term(CHAR_REDIR, &operator, curtok, root))
 	{
-<<<<<<< Updated upstream
-		free(operator);
-=======
 		free(filename);
->>>>>>> Stashed changes
 		return (NULL);
 	}
 	redirlistNode = redirlist(curtok);
