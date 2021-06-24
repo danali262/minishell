@@ -2,6 +2,7 @@ NAME = minishell
 
 SRC = \
 	src/main.c \
+	src/shell_utilities.c\
 	src/signals/signals.c \
 	src/reader/reader_aux.c \
 	src/reader/read_command_line.c \
@@ -9,7 +10,6 @@ SRC = \
 	src/reader/set_term_attr.c \
 	src/reader/keys.c\
 	src/reader/handle_keys.c \
-	src/reader/shell_utilities.c\
 	src/term_cap/init_terminal_data.c \
 	src/command_history/update_history.c \
 	src/command_history/prev_history.c \
