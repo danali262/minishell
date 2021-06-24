@@ -11,7 +11,11 @@ t_treenode	*simplecmd(t_curtok *curtok)
 	if (!root)
 		parser_error(root);
 	if (!term(TOKEN, &pathname, curtok, root))
+	{
+		free(root);
+		free(pathname);
 		return (NULL);
+	}
 	tokenlistNode = tokenlist(curtok);
 	set_node_data_type(root, pathname, NODE_PATH);
 	attach_tree_branch(root, tokenlistNode, NULL);
@@ -46,7 +50,10 @@ t_treenode	*tokenlist1(t_curtok *curtok)
 	if (!root)
 		parser_error(root);
 	if (!term(TOKEN, &arg, curtok, root))
+	{
+		free(root);
 		return (NULL);
+	}
 	tokenlistNode = tokenlist(curtok);
 	handle_node_result = handle_vars_and_args(arg);
 	if (handle_node_result == 0)

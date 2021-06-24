@@ -65,6 +65,7 @@ t_treenode	*cmd2(t_curtok *curtok)
 	}
 	if (!term(TOKEN, &filename, curtok, simplecmdNode))
 	{
+		free(filename);
 		delete_node(&simplecmdNode);
 		return (NULL);
 	}
