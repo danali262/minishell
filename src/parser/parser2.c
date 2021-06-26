@@ -33,7 +33,7 @@ t_treenode	*command_line1(t_curtok *curtok)
 		return (NULL);
 	if (!term(CHAR_SEMICOLON, NULL, curtok, jobNode))
 	{
-		// delete_node(&jobNode);
+		delete_node(&jobNode);
 		return (NULL);
 	}
 	cmdlineNode = command_line(curtok);
@@ -60,7 +60,7 @@ t_treenode	*command_line2(t_curtok *curtok)
 		return (NULL);
 	if (!term(CHAR_SEMICOLON, NULL, curtok, jobNode))
 	{
-		// delete_node(&jobNode);
+		delete_node(&jobNode);
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));
