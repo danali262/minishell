@@ -27,6 +27,7 @@ static void	check_for_append(t_lexer_state *lex_state)
 			head->data = ft_strdup(">>");
 			head->type = CHAR_APPEND;
 			temp = head->next->next;
+			free_token(head->next);
 			head->next = temp;
 			lex_state->tokens_nbr--;
 		}
@@ -95,6 +96,7 @@ static void	remove_spaces(t_lexer_state *lex_state)
 	t_token *prev;
 	t_token	*temp;
 
+    prev = NULL;
 	head = lex_state->tokens_list;
 	temp = head;
 	while (temp != NULL && temp->type == ' ')
