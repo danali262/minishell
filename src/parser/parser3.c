@@ -29,7 +29,7 @@ t_treenode	*job1(t_curtok *curtok)
 		return (NULL);
 	if (!term(CHAR_PIPE, NULL, curtok, cmdNode))
 	{
-		delete_node(&cmdNode);
+		// delete_node(&cmdNode);
 		return (NULL);
 	}
 	jobNode = job(curtok);
