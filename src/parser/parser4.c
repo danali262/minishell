@@ -35,8 +35,8 @@ t_treenode	*cmd1(t_curtok *curtok)
 		return (NULL);
 	if (!term(CHAR_REDIR, &operator, curtok, simplecmdNode))
 	{
-		free(operator);
-		delete_node(&simplecmdNode);
+		// free(operator);
+		// delete_node(&simplecmdNode);
 		return (NULL);
 	}
 	redirNode = redirlist(curtok);
@@ -68,14 +68,14 @@ t_treenode	*cmd2(t_curtok *curtok)
 		return (NULL);
 	if (!term(CHAR_REDIR, &operator, curtok, simplecmdNode))
 	{
-		free(operator);
-		delete_node(&simplecmdNode);
+		// free(operator);
+		// delete_node(&simplecmdNode);
 		return (NULL);
 	}
 	if (!term(TOKEN, &filename, curtok, simplecmdNode))
 	{
-		free(operator);
-		delete_node(&simplecmdNode);
+		// free(operator);
+		// delete_node(&simplecmdNode);
 		return (NULL);
 	}
 	root = malloc(sizeof(*root));

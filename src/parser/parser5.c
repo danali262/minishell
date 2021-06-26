@@ -13,7 +13,7 @@ t_treenode	*simplecmd(t_curtok *curtok)
 		parser_error(root);
 	if (!term(TOKEN, &pathname, curtok, root))
 	{
-		free(root);
+		// free(root);
 		return (NULL);
 	}
 	tokenlistNode = tokenlist(curtok);
@@ -53,8 +53,8 @@ t_treenode	*tokenlist1(t_curtok *curtok)
 		parser_error(root);
 	if (!term(TOKEN, &arg, curtok, root))
 	{
-		free(arg);
-		free(root);
+//		free(arg);
+		// free(root);
 		return (NULL);
 	}
 	tokenlistNode = tokenlist(curtok);
