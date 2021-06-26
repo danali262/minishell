@@ -102,7 +102,7 @@ static void	remove_spaces(t_lexer_state *lex_state)
 	while (temp != NULL && temp->type == ' ')
 	{
 		head = temp->next;
-		free(temp);
+		free_token(temp);
 		temp = head;
 	}
 	while (temp != NULL)
@@ -115,7 +115,7 @@ static void	remove_spaces(t_lexer_state *lex_state)
 		if (temp == NULL)
 			return;
 		prev->next = temp->next;
-		free(temp);
+		free_token(temp);
 		temp = prev->next;
 	}
 }
