@@ -8,12 +8,12 @@ char	*update_argument(char *new_arg_value, char *temp)
 
 	temp_arg_value = NULL;
 	if (new_arg_value == NULL)
-		temp_arg_value = temp;
+		temp_arg_value = ft_strdup(temp);
 	else
 		temp_arg_value = ft_strjoin(new_arg_value, temp);
 	if (!temp_arg_value)
 	{
-		free(temp);
+        free(temp); 
 		free(new_arg_value);
 		return (NULL);
 	}
@@ -66,18 +66,10 @@ char	*create_substr_with_envar_value(char *search_start, char *envvar_start,
 
 static char	*concat_non_envar_chunk(char *search_start, char *new_arg_value)
 {
-	char	*temp;
-
 	if (*search_start != '\0')
 	{
-		temp = create_substring(search_start, ft_strlen(search_start));
-		if (temp != NULL)
-		{
-			new_arg_value = update_argument(new_arg_value, temp);
-			if (new_arg_value == NULL)
-				return (NULL);
-		}
-		else
+		new_arg_value = update_argument(new_arg_value, search_start);
+		if (new_arg_value == NULL)
 			return (NULL);
 	}
 	return (new_arg_value);
@@ -101,6 +93,7 @@ char	*create_new_argument_string(char *search_start, t_shell *shell)
 		if (temp != NULL)
 		{
 			new_arg_value = update_argument(new_arg_value, temp);
+            free(temp);
 			if (new_arg_value == NULL)
 				return (NULL);
 		}
