@@ -42,10 +42,9 @@ t_treenode	*redirlist1(t_curtok *curtok)
 	{
 		free(filename);
 		free(operator);
-		delete_node(&root);
 		return (NULL);
 	}
-	root = malloc(sizeof(*root));
+	root = ft_calloc(1, sizeof(*root));
 	if (!root)
 		parser_error(root);
 	root = handle_root_redirection_multiple(root, redirlistNode, operator,
@@ -79,11 +78,11 @@ t_treenode	*redirlist2(t_curtok *curtok)
 		free(operator);
 		return (NULL);
 	}
-	fileNode_right = malloc(sizeof(*fileNode_right));
+	fileNode_right = ft_calloc(1, sizeof(*fileNode_right));
 	if (!fileNode_right)
 		parser_error(fileNode_right);
 	set_node_data_type(fileNode_right, filename_right, NODE_FILE);
-	root = malloc(sizeof(*root));
+	root = ft_calloc(1, sizeof(*root));
 	if (!root)
 		parser_error(root);
 	root = handle_root_redirection_multiple(root, fileNode_right, operator,
