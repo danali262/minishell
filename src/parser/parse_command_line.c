@@ -83,6 +83,7 @@ static int	count_redir(t_lexer_state *lex_state, t_shell *shell)
 			ft_putstr_fd(head->next->data, STDOUT_FILENO);
 			ft_putstr_fd("\n", STDOUT_FILENO);
 			shell->exit_code = 258;
+			lexer_destroy(lex_state);
 			return (-1);
 		}
 		head = head->next;
@@ -161,6 +162,7 @@ int	parse_command_line(t_shell *shell)
 	if (parser(&lex_state, shell) == ERROR)
 	{
 		lexer_destroy(&lex_state);
+		delete_node(&shell->syntax_tree);
 		return (0);
 	}
 	lexer_destroy(&lex_state);
