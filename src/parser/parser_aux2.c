@@ -46,7 +46,7 @@ t_treenode	*multiple_redirection_create_root(t_treenode *root, t_treenode
 {
 	t_treenode	*filenameNode;
 
-	filenameNode = malloc(sizeof(*filenameNode));
+	filenameNode = ft_calloc(1, sizeof(*filenameNode));
 	if (!filenameNode)
 		parser_error(filenameNode);
 	if (opt == 1)
@@ -65,7 +65,7 @@ t_treenode	*simple_redirection_create_root(t_treenode *root,
 {
 	t_treenode	*filenameNode;
 
-	filenameNode = malloc(sizeof(*filenameNode));
+	filenameNode = ft_calloc(1, sizeof(*filenameNode));
 	if (!filenameNode)
 		parser_error(filenameNode);
 	if (opt == 1)
