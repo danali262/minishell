@@ -13,7 +13,7 @@ char	*update_argument(char *new_arg_value, char *temp)
 		temp_arg_value = ft_strjoin(new_arg_value, temp);
 	if (!temp_arg_value)
 	{
-        free(temp); 
+		free(temp);
 		free(new_arg_value);
 		return (NULL);
 	}
@@ -64,43 +64,48 @@ char	*create_substr_with_envar_value(char *search_start, char *envvar_start,
 	return (temp);
 }
 
-static char	*concat_non_envar_chunk(char *search_start, char *new_arg_value)
+static char	*concat_envar_value_to_argument(char *search_start,
+	char *envvar_start, size_t *offset, t_shell *shell)
 {
-	if (*search_start != '\0')
+	char	*temp;
+	char	*new_arg_value;
+
+	new_arg_value = NULL;
+	temp = create_substr_with_envar_value(search_start, envvar_start,
+			offset, shell);
+	if (temp != NULL)
 	{
-		new_arg_value = update_argument(new_arg_value, search_start);
+		new_arg_value = update_argument(new_arg_value, temp);
+		free(temp);
 		if (new_arg_value == NULL)
 			return (NULL);
 	}
 	return (new_arg_value);
 }
 
-char	*create_new_argument_string(char *search_start, t_shell *shell)
+char	*create_new_argument_string(char *argument, t_shell *shell)
 {
 	char	*envvar_start;
+	char	*search_start;
 	char	*new_arg_value;
-	char	*temp;
 	size_t	offset;
 
-	new_arg_value = NULL;
+	search_start = argument;
 	while (*search_start != '\0')
 	{
 		envvar_start = ft_strchr(search_start, '$');
 		if (envvar_start == NULL)
 			break ;
-		temp = create_substr_with_envar_value(search_start, envvar_start,
-				&offset, shell);
-		if (temp != NULL)
-		{
-			new_arg_value = update_argument(new_arg_value, temp);
-            free(temp);
-			if (new_arg_value == NULL)
-				return (NULL);
-		}
+		new_arg_value = concat_envar_value_to_argument(search_start,
+				envvar_start, &offset, shell);
 		search_start += offset;
 	}
-	new_arg_value = concat_non_envar_chunk(search_start, new_arg_value);
-	if (new_arg_value == NULL)
-		return (NULL);
+	if (*search_start != '\0')
+	{
+		new_arg_value = update_argument(new_arg_value, search_start);
+		if (new_arg_value == NULL)
+			return (NULL);
+	}
+	free(argument);
 	return (new_arg_value);
 }
