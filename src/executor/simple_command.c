@@ -86,7 +86,7 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 		restore_stdio(shell);
 		return (ERROR);
 	}
-	if (shell->redir->redir_nbr > 0)
+	if (shell->redir->redir_nbr > 0 && (simple_cmd_node->type == NODE_REDIRECT_IN || simple_cmd_node->type == NODE_REDIRECT_OUT || simple_cmd_node->type == NODE_APPEND || simple_cmd_node->type == NODE_RHOMBUS))
 		simple_cmd_node = simple_cmd_node->left;
 	if (is_envar(simple_cmd_node))
 	{
