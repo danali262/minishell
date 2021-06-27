@@ -9,10 +9,7 @@ t_treenode	*simplecmd(t_curtok *curtok)
 
 	pathname = NULL;
 	if (!term(TOKEN, &pathname, curtok, NULL))
-	{
-		delete_node(&root);
 		return (NULL);
-	}
 	tokenlistNode = tokenlist(curtok);
 	root = malloc(sizeof(*root));
 	if (!root)
