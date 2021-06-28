@@ -37,7 +37,7 @@ char	*get_envar_value(char *command, t_shell *shell)
 	value = NULL;
 	while (envar_node->next != NULL)
 	{
-		if (ft_strcmp(envar_node->name, command) == 0)
+		if (is_command(envar_node->name, command))
 		{
 			value = ft_strdup(envar_node->value);
 			break ;
