@@ -28,7 +28,7 @@ void	handle_child_process(t_treenode *node, int **pipes_fd, int i,
 		node = node->left;
 	}
 	if (run_simple_command(node, shell) == ERROR
-			&& is_command(node->data, "exit") == false)
+		&& is_command(node->data, "exit") == false)
 	{
 		printf("minishell: %s\n\r", strerror(errno));
 		shell->exit_code = 126;

@@ -34,7 +34,7 @@ char		**fill_args_list(t_treenode *simple_cmd_node, char *executable_path,
 ** environment variables:
 */
 
-int			is_envar(t_treenode *arg_node);
+bool		is_envar(char *argument_string);
 char		*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell);
 char		*replace_name_with_value(char *envvar_start, t_shell *shell,
 				size_t *envvar_len);
