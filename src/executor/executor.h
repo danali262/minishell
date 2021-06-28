@@ -65,5 +65,6 @@ char		*concat_path(char *left, char *right);
 char		*strip_quotes(char *arg);
 char		*check_envars_and_quotes(t_treenode *arg_node, t_shell *shell);
 void		check_fork_error(pid_t pid, t_shell *shell);
+bool		is_command(char *str_to_compare, char *command);
 
 #endif
