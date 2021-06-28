@@ -29,6 +29,7 @@ t_treenode	*cmd1(t_curtok *curtok)
 	t_treenode	*redirNode;
 	char		*operator;
 
+	operator = NULL;
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
 		return (NULL);
@@ -39,12 +40,17 @@ t_treenode	*cmd1(t_curtok *curtok)
 	}
 	redirNode = redirlist(curtok);
 	if (redirNode == NULL)
+	{
+		free(operator);
+		delete_node(&simplecmdNode);
 		return (NULL);
+	}
 	root = malloc(sizeof(*root));
 	if (!root)
 		parser_error(root);
 	root = create_node(root, operator);
 	attach_tree_branch(root, simplecmdNode, redirNode);
+	free(operator);
 	return (root);
 }
 
@@ -55,6 +61,8 @@ t_treenode	*cmd2(t_curtok *curtok)
 	char		*filename;
 	char		*operator;
 
+	operator = NULL;
+	filename = NULL;
 	simplecmdNode = simplecmd(curtok);
 	if (simplecmdNode == NULL)
 		return (NULL);
@@ -65,6 +73,7 @@ t_treenode	*cmd2(t_curtok *curtok)
 	}
 	if (!term(TOKEN, &filename, curtok, simplecmdNode))
 	{
+		free(operator);
 		delete_node(&simplecmdNode);
 		return (NULL);
 	}
@@ -72,7 +81,9 @@ t_treenode	*cmd2(t_curtok *curtok)
 	if (!root)
 		parser_error(root);
 	root = handle_root_redirection(root, simplecmdNode, operator,
-			filename);
+		filename);
+	free(operator);
+	free(filename);
 	return (root);
 }
 

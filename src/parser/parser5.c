@@ -7,14 +7,16 @@ t_treenode	*simplecmd(t_curtok *curtok)
 	t_treenode	*root;
 	char		*pathname;
 
+	pathname = NULL;
+	if (!term(TOKEN, &pathname, curtok, NULL))
+		return (NULL);
+	tokenlistNode = tokenlist(curtok);
 	root = malloc(sizeof(*root));
 	if (!root)
 		parser_error(root);
-	if (!term(TOKEN, &pathname, curtok, root))
-		return (NULL);
-	tokenlistNode = tokenlist(curtok);
 	set_node_data_type(root, pathname, NODE_PATH);
 	attach_tree_branch(root, tokenlistNode, NULL);
+	free(pathname);
 	return (root);
 }
 
@@ -40,21 +42,17 @@ t_treenode	*tokenlist1(t_curtok *curtok)
 	t_treenode	*tokenlistNode;
 	t_treenode	*root;
 	char		*arg;
-	int			handle_node_result;
 
+	arg = NULL;
+	if (!term(TOKEN, &arg, curtok, NULL))
+		return (NULL);
+	tokenlistNode = tokenlist(curtok);
 	root = malloc(sizeof(*root));
 	if (!root)
 		parser_error(root);
-	if (!term(TOKEN, &arg, curtok, root))
-		return (NULL);
-	tokenlistNode = tokenlist(curtok);
-	handle_node_result = handle_vars_and_args(arg);
-	if (handle_node_result == 0)
-		handle_node_arg(root, tokenlistNode, arg);
-	else if (handle_node_result == 1)
-		handle_node_var(root, tokenlistNode, arg);
-	else
-		handle_both_nodes(root, arg);
+	set_node_data_type(root, arg, NODE_ARG);
+	attach_tree_branch(root, tokenlistNode, NULL);
+	free(arg);
 	return (root);
 }
 

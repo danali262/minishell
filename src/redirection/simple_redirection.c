@@ -16,7 +16,7 @@ static void	redirect_rhombus(t_treenode *syntax_tree)
 	int		fd;
 
 	filename = ft_strdup(syntax_tree->right->data);
-	fd = open(filename, O_WRONLY | O_CREAT , 0666);
+	fd = open(filename, O_WRONLY | O_CREAT , 0777);
 	close(fd);
 	free(filename);
 }
@@ -44,8 +44,6 @@ void	simple_redirection(t_treenode *syntax_tree, t_shell *shell)
 
 void	check_for_redirection(t_treenode *syntax_tree, t_shell *shell)
 {
-	shell->redir->stdinfd = dup(STDIN_FILENO);
-	shell->redir->stdoutfd = dup(STDOUT_FILENO);
 	if (shell->redir->redir_nbr == 0)
 		return ;
 	else if (shell->redir->redir_nbr == 1)

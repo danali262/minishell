@@ -22,6 +22,8 @@ void	init_tree(t_shell *shell)
 	shell->redir->filename_out = NULL;
 	shell->redir->filename_app = NULL;
 	shell->redir->saved_nodetype = NODE_EMPTY;
+	shell->redir->stdinfd = dup(STDIN_FILENO);
+	shell->redir->stdoutfd = dup(STDOUT_FILENO);
 }
 
 int	init_shell(t_shell *shell)

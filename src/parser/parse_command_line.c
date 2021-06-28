@@ -27,6 +27,7 @@ static void	check_for_append(t_lexer_state *lex_state)
 			head->data = ft_strdup(">>");
 			head->type = CHAR_APPEND;
 			temp = head->next->next;
+			free_token(head->next);
 			head->next = temp;
 			lex_state->tokens_nbr--;
 		}
@@ -82,6 +83,7 @@ static int	count_redir(t_lexer_state *lex_state, t_shell *shell)
 			ft_putstr_fd(head->next->data, STDOUT_FILENO);
 			ft_putstr_fd("\n", STDOUT_FILENO);
 			shell->exit_code = 258;
+			lexer_destroy(lex_state);
 			return (-1);
 		}
 		head = head->next;
@@ -95,12 +97,13 @@ static void	remove_spaces(t_lexer_state *lex_state)
 	t_token *prev;
 	t_token	*temp;
 
+    prev = NULL;
 	head = lex_state->tokens_list;
 	temp = head;
 	while (temp != NULL && temp->type == ' ')
 	{
 		head = temp->next;
-		free(temp);
+		free_token(temp);
 		temp = head;
 	}
 	while (temp != NULL)
@@ -113,7 +116,7 @@ static void	remove_spaces(t_lexer_state *lex_state)
 		if (temp == NULL)
 			return;
 		prev->next = temp->next;
-		free(temp);
+		free_token(temp);
 		temp = prev->next;
 	}
 }
@@ -159,6 +162,7 @@ int	parse_command_line(t_shell *shell)
 	if (parser(&lex_state, shell) == ERROR)
 	{
 		lexer_destroy(&lex_state);
+		delete_node(&shell->syntax_tree);
 		return (0);
 	}
 	lexer_destroy(&lex_state);

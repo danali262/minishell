@@ -22,7 +22,6 @@ SRC = \
 	src/parser/lexer/lexer2.c \
 	src/parser/lexer/lexer3.c \
 	src/parser/lexer/lexer4.c \
-	src/parser/lexer/utilities.c\
 	src/parser/parser.c\
 	src/parser/parser2.c\
 	src/parser/parser3.c\

@@ -49,3 +49,10 @@ void	check_fork_error(pid_t pid, t_shell *shell)
 		exit(errno);
 	}
 }
+
+bool	is_command(char *str_to_compare, char *command)
+{
+	if (ft_strcmp(str_to_compare, command) == 0)
+		return (true);
+	return (false);
+}

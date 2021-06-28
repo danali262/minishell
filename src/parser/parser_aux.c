@@ -13,7 +13,7 @@ bool	term(int tokentype, char **buffer, t_curtok *curtok, t_treenode *node)
 		if (buffer != NULL)
 		{
 			*buffer = malloc(ft_strlen(curtok->current_token->data) + 1);
-			if (!buffer)
+			if (!*buffer)
 				parser_error(node);
 			ft_strlcpy(*buffer, curtok->current_token->data,
 				ft_strlen(curtok->current_token->data) + 1);
