@@ -42,7 +42,8 @@ int	implement_redirection(t_shell *shell)
 	res = 1;
 	if (shell->redir->redirect_in)
 		res = implement_node_redirect_in(shell);
-	if ((res == 1)|| (res == -1 && shell->redir->saved_nodetype != NODE_REDIRECT_IN))
+	if ((res == 1) || (res == -1 && shell->redir->saved_nodetype
+			!= NODE_REDIRECT_IN))
 	{
 		if (shell->redir->redirect_out)
 			implement_node_redirect_out(shell);

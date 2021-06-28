@@ -15,6 +15,10 @@ bool		term(int tokentype, char **buffer, t_curtok *curtok,
 				t_treenode *node);
 void		initialize_syntax_tree(t_treenode *syntax_tree);
 
+void		check_for_append(t_lexer_state *lex_state);
+void		check_for_rhombus(t_lexer_state *lex_state);
+int			count_redir(t_lexer_state *lex_state, t_shell *shell);
+
 t_treenode	*command_line(t_curtok *curtok);
 t_treenode	*command_line1(t_curtok *curtok);
 t_treenode	*command_line2(t_curtok *curtok);
@@ -53,25 +57,19 @@ t_treenode	*handle_append_single(t_treenode *root, t_treenode *left_node,
 				t_treenode *right_node, char *filename);
 t_treenode	*handle_rhombus_single(t_treenode *root, t_treenode *left_node,
 				t_treenode *right_node, char *filename);
-t_treenode	*handle_redirect_in_multiple(t_treenode *root, t_treenode *left_node,
-				t_treenode *right_node, char *filename);
-t_treenode	*handle_redirect_out_multiple(t_treenode *root, t_treenode *left_node,
-				t_treenode *right_node, char *filename);
+t_treenode	*handle_redirect_in_multiple(t_treenode *root,
+				t_treenode *left_node, t_treenode *right_node, char *filename);
+t_treenode	*handle_redirect_out_multiple(t_treenode *root,
+				t_treenode *left_node, t_treenode *right_node, char *filename);
 t_treenode	*handle_append_multiple(t_treenode *root, t_treenode *left_node,
 				t_treenode *right_node, char *filename);
 t_treenode	*handle_rhombus_multiple(t_treenode *root, t_treenode *left_node,
 				t_treenode *right_node, char *filename);
 
-int			handle_vars_and_args(char *arg);
-char		*create_arg(char *arg, t_treenode *node);
-
 t_treenode	*multiple_redirection_create_root(t_treenode *root, t_treenode
 				*right_node, char *filename, int opt);
 t_treenode	*simple_redirection_create_root(t_treenode *root, t_treenode
 				*simplecmdNode, char *filename, int opt);
-void		handle_node_arg(t_treenode *root, t_treenode *tokenlist, char *arg);
-void		handle_node_var(t_treenode *root, t_treenode *tokenlist, char *arg);
-void		handle_both_nodes(t_treenode *root, char *arg);
 
 void		parser_error(t_treenode *node);
 

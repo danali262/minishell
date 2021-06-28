@@ -1,31 +1,23 @@
 #include "lexer/lexer.h"
 #include "parser.h"
 
-t_treenode	*cmd(t_curtok *curtok)
+static t_treenode	*cmd1_root(char *operator, t_treenode *simplecmdNode,
+	t_treenode *redirNode)
 {
-	t_treenode	*node;
-	t_token		*save;
+	t_treenode	*root;
 
-	save = curtok->current_token;
-	curtok->current_token = save;
-	node = cmd1(curtok);
-	if (node != NULL)
-		return (node);
-	curtok->current_token = save;
-	node = cmd2(curtok);
-	if (node != NULL)
-		return (node);
-	curtok->current_token = save;
-	node = cmd3(curtok);
-	if (node != NULL)
-		return (node);
-	return (NULL);
+	root = ft_calloc(1, sizeof(*root));
+	if (!root)
+		parser_error(root);
+	root = create_node(root, operator);
+	attach_tree_branch(root, simplecmdNode, redirNode);
+	free(operator);
+	return (root);
 }
 
 t_treenode	*cmd1(t_curtok *curtok)
 {
 	t_treenode	*simplecmdNode;
-	t_treenode	*root;
 	t_treenode	*redirNode;
 	char		*operator;
 
@@ -45,19 +37,27 @@ t_treenode	*cmd1(t_curtok *curtok)
 		delete_node(&simplecmdNode);
 		return (NULL);
 	}
-	root = malloc(sizeof(*root));
+	return (cmd1_root(operator, simplecmdNode, redirNode));
+}
+
+static t_treenode	*cmd2_root(t_treenode *simplecmdNode, char *operator,
+	char *filename)
+{
+	t_treenode	*root;
+
+	root = ft_calloc(1, sizeof(*root));
 	if (!root)
 		parser_error(root);
-	root = create_node(root, operator);
-	attach_tree_branch(root, simplecmdNode, redirNode);
+	root = handle_root_redirection(root, simplecmdNode, operator,
+			filename);
 	free(operator);
+	free(filename);
 	return (root);
 }
 
 t_treenode	*cmd2(t_curtok *curtok)
 {
 	t_treenode	*simplecmdNode;
-	t_treenode	*root;
 	char		*filename;
 	char		*operator;
 
@@ -77,14 +77,7 @@ t_treenode	*cmd2(t_curtok *curtok)
 		delete_node(&simplecmdNode);
 		return (NULL);
 	}
-	root = malloc(sizeof(*root));
-	if (!root)
-		parser_error(root);
-	root = handle_root_redirection(root, simplecmdNode, operator,
-		filename);
-	free(operator);
-	free(filename);
-	return (root);
+	return (cmd2_root(simplecmdNode, operator, filename));
 }
 
 t_treenode	*cmd3(t_curtok *curtok)

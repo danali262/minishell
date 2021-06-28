@@ -60,3 +60,23 @@ t_treenode	*tokenlist2(void)
 {
 	return (NULL);
 }
+
+t_treenode	*redirlist(t_curtok *curtok)
+{
+	t_treenode	*node;
+	t_token		*save;
+
+	save = curtok->current_token;
+	curtok->current_token = save;
+	node = redirlist1(curtok);
+	if (node != NULL)
+		return (node);
+	curtok->current_token = save;
+	node = redirlist2(curtok);
+	if (node != NULL)
+		return (node);
+	node = redirlist3();
+	if (node != NULL)
+		return (node);
+	return (NULL);
+}

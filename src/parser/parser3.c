@@ -50,3 +50,24 @@ t_treenode	*job2(t_curtok *curtok)
 {
 	return (cmd(curtok));
 }
+
+t_treenode	*cmd(t_curtok *curtok)
+{
+	t_treenode	*node;
+	t_token		*save;
+
+	save = curtok->current_token;
+	curtok->current_token = save;
+	node = cmd1(curtok);
+	if (node != NULL)
+		return (node);
+	curtok->current_token = save;
+	node = cmd2(curtok);
+	if (node != NULL)
+		return (node);
+	curtok->current_token = save;
+	node = cmd3(curtok);
+	if (node != NULL)
+		return (node);
+	return (NULL);
+}

@@ -1,8 +1,8 @@
 #include "lexer/lexer.h"
 #include "parser.h"
 
-t_treenode	*handle_redirect_in_multiple(t_treenode *root, t_treenode *left_node,
-	t_treenode *right_node, char *filename)
+t_treenode	*handle_redirect_in_multiple(t_treenode *root,
+	t_treenode *left_node, t_treenode *right_node, char *filename)
 {
 	set_node_data_type(root, "<", NODE_REDIRECT_IN);
 	set_node_data_type(left_node, filename, NODE_FILE);

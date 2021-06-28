@@ -1,8 +1,8 @@
 #include "executor.h"
-
 #include "builtins/builtins.h"
 #include "../signals/signals.h"
 #include "../redirection/redirection.h"
+#include "../shell_utilities.h"
 
 #include "libft.h"
 
@@ -85,7 +85,7 @@ int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 		restore_stdio(shell);
 		return (ERROR);
 	}
-	if (shell->redir->redir_nbr > 0 && (simple_cmd_node->type == NODE_REDIRECT_IN || simple_cmd_node->type == NODE_REDIRECT_OUT || simple_cmd_node->type == NODE_APPEND || simple_cmd_node->type == NODE_RHOMBUS))
+	if (shell->redir->redir_nbr > 0 && is_redirect_node(simple_cmd_node))
 		simple_cmd_node = simple_cmd_node->left;
 	if (is_envar(simple_cmd_node->data))
 	{
