@@ -55,9 +55,9 @@ t_envlist	*get_node_to_change(t_shell *shell, char *var_name)
 	return (NULL);
 }
 
-int	is_envar(t_treenode *arg_node)
+bool	is_envar(char *argument_string)
 {
-	if (ft_strchr(arg_node->data, '$') == NULL)
+	if (ft_strchr(argument_string, '$') == NULL)
 		return (false);
 	return (true);
 }

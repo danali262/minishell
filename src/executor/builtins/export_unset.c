@@ -47,7 +47,7 @@ int	execute_unset(t_treenode *simple_cmd_node, t_shell *shell)
 			envar_node = shell->env_list;
 			while (envar_node->next != NULL)
 			{
-				if (ft_strcmp(envar_node->next->name, arg_node->data) == 0)
+				if (is_command(envar_node->next->name, arg_node->data))
 				{
 					temp = envar_node->next->next;
 					ft_env_lstdelone(&envar_node->next);

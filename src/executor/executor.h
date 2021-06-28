@@ -34,7 +34,7 @@ char		**fill_args_list(t_treenode *simple_cmd_node, char *executable_path,
 ** environment variables:
 */
 
-int			is_envar(t_treenode *arg_node);
+bool		is_envar(char *argument_string);
 char		*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell);
 char		*replace_name_with_value(char *envvar_start, t_shell *shell,
 				size_t *envvar_len);
@@ -62,8 +62,11 @@ int			can_update_env_list(t_shell *shell, char *envar_name, char *string);
 */
 
 char		*concat_path(char *left, char *right);
-char		*strip_quotes(char *arg);
 char		*check_envars_and_quotes(t_treenode *arg_node, t_shell *shell);
 void		check_fork_error(pid_t pid, t_shell *shell);
+bool		is_command(char *str_to_compare, char *command);
+
+char		*strip_quotes(char *arg);
+bool		is_wrapped_by_single_quotes(char *arg_string);
 
 #endif

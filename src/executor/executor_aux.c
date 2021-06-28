@@ -29,7 +29,7 @@ char	*concat_path(char *left, char *right)
 
 char	*check_envars_and_quotes(t_treenode *arg_node, t_shell *shell)
 {
-	if (is_envar(arg_node))
+	if (is_envar(arg_node->data))
 	{
 		arg_node->data = handle_argument_with_envvars(arg_node, shell);
 		if (arg_node->data == NULL)
@@ -48,4 +48,11 @@ void	check_fork_error(pid_t pid, t_shell *shell)
 		printf("Error creating child process.\n\r");
 		exit(errno);
 	}
+}
+
+bool	is_command(char *str_to_compare, char *command)
+{
+	if (ft_strcmp(str_to_compare, command) == 0)
+		return (true);
+	return (false);
 }

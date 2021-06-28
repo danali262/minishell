@@ -1,5 +1,6 @@
 #include "builtins_map.h"
 #include "builtins.h"
+#include "../executor.h"
 
 #include "libft.h"
 
@@ -26,7 +27,7 @@ int	execute_builtin(t_treenode *simple_cmd, t_builtins_map	*builtins_map,
 	i = 0;
 	while (builtins_map[i].cmd_name[0] != '\0')
 	{
-		if (ft_strcmp(builtins_map[i].cmd_name, simple_cmd->data) == 0)
+		if (is_command(builtins_map[i].cmd_name, simple_cmd->data))
 		{
 			shell->exit_code = builtins_map[i].cmd_executor(simple_cmd,
 					shell);

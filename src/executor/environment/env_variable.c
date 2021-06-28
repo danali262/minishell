@@ -37,7 +37,7 @@ char	*get_envar_value(char *command, t_shell *shell)
 	value = NULL;
 	while (envar_node->next != NULL)
 	{
-		if (ft_strcmp(envar_node->name, command) == 0)
+		if (is_command(envar_node->name, command))
 		{
 			value = ft_strdup(envar_node->value);
 			break ;
@@ -107,8 +107,13 @@ char	*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell)
 	char	*string_without_quotes;
 
 	string_without_quotes = NULL;
-	new_arg_value = create_new_argument_string(arg_node->data, shell);
-	if (new_arg_value != NULL)
-		string_without_quotes = strip_quotes(new_arg_value);
+	if (!is_wrapped_by_single_quotes(arg_node->data))
+	{
+		new_arg_value = create_new_argument_string(arg_node->data, shell);
+		if (new_arg_value != NULL)
+			string_without_quotes = strip_quotes(new_arg_value);
+	}
+	else
+		string_without_quotes = strip_quotes(arg_node->data);
 	return (string_without_quotes);
 }
