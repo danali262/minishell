@@ -50,13 +50,16 @@ t_treenode	*multiple_redirection_create_root(t_treenode *root, t_treenode
 	if (!filenameNode)
 		parser_error(filenameNode);
 	if (opt == 1)
-		root = handle_redirect_in_multiple(root, filenameNode, right_node, filename);
+		root = handle_redirect_in_multiple(root, filenameNode, right_node,
+				filename);
 	else if (opt == 2)
-		root = handle_redirect_out_multiple(root, filenameNode, right_node, filename);
+		root = handle_redirect_out_multiple(root, filenameNode, right_node,
+				filename);
 	else if (opt == 3)
 		root = handle_append_multiple(root, filenameNode, right_node, filename);
 	else
-		root = handle_rhombus_multiple(root, filenameNode, right_node, filename);
+		root = handle_rhombus_multiple(root, filenameNode, right_node,
+				filename);
 	return (root);
 }
 
@@ -69,12 +72,16 @@ t_treenode	*simple_redirection_create_root(t_treenode *root,
 	if (!filenameNode)
 		parser_error(filenameNode);
 	if (opt == 1)
-		root = handle_redirect_in_single(root, simplecmdNode, filenameNode, filename);
+		root = handle_redirect_in_single(root, simplecmdNode, filenameNode,
+				filename);
 	else if (opt == 2)
-		root = handle_redirect_out_single(root, simplecmdNode, filenameNode, filename);
+		root = handle_redirect_out_single(root, simplecmdNode, filenameNode,
+				filename);
 	else if (opt == 3)
-		root = handle_append_single(root, simplecmdNode, filenameNode, filename);
+		root = handle_append_single(root, simplecmdNode, filenameNode,
+				filename);
 	else
-		root = handle_rhombus_single(root, simplecmdNode, filenameNode, filename);
+		root = handle_rhombus_single(root, simplecmdNode, filenameNode,
+				filename);
 	return (root);
 }

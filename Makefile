@@ -32,7 +32,6 @@ SRC = \
 	src/parser/parser_aux2.c\
 	src/parser/parser_aux3.c\
 	src/parser/parser_aux4.c\
-	src/parser/parser_aux5.c\
 	src/parser/parser_error.c\
 	src/parser/astree.c \
 	src/executor/executor_aux.c \
@@ -55,6 +54,7 @@ SRC = \
 	src/executor/builtins/export_unset.c\
 	src/redirection/simple_redirection.c\
 	src/redirection/multiple_redirection.c\
+	src/redirection/multiple_redirection2.c\
 	src/redirection/implement_redirection.c\
 	src/redirection/redirection_error.c\
 	src/redirection/restore_stdio.c\

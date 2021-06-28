@@ -12,5 +12,9 @@ void	multiple_redirection(t_treenode *syntax_tree, t_shell *shell);
 void	simple_redirection(t_treenode *syntax_tree, t_shell *shell);
 void	restore_stdio(t_shell *shell);
 void	redirection_error(t_shell *shell, int opt);
+void	assign_file_multiple(t_treenode *syntax_tree, t_shell *shell, int
+			type);
+void	handle_multiple_append(t_treenode *node, int saved_type, t_shell
+			*shell);
 
 #endif

@@ -16,7 +16,7 @@ static void	redirect_rhombus(t_treenode *syntax_tree)
 	int		fd;
 
 	filename = ft_strdup(syntax_tree->right->data);
-	fd = open(filename, O_WRONLY | O_CREAT , 0777);
+	fd = open(filename, O_WRONLY | O_CREAT, 0777);
 	close(fd);
 	free(filename);
 }

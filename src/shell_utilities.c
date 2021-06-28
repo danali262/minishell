@@ -47,3 +47,21 @@ void	free_shell_data(t_shell *shell)
 	free_history(&shell->history);
 	free_env_list(shell->env_list, ft_env_lstdelone);
 }
+
+int	is_redirect_type(t_token *head)
+{
+	if (head->type == CHAR_GREATER || head->type == CHAR_LESSER ||
+		head->type == CHAR_APPEND || head->type == CHAR_RHOMBUS)
+		return (1);
+	else
+		return (0);
+}
+
+int	is_redirect_node(t_treenode *node)
+{
+	if (node->type == NODE_REDIRECT_IN || node->type == NODE_REDIRECT_OUT ||
+		node->type == NODE_APPEND || node->type == NODE_RHOMBUS)
+		return (1);
+	else
+		return (0);
+}
