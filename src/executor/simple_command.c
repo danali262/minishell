@@ -16,6 +16,29 @@
 ** by a normally terminated child process.
 */
 
+static t_treenode	*simple_cmd_redirection(t_treenode *simple_cmd_node, t_shell
+	*shell)
+{
+	int	res;
+
+	if (shell->redir->semi_nbr > 0 || shell->redir->pipes_nbr > 0)
+	{
+		shell->redir->redirect_in = 0;
+		shell->redir->redirect_out = 0;
+		shell->redir->redirect_app = 0;
+		simple_redirection(simple_cmd_node, shell);
+	}
+	res = implement_redirection(shell);
+	if (res == -1)
+	{
+		restore_stdio(shell);
+		return (NULL);
+	}
+	if (shell->redir->redir_nbr > 0 && is_redirect_node(simple_cmd_node))
+		simple_cmd_node = simple_cmd_node->left;
+	return (simple_cmd_node);
+}
+
 void	wait_for_child(pid_t pid, t_shell *shell)
 {
 	int	wait_return;
@@ -73,20 +96,12 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	int		builtin_result;
-	int		res;
 	char	*command;
 
 	signal(SIGQUIT, quit_execution);
-	if (shell->redir->semi_nbr > 0 || shell->redir->pipes_nbr > 0)
-		simple_redirection(simple_cmd_node, shell);
-	res = implement_redirection(shell);
-	if (res == -1)
-	{
-		restore_stdio(shell);
+	simple_cmd_node = simple_cmd_redirection(simple_cmd_node, shell);
+	if (simple_cmd_node == NULL)
 		return (ERROR);
-	}
-	if (shell->redir->redir_nbr > 0 && is_redirect_node(simple_cmd_node))
-		simple_cmd_node = simple_cmd_node->left;
 	if (is_envar(simple_cmd_node->data))
 	{
 		command = handle_argument_with_envvars(simple_cmd_node, shell);
