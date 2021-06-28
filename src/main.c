@@ -22,7 +22,7 @@ int	shell_event_loop(t_shell *shell)
 		shell->syntax_tree = &tree;
 		shell->redir = &redir;
 		init_tree(shell);
-		write_prompt(shell);
+		write_prompt();
 		catch_signals();
 		while (shell->is_command_executed != 1)
 			if (read_input(shell, &origin_attr) == ERROR)

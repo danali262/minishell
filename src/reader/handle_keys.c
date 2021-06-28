@@ -28,7 +28,7 @@ int	handle_enter(t_shell *shell)
 {
 	if (!add_history_line(&shell->history, &shell->cmd_line))
 		return (0);
-	printf("\n\r");
+	printf("\n");
 	free_temp_input(&shell->history);
 	shell->history.iter_mode = 0;
 	shell->is_command_executed = 1;

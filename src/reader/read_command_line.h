@@ -17,7 +17,7 @@
 # define CTRL_C '\x03'
 # define CTRL_D '\x04'
 
-void	write_prompt(t_shell *shell);
+void	write_prompt(void);
 
 /*
 ** Set input mode with the termios struct:
