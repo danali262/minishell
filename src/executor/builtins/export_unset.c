@@ -3,31 +3,38 @@
 
 #include "libft.h"
 
+static int	export_envar(t_treenode *arg_node, t_shell *shell)
+{
+	char	*envar_name;
+
+	envar_name = NULL;
+	while (arg_node != NULL)
+	{
+		arg_node->data = check_envars_and_quotes(arg_node, shell);
+		if (arg_node->data == NULL)
+			return (ERROR);
+		envar_name = create_envar_name(arg_node->data);
+		if (envar_name == NULL)
+			return (ERROR);
+		if (can_update_env_list(shell, envar_name, arg_node->data) == ERROR)
+		{
+			free(envar_name);
+			return (ERROR);
+		}
+		arg_node = arg_node->left;
+		free(envar_name);
+	}
+	return (SUCCESS);
+}
+
 int	execute_export(t_treenode *simple_cmd_node, t_shell *shell)
 {
-	t_treenode	*arg_node;
-	char		*envar_name;
-
 	if (simple_cmd_node->left == NULL)
 		execute_env(simple_cmd_node, shell);
 	else
 	{
-		arg_node = simple_cmd_node->left;
-		while (arg_node != NULL)
-		{
-			arg_node->data = check_envars_and_quotes(arg_node, shell);
-			if (arg_node->data == NULL)
-				return (ERROR);
-			envar_name = create_envar_name(arg_node->data);
-			if (envar_name == NULL)
-				return (ERROR);
-			if (can_update_env_list(shell, envar_name, arg_node->data) == ERROR)
-			{
-				free(envar_name);
-				return (ERROR);
-			}
-			arg_node = arg_node->left;
-		}
+		if (export_envar(simple_cmd_node->left, shell) == ERROR)
+			return (ERROR);
 	}
 	return (SUCCESS);
 }
