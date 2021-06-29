@@ -55,9 +55,9 @@ t_envlist	*get_node_to_change(t_shell *shell, char *var_name)
 	return (NULL);
 }
 
-bool	is_envar(char *argument_string)
+bool	contains_char(char *argument_string, char character)
 {
-	if (ft_strchr(argument_string, '$') == NULL)
+	if (ft_strchr(argument_string, character) == NULL)
 		return (false);
 	return (true);
 }

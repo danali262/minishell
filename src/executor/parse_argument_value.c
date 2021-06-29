@@ -4,7 +4,7 @@ char	*parse_argument_value(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	char	*command;
 
-	if (is_envar(simple_cmd_node->data))
+	if (contains_char(simple_cmd_node->data, '$'))
 	{
 		command = handle_argument_with_envvars(simple_cmd_node, shell);
 		if (command == NULL)
@@ -22,8 +22,7 @@ char	*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell)
 	char	*string_without_quotes;
 
 	string_without_quotes = NULL;
-	if (!is_wrapped_in_single_quotes(arg_node->data)
-		&& !is_preceeded_by_single_backslash(arg_node->data))
+	if (!is_wrapped_in_single_quotes(arg_node->data))
 	{
 		new_arg_value = create_new_argument_string(arg_node->data, shell);
 		if (new_arg_value != NULL)

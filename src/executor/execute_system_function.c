@@ -48,7 +48,7 @@ char	**fill_args_list(t_treenode *simple_cmd_node, char *executable_path,
 	arg_node = simple_cmd_node->left;
 	while (arg_node != NULL)
 	{
-		arg_node->data = check_envars_and_quotes(arg_node, shell);
+		arg_node->data = parse_argument_value(arg_node, shell);
 		if (arg_node->data != NULL)
 			arguments[i] = ft_strdup(arg_node->data);
 		i++;

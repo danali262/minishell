@@ -64,7 +64,7 @@ char	*create_substr_with_envar_value(char *search_start, char *envvar_start,
 	return (temp);
 }
 
-static char	*concat_envar_value_to_argument(char *search_start,
+static char	*add_envar_value_to_argument(char *search_start,
 	char *new_arg_value, size_t *offset, t_shell *shell)
 {
 	char	*temp;
@@ -93,9 +93,9 @@ char	*create_new_argument_string(char *argument, t_shell *shell)
 	new_arg_value = NULL;
 	while (*search_start != '\0')
 	{
-		if (!is_envar(search_start))
+		if (!contains_char(search_start, '$'))
 			break ;
-		new_arg_value = concat_envar_value_to_argument(search_start,
+		new_arg_value = add_envar_value_to_argument(search_start,
 				new_arg_value, &offset, shell);
 		search_start += offset;
 	}

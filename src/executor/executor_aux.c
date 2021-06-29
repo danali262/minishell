@@ -27,19 +27,6 @@ char	*concat_path(char *left, char *right)
 	return (path);
 }
 
-char	*check_envars_and_quotes(t_treenode *arg_node, t_shell *shell)
-{
-	if (is_envar(arg_node->data))
-	{
-		arg_node->data = handle_argument_with_envvars(arg_node, shell);
-		if (arg_node->data == NULL)
-			return (NULL);
-	}
-	else
-		arg_node->data = strip_quotes(arg_node->data);
-	return (arg_node->data);
-}
-
 void	check_fork_error(pid_t pid, t_shell *shell)
 {
 	if (pid < 0)
@@ -53,18 +40,6 @@ void	check_fork_error(pid_t pid, t_shell *shell)
 bool	is_command(char *str_to_compare, char *command)
 {
 	if (ft_strcmp(str_to_compare, command) == 0)
-		return (true);
-	return (false);
-}
-
-bool	is_preceeded_by_single_backslash(char *arg_string)
-{
-	char	*backslash_position;
-
-	backslash_position = ft_strchr(arg_string, '\\');
-	if (backslash_position == NULL)
-		return (false);
-	if (*(backslash_position + 1) == '$')
 		return (true);
 	return (false);
 }
