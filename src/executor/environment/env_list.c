@@ -16,8 +16,6 @@ int	can_update_env_list(t_shell *shell, char *envar_name, char *string)
 		if (update_env_list(shell, envar_name, value_start) == ERROR)
 			return (ERROR);
 	}
-	else
-		free(envar_name);
 	return (SUCCESS);
 }
 
@@ -58,19 +56,22 @@ int	add_to_env_list(char *envar_name, char *envar_value, t_envlist	**env_list)
 	return (SUCCESS);
 }
 
-int	update_env_list(t_shell *shell, char *envar_name, char *value_start)
+int	update_env_list(t_shell *shell, char *name, char *value_start)
 {
 	int			change_value_res;
 	char		*envar_value;
+	char		*envar_name;
 	t_envlist	*envar_node;
 
 	envar_value = NULL;
-	change_value_res = change_env_value(shell, envar_name, value_start);
+	envar_value = NULL;
+	change_value_res = change_env_value(shell, name, value_start);
 	if (change_value_res == ERROR)
 		return (ERROR);
 	else if (change_value_res == NOT_IN_ENVLIST)
 	{
 		envar_value = ft_strdup(value_start);
+		envar_name = ft_strdup(name);
 		if (envar_value == NULL)
 			return (ERROR);
 		envar_node = ft_env_lstnew(envar_name, envar_value);
