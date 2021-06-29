@@ -1,19 +1,6 @@
 #include "parser.h"
 #include "../shell_utilities.h"
 
-void	print_tokens(t_token *tokens_list)         /* to be deleted */
-{
-	t_token	*head;
-
-	head = tokens_list;
-	printf("tokens are:\n");
-	while (head != NULL)
-	{
-		printf("|%s|\t|%d|\n", head->data, head->type);
-		head = head->next;
-	}
-}
-
 static void	remove_spaces_loop(t_token *temp, t_token *prev)
 {
 	while (temp != NULL)
@@ -75,9 +62,6 @@ int	parse_command_line(t_shell *shell)
 
 	lex_state.line = &shell->cmd_line;
 	lexer_result = lexer_build(&lex_state);
-	// printf("tokens with spaces:\n");
-	// print_tokens(lex_state.tokens_list);        /* to be deleted */
-	// printf("number of tokens is %d\n", lex_state.tokens_nbr);
 	if (lexer_result == -1)
 		return (-1);
 	else if (lexer_result == 0)
@@ -87,9 +71,6 @@ int	parse_command_line(t_shell *shell)
 	if (count_redir(&lex_state, shell) == -1)
 		return (0);
 	remove_spaces(&lex_state);
-	// printf("tokens without spaces:\n");
-	// print_tokens(lex_state.tokens_list);        /* to be deleted */
-	// printf("number of tokens is %d\n", lex_state.tokens_nbr);
 	count_pipes(&lex_state, shell);
 	if (parser(&lex_state, shell) == ERROR)
 	{

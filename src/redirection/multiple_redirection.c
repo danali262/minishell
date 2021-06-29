@@ -59,7 +59,7 @@ void	multiple_redirection(t_treenode *syntax_tree, t_shell *shell)
 		i++;
 		if (is_redirect_node(syntax_tree->right))
 		{
-			fd = open(syntax_tree->left->data, O_WRONLY | O_CREAT,
+			fd = open(syntax_tree->left->data, O_WRONLY | O_CREAT | O_TRUNC,
 					0777);
 			close(fd);
 			turn_off_redirect_flag(syntax_tree, shell);

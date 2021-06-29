@@ -39,6 +39,7 @@ void	check_for_rhombus(t_lexer_state *lex_state)
 			head->data = ft_strdup("<>");
 			head->type = CHAR_RHOMBUS;
 			temp = head->next->next;
+			free_token(head->next);
 			head->next = temp;
 			lex_state->tokens_nbr--;
 		}
