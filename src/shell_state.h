@@ -62,7 +62,7 @@ typedef struct s_shell
 /* 9. variable */
 /* 10. empty */
 
-typedef	enum
+typedef enum e_nodetype
 {
 	NODE_SEMI,
 	NODE_PIPE,
