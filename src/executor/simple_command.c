@@ -96,18 +96,14 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 int	run_simple_command(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	int		builtin_result;
-	char	*command;
 
 	signal(SIGQUIT, quit_execution);
 	simple_cmd_node = simple_cmd_redirection(simple_cmd_node, shell);
 	if (simple_cmd_node == NULL)
 		return (ERROR);
-	if (is_envar(simple_cmd_node->data))
-	{
-		command = handle_argument_with_envvars(simple_cmd_node, shell);
-		if (command != NULL)
-			simple_cmd_node->data = command;
-	}
+	simple_cmd_node->data = parse_argument_value(simple_cmd_node, shell);
+	if (simple_cmd_node->data == NULL)
+		return (ERROR);
 	builtin_result = can_execute_builtin(simple_cmd_node, shell);
 	if (builtin_result == ERROR)
 		return (ERROR);
