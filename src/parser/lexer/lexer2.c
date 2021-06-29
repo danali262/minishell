@@ -34,19 +34,14 @@ t_counters *count, char c)
 		token = process_dquote(lex_state, token, count);
 	else if (lex_state->chtype == CHAR_ESCAPESEQUENCE)
 	{
-		if (count->flag == 0)
-		{
-			token->data[count->j++] = lex_state->line->buf[++count->i];
-			token->type = TOKEN;
-		}
-		else
-			token = process_general(token, count, c);
+		token->data[count->j++] = lex_state->line->buf[++count->i];
+		token->type = TOKEN;
 	}
 	else if (lex_state->chtype == CHAR_GENERAL)
 		token = process_general(token, count, c);
-	else if ((lex_state->chtype == CHAR_SEMICOLON) || (lex_state->chtype
-			== CHAR_GREATER) || (lex_state->chtype == CHAR_LESSER)
-		|| (lex_state->chtype == CHAR_EMPTY) || (lex_state->chtype == CHAR_PIPE)
+	else if ((lex_state->chtype == CHAR_SEMICOLON) | (lex_state->chtype
+			== CHAR_GREATER) | (lex_state->chtype == CHAR_LESSER)
+		| (lex_state->chtype == CHAR_EMPTY) | (lex_state->chtype == CHAR_PIPE)
 		|| (lex_state->chtype == CHAR_WHITESPACE))
 	{
 		token = process_others(lex_state, token, count);
