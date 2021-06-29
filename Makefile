@@ -34,6 +34,11 @@ SRC = \
 	src/parser/parser_aux4.c\
 	src/parser/parser_error.c\
 	src/parser/astree.c \
+	src/executor/execute_cmd_line.c \
+	src/executor/simple_command.c \
+	src/executor/parse_argument_value.c \
+	src/executor/executable_path.c \
+	src/executor/execute_system_function.c \
 	src/executor/executor_aux.c \
 	src/executor/strip_quotes.c \
 	src/executor/environment/environment_aux.c \
@@ -42,10 +47,6 @@ SRC = \
 	src/executor/environment/dollar_question.c \
 	src/executor/environment/env_list.c \
 	src/executor/environment/env_list_aux.c \
-	src/executor/execute_cmd_line.c \
-	src/executor/simple_command.c \
-	src/executor/executable_path.c \
-	src/executor/execute_system_function.c \
 	src/executor/builtins/builtins.c \
 	src/executor/builtins/echo.c \
 	src/executor/builtins/cd_pwd.c \
@@ -62,10 +63,7 @@ SRC = \
 	src/redirection/pipes_aux2.c\
 	src/redirection/pipes.c
 
-
 OBJS = $(SRC:.c=.o)
-# remove the flags for amd processor and debugging
-# CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12 -fsanitize=address
 CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12
 
 INCLUDES =	./libft

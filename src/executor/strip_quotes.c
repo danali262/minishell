@@ -67,7 +67,7 @@ char	*strip_quotes(char *arg)
 	return (free_and_return(arg, temp));
 }
 
-bool	is_wrapped_by_single_quotes(char *arg_string)
+bool	is_wrapped_in_single_quotes(char *arg_string)
 {
 	char	*dollar_sign_position;
 	char	*single_quote_position;

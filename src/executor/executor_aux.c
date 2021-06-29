@@ -56,3 +56,15 @@ bool	is_command(char *str_to_compare, char *command)
 		return (true);
 	return (false);
 }
+
+bool	is_preceeded_by_single_backslash(char *arg_string)
+{
+	char	*backslash_position;
+
+	backslash_position = ft_strchr(arg_string, '\\');
+	if (backslash_position == NULL)
+		return (false);
+	if (*(backslash_position + 1) == '$')
+		return (true);
+	return (false);
+}

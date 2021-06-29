@@ -101,19 +101,20 @@ char	*replace_name_with_value(char *envvar_start, t_shell *shell,
 	return (value);
 }
 
-char	*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell)
-{
-	char	*new_arg_value;
-	char	*string_without_quotes;
-
-	string_without_quotes = NULL;
-	if (!is_wrapped_by_single_quotes(arg_node->data))
-	{
-		new_arg_value = create_new_argument_string(arg_node->data, shell);
-		if (new_arg_value != NULL)
-			string_without_quotes = strip_quotes(new_arg_value);
-	}
-	else
-		string_without_quotes = strip_quotes(arg_node->data);
-	return (string_without_quotes);
-}
+// char	*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell)
+// {
+// 	char	*new_arg_value;
+// 	char	*string_without_quotes;
+// 
+// 	string_without_quotes = NULL;
+// 	if (!is_wrapped_in_single_quotes(arg_node->data)
+// 		|| !is_preceeded_by_single_backslash(arg_node->data))
+// 	{
+// 		new_arg_value = create_new_argument_string(arg_node->data, shell);
+// 		if (new_arg_value != NULL)
+// 			string_without_quotes = strip_quotes(new_arg_value);
+// 	}
+// 	else
+// 		string_without_quotes = strip_quotes(arg_node->data);
+// 	return (string_without_quotes);
+// }
