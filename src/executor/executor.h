@@ -36,7 +36,7 @@ void		free_env_list(t_envlist *lst, void (*f)(t_envlist **));
 ** environment variables:
 */
 
-bool		is_envar(char *argument_string);
+bool		contains_char(char *argument_string, char character);
 char		*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell);
 char		*replace_name_with_value(char *envvar_start, t_shell *shell,
 				size_t *envvar_len);
@@ -64,7 +64,6 @@ int			can_update_env_list(t_shell *shell, char *envar_name, char *string);
 */
 
 char		*concat_path(char *left, char *right);
-char		*check_envars_and_quotes(t_treenode *arg_node, t_shell *shell);
 void		check_fork_error(pid_t pid, t_shell *shell);
 bool		is_command(char *str_to_compare, char *command);
 

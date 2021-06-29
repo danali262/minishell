@@ -10,7 +10,7 @@ static int	export_envar(t_treenode *arg_node, t_shell *shell)
 	envar_name = NULL;
 	while (arg_node != NULL)
 	{
-		arg_node->data = check_envars_and_quotes(arg_node, shell);
+		arg_node->data = parse_argument_value(arg_node, shell);
 		if (arg_node->data == NULL)
 			return (ERROR);
 		envar_name = create_envar_name(arg_node->data);

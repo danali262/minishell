@@ -6,9 +6,7 @@
 
 # define BUF_SIZE ARG_MAX
 
-# define PROMPT "minishell-0.95.4$ "
-
-// # define PROMPT "bash-3.2$ "
+# define PROMPT "minishell-1.0$ "
 
 typedef struct s_line
 {
