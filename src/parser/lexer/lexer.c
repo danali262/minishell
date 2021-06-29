@@ -35,6 +35,18 @@ static int	get_char_type(char c)
 		return (get_char_type_2(c));
 }
 
+static int	escape_sequence_flag(t_lexer_state *lex_state, t_counters *count)
+{
+	int	j;
+
+	j = count->i;
+	while (get_char_type(lex_state->line->buf[j]) == CHAR_ESCAPESEQUENCE)
+		j++;
+	if (get_char_type(lex_state->line->buf[j] == '$'))
+		count->flag = 1;
+	return (count->flag);
+}
+
 static t_token	*loop(t_lexer_state *lex_state, t_token *token)
 {
 	t_counters	count;
@@ -42,11 +54,14 @@ static t_token	*loop(t_lexer_state *lex_state, t_token *token)
 
 	count.i = 0;
 	count.j = 0;
+	count.flag = 0;
 	c = lex_state->line->buf[count.i];
 	while (c != '\0')
 	{
 		c = lex_state->line->buf[count.i];
 		lex_state->chtype = get_char_type(lex_state->line->buf[count.i]);
+		if (lex_state->chtype == CHAR_ESCAPESEQUENCE)
+			count.flag = escape_sequence_flag(lex_state, &count);
 		if (lex_state->state == STATE_GENERAL)
 			token = process_general_state(lex_state, token, &count, c);
 		else if (lex_state->state == STATE_IN_DQUOTE)

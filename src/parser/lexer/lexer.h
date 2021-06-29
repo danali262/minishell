@@ -29,6 +29,7 @@ typedef struct s_counters
 {
 	size_t	i;
 	size_t	j;
+	int		flag;
 }				t_counters;
 
 enum	e_tokentype
