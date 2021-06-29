@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void static	overlap_history(t_history *history)
+static void	overlap_history(t_history *history)
 {
 	int	i;
 

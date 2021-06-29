@@ -7,7 +7,7 @@
 ** as in cmd_line now
 */
 
-int	static	can_get_prev_history(t_history *history, t_line *cmd_line)
+static int	can_get_prev_history(t_history *history, t_line *cmd_line)
 {
 	if ((history->num_lines == 1 && cmd_line->size == 0)
 		|| (history->num_lines == 1
@@ -20,7 +20,7 @@ int	static	can_get_prev_history(t_history *history, t_line *cmd_line)
 		return (0);
 }
 
-int static	load_prev_history_line(t_history *history, t_line *cmd_line)
+static int	load_prev_history_line(t_history *history, t_line *cmd_line)
 {
 	char	*prev_line;
 

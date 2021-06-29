@@ -2,7 +2,7 @@
 
 #include "libft.h"
 
-int static	load_next_history_line(t_history *history, t_line *cmd_line)
+static int	load_next_history_line(t_history *history, t_line *cmd_line)
 {
 	char	*next_line;
 
@@ -15,7 +15,7 @@ int static	load_next_history_line(t_history *history, t_line *cmd_line)
 	return (1);
 }
 
-int static	load_from_temp_input(t_history *history, t_line *cmd_line)
+static int	load_from_temp_input(t_history *history, t_line *cmd_line)
 {
 	if (!update_cmd_line(history->saved_temp_input[MAX_HIST],
 			cmd_line))

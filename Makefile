@@ -64,7 +64,7 @@ SRC = \
 	src/redirection/pipes.c
 
 OBJS = $(SRC:.c=.o)
-CFLAGS = -Wall -Werror -Wextra  -O0 -g -target x86_64-apple-macos10.12
+CFLAGS = -Wall -Werror -Wextra
 
 INCLUDES =	./libft
 
@@ -77,7 +77,6 @@ $(NAME):	$(OBJS) $(INCLUDES)
 			cp libft/libft.a .
 			$(CC) -ltermcap -Llibft -lft \
 			-o $(NAME) $(OBJS) $(CFLAGS)
-			# $(CC) $(CFLAGS) -o $(NAME) $(OBJS) -ltermcap -Llibft -lft
 
 %.o:	%.c
 			$(CC) $(CFLAGS) -Ilibft/include -Isrc -c $< -o $@

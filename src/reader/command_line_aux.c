@@ -9,9 +9,6 @@
 
 int	init_command_line(t_line *cmd_line)
 {
-	int	i;
-
-	i = 0;
 	cmd_line->buf = ft_calloc(BUF_SIZE + 1, 1);
 	if (cmd_line->buf == NULL)
 	{
