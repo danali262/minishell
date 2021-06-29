@@ -16,6 +16,8 @@ int	can_update_env_list(t_shell *shell, char *envar_name, char *string)
 		if (update_env_list(shell, envar_name, value_start) == ERROR)
 			return (ERROR);
 	}
+	else
+		free(envar_name);
 	return (SUCCESS);
 }
 
