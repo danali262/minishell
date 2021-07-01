@@ -18,6 +18,7 @@ void	free_token(t_token *tok)
 	{
 		free(tok->data);
 		tok->data = NULL;
+		tok->type = CHAR_EMPTY;
 	}
 	free(tok);
 	tok = NULL;

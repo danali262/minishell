@@ -23,6 +23,7 @@ typedef struct s_lexer_state
 	int		chtype;
 	t_token	*tokens_list;
 	int		tokens_nbr;
+	int		spaces_flag;
 }				t_lexer_state;
 
 typedef struct s_counters

@@ -27,15 +27,14 @@ static void	remove_spaces(t_lexer_state *lex_state)
 	prev = NULL;
 	head = lex_state->tokens_list;
 	temp = head;
+	lex_state->spaces_flag = 0;
 	while (temp != NULL && temp->type == ' ')
 	{
-		if (temp->next->type != ' ')
-		{
-			printf("am i here?\n");
-			head = temp->next;
-			free_token(temp);
-			temp = head;
-		}
+		if (temp->next->type != ' ' && temp->next->type != '\0')
+			lex_state->spaces_flag = 1;
+		head = temp->next;
+		free_token(temp);
+		temp = head;
 	}
 	remove_spaces_loop(temp, prev);
 }
@@ -74,7 +73,8 @@ int	parse_command_line(t_shell *shell)
 	count_pipes(&lex_state, shell);
 	if (parser(&lex_state, shell) == ERROR)
 	{
-		lexer_destroy(&lex_state);
+		if (lex_state.spaces_flag == 1)
+			lexer_destroy(&lex_state);
 		delete_node(&shell->syntax_tree);
 		return (0);
 	}
