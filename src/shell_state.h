@@ -6,6 +6,8 @@
 # include "term_cap/termcap_codes.h"
 # include "executor/environment/environment.h"
 
+# include <termios.h>
+
 # define ERROR 1
 # define SUCCESS 0
 
@@ -45,6 +47,7 @@ typedef struct s_shell
 	t_redirection	*redir;
 	char			*term_buffer;
 	t_envlist		*env_list;
+	struct termios	origin_attr;
 	int				is_command_executed;
 	int				exit_code;
 	int				minishell_exits;

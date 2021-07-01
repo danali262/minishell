@@ -22,28 +22,32 @@
 **
 */
 
-int	set_input_mode(struct termios *origin_attr)
+int	set_input_mode(t_shell *shell)
 {
-	if (!isatty (STDIN_FILENO) || tcgetattr(STDIN_FILENO, origin_attr) < 0)
+	struct termios	attributes;
+
+	if (!isatty(STDIN_FILENO) || tcgetattr(STDIN_FILENO, &shell->origin_attr) < 0
+		|| tcgetattr(STDIN_FILENO, &attributes) < 0)
 	{
 		errno = ENOTTY;
 		return (0);
 	}
-	(*origin_attr).c_lflag &= ~(ICANON | ECHO);
-	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, origin_attr) < 0)
+	attributes.c_lflag &= ~(ICANON | ECHO);
+	attributes.c_cc[VTIME] = 0;    
+	attributes.c_cc[VMIN] = 1;    
+	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &attributes) < 0)
 	{
 		printf("Error. Unable to set one or more terminal attributes.\n");
 		return (0);
 	}
-	if (((*origin_attr).c_lflag & (ECHO | ICANON)))
-		return (reset_input_mode(origin_attr, EINVAL));
+	if ((attributes.c_lflag & (ECHO | ICANON)))
+		return (reset_input_mode(shell, EINVAL));
 	return (1);
 }
 
-int	reset_input_mode(struct termios *origin_attr, int error_code)
+int	reset_input_mode(t_shell *shell, int error_code)
 {
-	(*origin_attr).c_lflag |= (ECHO | ICANON);
-	tcsetattr(STDIN_FILENO, TCSANOW, origin_attr);
+	tcsetattr(STDIN_FILENO, TCSANOW, &shell->origin_attr);
 	if (error_code == 0)
 		return (1);
 	else

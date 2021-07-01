@@ -7,9 +7,9 @@
 
 #include <unistd.h>
 
-int	read_input(t_shell *shell, struct termios *origin_attr)
+int	read_input(t_shell *shell)
 {
-	if (!set_input_mode(origin_attr))
+	if (!set_input_mode(shell))
 		return (ERROR);
 	if (read_command_line(STDIN_FILENO, shell) == -1)
 	{

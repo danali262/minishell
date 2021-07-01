@@ -6,8 +6,6 @@
 # include "command_line_state.h"
 # include "../shell_state.h"
 
-# include <termios.h>
-
 //  ANSI escape sequences, which extend the functions available with the control
 // codes:
 # define ESC '\x1b'
@@ -22,8 +20,8 @@ void	write_prompt(void);
 /*
 ** Set input mode with the termios struct:
 */
-int		set_input_mode(struct termios *origin_attr);
-int		reset_input_mode(struct termios *origin_attr, int error_code);
+int		set_input_mode(t_shell *shell);
+int		reset_input_mode(t_shell *shell, int error_code);
 
 /*
 ** Command line:
@@ -35,7 +33,7 @@ void	free_command_line(t_line *cmd_line);
 int		update_cmd_line(char *new_line, t_line *cmd_line);
 void	erase_current_line(t_line *cmd_line);
 
-int		read_input(t_shell *shell, struct termios *origin_attr);
+int		read_input(t_shell *shell);
 int		read_command_line(int fd, t_shell *shell);
 void	capture_keystrokes(int fd, char ch, t_shell *shell);
 
