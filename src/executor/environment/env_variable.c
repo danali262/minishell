@@ -58,8 +58,7 @@ int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 		return (NOT_IN_ENVLIST);
 	else
 	{
-		if (ft_strncmp(envar_node->value, new_value,
-				ft_strlen(envar_node->value)) != 0)
+		if (ft_strcmp(envar_node->value, new_value) != 0)
 		{
 			updated_value = ft_strtrim(new_value, "'\"");
 			if (!updated_value)
@@ -91,7 +90,7 @@ char	*replace_name_with_value(char *envvar_start, t_shell *shell,
 	else
 	{
 		i = 1;
-		while (ft_isalnum(envvar_start[i]))
+		while (is_allowed_in_envvar_name(envvar_start[i]))
 			i++;
 		*envvar_len = i;
 		envvar_name = create_substring(envvar_start + 1, i - 1);

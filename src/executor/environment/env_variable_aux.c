@@ -48,9 +48,11 @@ char	*create_substr_with_envar_value(char *search_start, char *envvar_start,
 	envvar_len = 0;
 	temp = NULL;
 	if (search_start != envvar_start
-		|| (*(envvar_start + 1) != '?' && !ft_isalnum(*(envvar_start + 1))))
+		|| (*(envvar_start + 1) != '?'
+			&& !is_allowed_in_envvar_name(*(envvar_start + 1))))
 	{
-		if (*(envvar_start + 1) != '?' && !ft_isalnum(*(envvar_start + 1)))
+		if (*(envvar_start + 1) != '?'
+			&& !is_allowed_in_envvar_name(*(envvar_start + 1)))
 			*offset = envvar_start - search_start + 1;
 		else
 			*offset = envvar_start - search_start;

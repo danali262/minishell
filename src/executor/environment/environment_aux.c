@@ -6,18 +6,24 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-int	has_alpha_char(char *name, int	length)
+int	has_alpha_char(char *name, int length)
 {
 	int	i;
 
 	i = 0;
-	while (name[i] > length)
+	while (i < length)
 	{
-		if (ft_isalpha(name[i]))
+		if (is_allowed_in_envvar_name(name[i]))
 			return (true);
 		i++;
 	}
 	return (false);
+}
+
+bool	is_allowed_in_envvar_name(char c)
+{
+	return ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')
+		|| (c >= '0' && c <= '9') || (c == '_'));
 }
 
 void	update_old_pwd(char	*envar_value, t_shell *shell)
