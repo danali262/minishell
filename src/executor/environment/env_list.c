@@ -64,7 +64,6 @@ int	update_env_list(t_shell *shell, char *name, char *value_start)
 	t_envlist	*envar_node;
 
 	envar_value = NULL;
-	envar_value = NULL;
 	change_value_res = change_env_value(shell, name, value_start);
 	if (change_value_res == ERROR)
 		return (ERROR);
