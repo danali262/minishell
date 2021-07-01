@@ -90,7 +90,7 @@ char	*replace_name_with_value(char *envvar_start, t_shell *shell,
 	else
 	{
 		i = 1;
-		while (ft_isalnum(envvar_start[i]))
+		while (is_allowed_in_envvar_name(envvar_start[i]))
 			i++;
 		*envvar_len = i;
 		envvar_name = create_substring(envvar_start + 1, i - 1);

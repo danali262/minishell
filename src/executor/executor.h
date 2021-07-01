@@ -66,7 +66,7 @@ int			can_update_env_list(t_shell *shell, char *envar_name, char *string);
 char		*concat_path(char *left, char *right);
 void		check_fork_error(pid_t pid, t_shell *shell);
 bool		is_command(char *str_to_compare, char *command);
-
+bool		is_allowed_in_envvar_name(char c);
 char		*strip_quotes(char *arg);
 bool		is_wrapped_in_single_quotes(char *arg_string);
 bool		is_preceeded_by_single_backslash(char *arg_string);
