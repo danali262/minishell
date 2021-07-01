@@ -1,7 +1,7 @@
 #ifndef HISTORY_STATE_H
 # define HISTORY_STATE_H
 
-# define MAX_HIST 100 //temp for debug, make 200 before pushing
+# define MAX_HIST 200
 
 /*
 ** num_lines == number of lines filled
@@ -19,4 +19,5 @@ typedef struct s_history
 	int		last_shown_line;
 	int		iter_mode;
 }				t_history;
+
 #endif
