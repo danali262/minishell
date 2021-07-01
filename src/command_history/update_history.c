@@ -29,6 +29,9 @@ int	add_history_line(t_history *history, t_line *cmd_line)
 
 	if (history->num_lines + 1 > MAX_HIST)
 		overlap_history(history);
+	else if (history->saved_temp_input[MAX_HIST] == NULL
+		&& cmd_line->buf[0] == '\0')
+		return (1);
 	else
 		history->num_lines++;
 	history->last_shown_line = history->num_lines - 1;

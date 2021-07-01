@@ -26,15 +26,16 @@ int	set_input_mode(t_shell *shell)
 {
 	struct termios	attributes;
 
-	if (!isatty(STDIN_FILENO) || tcgetattr(STDIN_FILENO, &shell->origin_attr) < 0
+	if (!isatty(STDIN_FILENO)
+		|| tcgetattr(STDIN_FILENO, &shell->origin_attr) < 0
 		|| tcgetattr(STDIN_FILENO, &attributes) < 0)
 	{
 		errno = ENOTTY;
 		return (0);
 	}
 	attributes.c_lflag &= ~(ICANON | ECHO);
-	attributes.c_cc[VTIME] = 0;    
-	attributes.c_cc[VMIN] = 1;    
+	attributes.c_cc[VTIME] = 0;
+	attributes.c_cc[VMIN] = 1;
 	if (tcsetattr(STDIN_FILENO, TCSAFLUSH, &attributes) < 0)
 	{
 		printf("Error. Unable to set one or more terminal attributes.\n");
