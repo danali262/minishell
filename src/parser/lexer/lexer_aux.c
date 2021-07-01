@@ -2,7 +2,7 @@
 
 int	tok_init(t_token *tok, int datasize, t_lexer_state *lex_state)
 {
-	tok->data = malloc(datasize + 1);
+	tok->data = ft_calloc(datasize + 1, sizeof(char));
 	if (!tok->data)
 		return (-1);
 	tok->data[0] = '\0';
@@ -18,8 +18,8 @@ void	free_token(t_token *tok)
 	{
 		free(tok->data);
 		tok->data = NULL;
-		tok->type = CHAR_EMPTY;
 	}
+	tok->type = CHAR_EMPTY;
 	free(tok);
 	tok = NULL;
 }

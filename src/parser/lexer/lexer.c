@@ -42,6 +42,8 @@ static t_token	*loop(t_lexer_state *lex_state, t_token *token)
 
 	count.i = 0;
 	count.j = 0;
+	while (lex_state->line->buf[count.i] == ' ')
+		count.i++;
 	c = lex_state->line->buf[count.i];
 	while (c != '\0')
 	{
@@ -70,7 +72,7 @@ int	lexer_build(t_lexer_state *lex_state)
 		return (0);
 	}
 	lex_state->tokens_nbr = 0;
-	lex_state->tokens_list = malloc(sizeof(t_token));
+	lex_state->tokens_list = ft_calloc(1, sizeof(t_token));
 	if (!lex_state->tokens_list)
 		return (-1);
 	token = lex_state->tokens_list;
