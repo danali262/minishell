@@ -15,7 +15,6 @@ void	termination_handler(int signum)
 	if (signum == SIGINT)
 	{
 		g_shell->exit_code = 1;
-		g_shell->is_command_executed = 1;
 		clear_command_line(&g_shell->cmd_line);
 		ft_putstr_fd("\n\r", STDOUT_FILENO);
 		if (g_shell->syntax_tree->data == NULL)
