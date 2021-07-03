@@ -48,6 +48,7 @@ int	set_input_mode(t_shell *shell)
 
 int	reset_input_mode(t_shell *shell, int error_code)
 {
+	shell->origin_attr.c_lflag |= (ECHO | ICANON);
 	tcsetattr(STDIN_FILENO, TCSANOW, &shell->origin_attr);
 	if (error_code == 0)
 		return (1);
