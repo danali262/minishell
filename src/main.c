@@ -22,6 +22,7 @@ int	shell_event_loop(t_shell *shell)
 		shell->redir = &redir;
 		init_tree(shell);
 		write_prompt();
+		catch_signals();
 		while (shell->is_command_executed != 1)
 			if (read_input(shell) == ERROR)
 				return (ERROR);
@@ -50,7 +51,6 @@ int	main(int argc, char **argv)
 	g_shell = &shell;
 	ft_bzero(&shell, sizeof(t_shell));
 	init_shell(&shell);
-	catch_signals();
 	if (shell_event_loop(&shell) == ERROR)
 	{
 		g_shell = NULL;
