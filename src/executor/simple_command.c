@@ -71,7 +71,7 @@ int	run_cmd_executable(t_treenode *simple_cmd_node, t_shell *shell)
 	char		**argv;
 
 	executable_path = NULL;
-	if (simple_cmd_node != NULL)
+	if (simple_cmd_node != NULL && simple_cmd_node->data[0] != '\0')
 		executable_path = locate_executable_path(simple_cmd_node, shell);
 	if (executable_path != NULL)
 	{
