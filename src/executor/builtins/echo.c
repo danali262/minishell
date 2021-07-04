@@ -7,6 +7,7 @@ static int	is_n_option(t_treenode *arg_node)
 {
 	if (arg_node == NULL)
 		return (0);
+	arg_node->data = strip_quotes(arg_node->data);
 	if (ft_strncmp(arg_node->data, "-n", 3) == 0)
 		return (1);
 	return (0);
