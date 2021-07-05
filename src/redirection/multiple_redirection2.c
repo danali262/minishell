@@ -1,7 +1,9 @@
 #include "redirection.h"
+#include "../executor/executor.h"
 
 static void	assign_file_in(t_treenode *syntax_tree, t_shell *shell)
 {
+	syntax_tree->data = strip_quotes(syntax_tree->data);
 	if (shell->redir->filename_in)
 	{
 		free(shell->redir->filename_in);
@@ -12,6 +14,7 @@ static void	assign_file_in(t_treenode *syntax_tree, t_shell *shell)
 
 static void	assign_file_out(t_treenode *syntax_tree, t_shell *shell)
 {
+	syntax_tree->data = strip_quotes(syntax_tree->data);
 	if (shell->redir->filename_out)
 	{
 		free(shell->redir->filename_out);
@@ -22,6 +25,7 @@ static void	assign_file_out(t_treenode *syntax_tree, t_shell *shell)
 
 static void	assign_file_app(t_treenode *syntax_tree, t_shell *shell)
 {
+	syntax_tree->data = strip_quotes(syntax_tree->data);
 	if (shell->redir->filename_app)
 	{
 		free(shell->redir->filename_app);

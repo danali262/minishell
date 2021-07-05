@@ -1,7 +1,9 @@
 #include "redirection.h"
+#include "../executor/executor.h"
 
 static void	assign_file_simple(t_treenode *syntax_tree, t_shell *shell)
 {
+	syntax_tree->data = strip_quotes(syntax_tree->data);
 	if (shell->redir->redirect_in == 1)
 		shell->redir->filename_in = ft_strdup(syntax_tree->data);
 	else if (shell->redir->redirect_out == 1)
