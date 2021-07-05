@@ -42,17 +42,31 @@ void	handle_parent_process(int **pipes_fd, int i)
 		close_both_pipe_ends(pipes_fd, i - 1);
 }
 
-pid_t	*loop_through_pipes(t_treenode *node, int **pipes_fd, t_shell *shell)
+int	calculate_pipes(t_treenode *node)
 {
-	int		pipes_num;
+	int			pipes_num;
+
+	pipes_num = 0;
+	while (node != NULL)
+	{
+		if (node->data[0] == '|')
+			pipes_num++;
+		node = node->right;
+	}
+	return (pipes_num);
+}
+
+pid_t	*loop_through_pipes(t_treenode *node, int **pipes_fd, t_shell *shell,
+		int pipes_num)
+{
 	pid_t	*pid_array;
 	pid_t	pid;
 	int		i;
 
-	pipes_num = shell->redir->pipes_nbr;
 	pid_array = (int *)malloc(sizeof(int) * pipes_num + 1);
 	if (!pid_array)
 		return (NULL);
+	shell->redir->pipes_nbr = pipes_num;
 	i = 0;
 	while (i <= pipes_num)
 	{
@@ -80,9 +94,9 @@ int	handle_pipeline(t_treenode *node, t_shell *shell)
 
 	shell->redir->stdoutfd = dup(STDOUT_FILENO);
 	shell->redir->stdinfd = dup(STDIN_FILENO);
-	pipes_num = shell->redir->pipes_nbr;
-	pipes_fd = create_pipes_fd_array(shell);
-	pid_array = loop_through_pipes(node, pipes_fd, shell);
+	pipes_num = calculate_pipes(node);
+	pipes_fd = create_pipes_fd_array(pipes_num);
+	pid_array = loop_through_pipes(node, pipes_fd, shell, pipes_num);
 	if (pid_array == NULL)
 		return (ERROR);
 	i = 0;

@@ -9,19 +9,17 @@ void	close_both_pipe_ends(int **pipes_fd, int i)
 	close(pipes_fd[i][WRITE]);
 }
 
-int	**create_pipes_fd_array(t_shell *shell)
+int	**create_pipes_fd_array(int pipes_num)
 {
 	int	**pipes_fd;
-	int	num;
 	int	i;
 
-	num = shell->redir->pipes_nbr;
-	pipes_fd = (int **)malloc(sizeof(int *) * (num + 1));
+	pipes_fd = (int **)malloc(sizeof(int *) * (pipes_num + 1));
 	if (!pipes_fd)
 		return (NULL);
-	pipes_fd[num] = NULL;
+	pipes_fd[pipes_num] = NULL;
 	i = 0;
-	while (i < num)
+	while (i < pipes_num)
 	{
 		pipes_fd[i] = (int *)malloc(sizeof(int) * 2);
 		if (!pipes_fd[i])
