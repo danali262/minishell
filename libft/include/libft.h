@@ -6,7 +6,7 @@
 /*   By: osamara <osamara@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/10/27 15:27:38 by osamara       #+#    #+#                 */
-/*   Updated: 2021/06/15 13:44:19 by osamara       ########   odam.nl         */
+/*   Updated: 2021/07/07 00:58:40 by osamara       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stddef.h>
+# include <stdbool.h>
 
 typedef struct s_list
 {
@@ -43,6 +44,7 @@ int				ft_printf_atoi(const char *start, int *num);
 int				ft_minishell_atoi(char *start, int *num);
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
+bool			ft_isnumber(char *string);
 int				ft_isalnum(int c);
 int				ft_isascii(int c);
 int				ft_isprint(int c);

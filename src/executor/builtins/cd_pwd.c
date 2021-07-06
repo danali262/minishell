@@ -50,8 +50,13 @@ static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 	char		*updated_cwd;
 
 	updated_cwd = NULL;
-	if (arg_node == NULL)
+	if (arg_node == NULL || is_command("~", arg_node->data))
 		updated_cwd = ft_strdup(getenv("HOME"));
+	else if (is_command("-", arg_node->data))
+	{
+		updated_cwd = get_envar_value("OLDPWD", shell);
+		printf("%s\n", updated_cwd);
+	}
 	else
 	{
 		arg_node->data = parse_argument_value(arg_node, shell);

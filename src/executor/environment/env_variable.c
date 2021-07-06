@@ -63,7 +63,7 @@ int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 			updated_value = ft_strtrim(new_value, "'\"");
 			if (!updated_value)
 				return (ERROR);
-			if (ft_strncmp(var_name, "PWD", 4) == 0)
+			if (ft_strcmp(var_name, "PWD") == 0)
 				update_old_pwd(envar_node->value, shell);
 			else
 				free(envar_node->value);
