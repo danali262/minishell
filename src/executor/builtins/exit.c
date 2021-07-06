@@ -38,7 +38,7 @@ int	execute_exit(t_treenode *simple_cmd_node, t_shell *shell)
 		printf("exit\n\r");
 		shell->minishell_exits = true;
 	}
-	else if (arg_num > 1)
+	else if (arg_num > 1 && ft_isnumber(simple_cmd_node->left->data))
 	{
 		printf("exit\nminishell: %s: too many arguments\n",
 			simple_cmd_node->data);
