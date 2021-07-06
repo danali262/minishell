@@ -19,6 +19,7 @@ SRC = src/ft_memset.c \
 	src/ft_atoi.c \
 	src/ft_isalpha.c \
 	src/ft_isdigit.c \
+	src/ft_isnumber.c \
 	src/ft_isalnum.c \
 	src/ft_isascii.c \
 	src/ft_isprint.c \
