@@ -29,13 +29,11 @@ bool	is_allowed_in_envvar_name(char c)
 void	update_old_pwd(char	*envar_value, t_shell *shell)
 {
 	t_envlist	*envar_node;
-	size_t		name_len;
 
-	name_len = ft_strlen("OLD_PWD");
 	envar_node = shell->env_list;
 	while (envar_node != NULL)
 	{
-		if (ft_strncmp(envar_node->name, "OLD_PWD", name_len + 1) == 0)
+		if (ft_strcmp(envar_node->name, "OLDPWD") == 0)
 		{
 			free(envar_node->value);
 			envar_node->value = envar_value;
