@@ -36,7 +36,6 @@ int	init_shell(t_shell *shell)
 	shell->is_command_executed = 0;
 	shell->exit_code = 0;
 	shell->minishell_exits = false;
-	shell->is_newline = true;
 	return (SUCCESS);
 }
 
