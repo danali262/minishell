@@ -6,7 +6,7 @@
 
 # define BUF_SIZE ARG_MAX
 
-# define PROMPT "omnomnom-1.8$ "
+# define PROMPT "omnomnom-1.85$ "
 
 typedef struct s_line
 {
