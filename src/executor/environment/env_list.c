@@ -36,10 +36,15 @@ int	create_env_list(t_shell *shell)
 	while (environ[i] != NULL)
 	{
 		envar_name = create_envar_name(environ[i]);
-		envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
-		if (!envar_name || !envar_value)
-			return (ERROR);
-		add_to_env_list(envar_name, envar_value, &shell->env_list);
+		if (is_command(envar_name, "OLDPWD"))
+			free(envar_name);
+		else
+		{
+			envar_value = ft_strdup(environ[i] + ft_strlen(envar_name) + 1);
+			if (!envar_name || !envar_value)
+				return (ERROR);
+			add_to_env_list(envar_name, envar_value, &shell->env_list);
+		}
 		i++;
 	}
 	return (SUCCESS);

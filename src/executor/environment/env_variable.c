@@ -50,9 +50,11 @@ char	*get_envar_value(char *command, t_shell *shell)
 int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 {
 	char		*updated_value;
+	char		*pwd_value;
 	t_envlist	*envar_node;
 
 	updated_value = NULL;
+	pwd_value = NULL;
 	envar_node = get_node_to_change(shell, var_name);
 	if (envar_node == NULL)
 		return (NOT_IN_ENVLIST);
@@ -64,9 +66,11 @@ int	change_env_value(t_shell *shell, char *var_name, char *new_value)
 			if (!updated_value)
 				return (ERROR);
 			if (ft_strcmp(var_name, "PWD") == 0)
-				update_old_pwd(envar_node->value, shell);
-			else
-				free(envar_node->value);
+			{
+				pwd_value = ft_strdup(envar_node->value);
+				update_old_pwd(pwd_value, shell);
+			}
+			free(envar_node->value);
 			envar_node->value = updated_value;
 		}
 	}
