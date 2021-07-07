@@ -26,20 +26,28 @@ bool	is_allowed_in_envvar_name(char c)
 		|| (c >= '0' && c <= '9') || (c == '_'));
 }
 
-void	update_old_pwd(char	*envar_value, t_shell *shell)
+void	update_old_pwd(char	*current_pwd_value, t_shell *shell)
 {
 	t_envlist	*envar_node;
+	bool		is_oldpwd_set;
 
 	envar_node = shell->env_list;
+	is_oldpwd_set = false;
 	while (envar_node != NULL)
 	{
 		if (ft_strcmp(envar_node->name, "OLDPWD") == 0)
 		{
+			is_oldpwd_set = true;
 			free(envar_node->value);
-			envar_node->value = envar_value;
+			envar_node->value = current_pwd_value;
 			break ;
 		}
 		envar_node = envar_node->next;
+	}
+	if (!is_oldpwd_set)
+	{
+		update_env_list(shell, "OLDPWD", current_pwd_value);
+		free(current_pwd_value);
 	}
 }
 

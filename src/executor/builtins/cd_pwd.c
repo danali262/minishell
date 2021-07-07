@@ -45,6 +45,20 @@ static char	*get_path_to_new_working_directory(char	*path)
 	return (updated_path);
 }
 
+static char	*change_to_oldpwd(t_shell *shell)
+{
+	char		*updated_cwd;
+
+	updated_cwd = get_envar_value("OLDPWD", shell);
+	if (updated_cwd == NULL)
+	{
+		printf("minishell: cd: OLDPWD not set\n");
+		return (NULL);
+	}
+	printf("%s\n", updated_cwd);
+	return (updated_cwd);
+}
+
 static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 {
 	char		*updated_cwd;
@@ -53,10 +67,7 @@ static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 	if (arg_node == NULL || is_command("~", arg_node->data))
 		updated_cwd = ft_strdup(getenv("HOME"));
 	else if (is_command("-", arg_node->data))
-	{
-		updated_cwd = get_envar_value("OLDPWD", shell);
-		printf("%s\n", updated_cwd);
-	}
+		updated_cwd = change_to_oldpwd(shell);
 	else
 	{
 		arg_node->data = parse_argument_value(arg_node, shell);
@@ -81,8 +92,9 @@ int	execute_cd(t_treenode *simple_cmd_node, t_shell *shell)
 	updated_cwd = change_directory(simple_cmd_node->left, shell);
 	if (updated_cwd == NULL)
 	{
-		printf("minishell: cd: %s: %s\n\r", simple_cmd_node->left->data,
-			strerror(errno));
+		if (!is_command("-", simple_cmd_node->left->data))
+			printf("minishell: cd: %s: %s\n\r", simple_cmd_node->left->data,
+				strerror(errno));
 		return (ERROR);
 	}
 	else
