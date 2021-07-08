@@ -1,4 +1,5 @@
 #include "../executor.h"
+#include "environment.h"
 
 #include "libft.h"
 
@@ -39,42 +40,41 @@ char	*create_substring(char *start, size_t len)
 ** environment variables cannot be non-alphanum except for $?
 */
 
-char	*create_substr_with_envar_value(char *search_start, char *envvar_start,
-		size_t	*offset, t_shell *shell)
+char	*create_substr_with_envar_value(t_arg_with_envvar *arg,
+	t_shell *shell)
 {
 	size_t	envvar_len;
 	char	*temp;
+	char	*envvar_start;
 
+	envvar_start = ft_strchr(arg->search_start, '$');
 	envvar_len = 0;
-	temp = NULL;
-	if (search_start != envvar_start
+	if (arg->search_start != envvar_start
+		|| is_wrapped_in_single_quotes(arg->start, envvar_start)
 		|| (*(envvar_start + 1) != '?'
 			&& !is_allowed_in_envvar_name(*(envvar_start + 1))))
 	{
-		if (*(envvar_start + 1) != '?'
-			&& !is_allowed_in_envvar_name(*(envvar_start + 1)))
-			*offset = envvar_start - search_start + 1;
-		else
-			*offset = envvar_start - search_start;
-		temp = create_substring(search_start, *offset);
+		arg->offset = envvar_start - arg->search_start;
+		if (is_wrapped_in_single_quotes(arg->start, envvar_start)
+			|| (*(envvar_start + 1) != '?'
+				&& !is_allowed_in_envvar_name(*(envvar_start + 1))))
+			arg->offset++;
+		temp = create_substring(arg->search_start, arg->offset);
 	}
 	else
 	{
-		temp = replace_name_with_value(search_start, shell, &envvar_len);
-		*offset = envvar_len;
+		temp = replace_name_with_value(arg->search_start, shell, &envvar_len);
+		arg->offset = envvar_len;
 	}
 	return (temp);
 }
 
-static char	*add_envar_value_to_argument(char *search_start,
-	char *new_arg_value, size_t *offset, t_shell *shell)
+static char	*add_envar_value_to_argument(t_arg_with_envvar *arg_with_envvar,
+	char *new_arg_value, t_shell *shell)
 {
 	char	*temp;
-	char	*envvar_start;
 
-	envvar_start = ft_strchr(search_start, '$');
-	temp = create_substr_with_envar_value(search_start, envvar_start,
-			offset, shell);
+	temp = create_substr_with_envar_value(arg_with_envvar, shell);
 	if (temp != NULL)
 	{
 		new_arg_value = update_argument(new_arg_value, temp);
@@ -85,25 +85,34 @@ static char	*add_envar_value_to_argument(char *search_start,
 	return (new_arg_value);
 }
 
+/*
+**  Separate start and search_start are needed to keep track of single quotes and
+**  several $ if they happen to be within one argument.
+**	If there happen to be several environmemt variables inside the argument,
+**  the string is divided into chunks when $ is found.
+**  After the previous chunk is parsed the search start is moved.
+*/
+
 char	*create_new_argument_string(char *argument, t_shell *shell)
 {
-	char	*search_start;
-	char	*new_arg_value;
-	size_t	offset;
+	t_arg_with_envvar	arg_with_envvar;
+	char				*new_arg_value;
 
-	search_start = argument;
+	arg_with_envvar.start = argument;
+	arg_with_envvar.search_start = arg_with_envvar.start;
 	new_arg_value = NULL;
-	while (*search_start != '\0')
+	while (*arg_with_envvar.search_start != '\0')
 	{
-		if (!contains_char(search_start, '$'))
+		if (!contains_char(arg_with_envvar.search_start, '$'))
 			break ;
-		new_arg_value = add_envar_value_to_argument(search_start,
-				new_arg_value, &offset, shell);
-		search_start += offset;
+		new_arg_value = add_envar_value_to_argument(&arg_with_envvar,
+				new_arg_value, shell);
+		arg_with_envvar.search_start += arg_with_envvar.offset;
 	}
-	if (*search_start != '\0')
+	if (*arg_with_envvar.search_start != '\0')
 	{
-		new_arg_value = update_argument(new_arg_value, search_start);
+		new_arg_value = update_argument(new_arg_value,
+				arg_with_envvar.search_start);
 		if (new_arg_value == NULL)
 			return (NULL);
 	}
