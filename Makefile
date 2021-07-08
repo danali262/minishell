@@ -41,6 +41,7 @@ SRC = \
 	src/executor/execute_system_function.c \
 	src/executor/executor_aux.c \
 	src/executor/strip_quotes.c \
+	src/executor/quotes_aux.c \
 	src/executor/environment/environment_aux.c \
 	src/executor/environment/env_variable.c \
 	src/executor/environment/env_variable_aux.c \

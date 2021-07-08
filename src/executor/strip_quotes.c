@@ -66,17 +66,3 @@ char	*strip_quotes(char *arg)
 		return (free_and_return(temp, arg));
 	return (free_and_return(arg, temp));
 }
-
-bool	is_wrapped_in_single_quotes(char *arg_string)
-{
-	char	*dollar_sign_position;
-	char	*single_quote_position;
-
-	single_quote_position = ft_strchr(arg_string, '\'');
-	dollar_sign_position = ft_strchr(arg_string, '$');
-	if (single_quote_position == NULL || dollar_sign_position == NULL)
-		return (false);
-	if (dollar_sign_position - single_quote_position > 0)
-		return (true);
-	return (false);
-}
