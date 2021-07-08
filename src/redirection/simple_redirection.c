@@ -44,12 +44,16 @@ void	simple_redirection(t_treenode *syntax_tree, t_shell *shell)
 	simple_redirection(syntax_tree->right, shell);
 }
 
-void	check_for_redirection(t_treenode *syntax_tree, t_shell *shell)
+int	check_for_redirection(t_treenode *syntax_tree, t_shell *shell)
 {
+	int	res;
+
+	res = 1;
 	if (shell->redir->redir_nbr == 0)
-		return ;
+		return (res);
 	else if (shell->redir->redir_nbr == 1)
 		simple_redirection(syntax_tree, shell);
 	else
-		multiple_redirection(syntax_tree, shell);
+		res = multiple_redirection(syntax_tree, shell);
+	return (res);
 }

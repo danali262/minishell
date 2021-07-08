@@ -6,9 +6,9 @@
 # include <sys/wait.h>
 # include "../executor/executor.h"
 
-void	check_for_redirection(t_treenode *syntax_tree, t_shell *shell);
+int		check_for_redirection(t_treenode *syntax_tree, t_shell *shell);
 int		implement_redirection(t_shell *shell);
-void	multiple_redirection(t_treenode *syntax_tree, t_shell *shell);
+int		multiple_redirection(t_treenode *syntax_tree, t_shell *shell);
 void	simple_redirection(t_treenode *syntax_tree, t_shell *shell);
 void	restore_stdio(t_shell *shell);
 void	redirection_error(t_shell *shell, int opt);
