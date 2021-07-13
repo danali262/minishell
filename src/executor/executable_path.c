@@ -54,14 +54,14 @@ static char	**get_directories_list(t_shell *shell)
 	return (dir_list);
 }
 
-char	*locate_executable_path(t_treenode *simple_cmd_node, t_shell *shell)
+char	*locate_executable_path(t_treenode *command, t_shell *shell)
 {
 	char	**dir_list;
 	char	*cmd_location;
 	int		i;
 
-	if (is_valid_path(simple_cmd_node->data))
-		return (ft_strdup(simple_cmd_node->data));
+	if (is_valid_path(command->data) && contains_char(command->data, '/'))
+		return (ft_strdup(command->data));
 	dir_list = get_directories_list(shell);
 	if (dir_list == NULL)
 		return (NULL);
@@ -69,7 +69,7 @@ char	*locate_executable_path(t_treenode *simple_cmd_node, t_shell *shell)
 	cmd_location = NULL;
 	while (dir_list[i] != NULL)
 	{
-		cmd_location = append_cmd_to_dir(dir_list[i], simple_cmd_node->data);
+		cmd_location = append_cmd_to_dir(dir_list[i], command->data);
 		if (cmd_location == NULL)
 			return (NULL);
 		if (is_valid_path(cmd_location))
