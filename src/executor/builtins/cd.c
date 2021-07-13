@@ -39,24 +39,12 @@ static char	*change_to_oldpwd(t_shell *shell)
 	return (updated_cwd);
 }
 
-static char	*append_tilde_value(char	*path)
-{
-	char	*temp;
-
-	temp = NULL;
-	temp = ft_strdup(path + 2);
-	free(path);
-	path = concat_path(getenv("HOME"), temp);
-	free(temp);
-	return (path);
-}
-
 static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 {
 	char	*updated_cwd;
 
 	updated_cwd = NULL;
-	if (arg_node == NULL || is_command("~", arg_node->data))
+	if (arg_node == NULL)
 		updated_cwd = ft_strdup(getenv("HOME"));
 	else if (is_command("-", arg_node->data))
 		updated_cwd = change_to_oldpwd(shell);
@@ -65,8 +53,6 @@ static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 		arg_node->data = parse_argument_value(arg_node, shell);
 		if (arg_node->data == NULL)
 			return (NULL);
-		if (ft_strncmp("~/", arg_node->data, 2) == 0)
-			arg_node->data = append_tilde_value(arg_node->data);
 		updated_cwd = get_path_to_new_working_directory(arg_node->data);
 		if (updated_cwd == NULL)
 			return (NULL);

@@ -1,14 +1,30 @@
 #include "executor.h"
 
+static char	*append_tilde_value(char *path)
+{
+	char	*tilde_value;
+	char	*temp;
+
+	tilde_value = ft_strdup(getenv("HOME"));
+	if (path[1] == '\0')
+	{
+		free(path);
+		return (tilde_value);
+	}
+	temp = ft_strdup(path + 2);
+	free(path);
+	path = concat_path(tilde_value, temp);
+	free(tilde_value);
+	free(temp);
+	return (path);
+}
+
 char	*parse_argument_value(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	char	*command;
 
-	if (is_command("~", simple_cmd_node->data))
-	{
-		free(simple_cmd_node->data);
-		simple_cmd_node->data = ft_strdup(getenv("HOME"));
-	}
+	if (simple_cmd_node->data[0] == '~')
+		simple_cmd_node->data = append_tilde_value(simple_cmd_node->data);
 	else if (contains_char(simple_cmd_node->data, '$'))
 	{
 		command = handle_argument_with_envvars(simple_cmd_node, shell);
