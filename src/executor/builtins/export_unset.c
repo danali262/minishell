@@ -18,7 +18,7 @@ static int	export_envar(t_treenode *arg_node, t_shell *shell)
 		envar_name = create_envar_name(arg_node->data, &invalid_identifier_res);
 		if (envar_name == NULL && !invalid_identifier_res)
 			return (ERROR);
-		else if (envar_name != NULL)	
+		else if (envar_name != NULL)
 		{
 			if (can_update_env_list(shell, envar_name, arg_node->data) == ERROR)
 			{
