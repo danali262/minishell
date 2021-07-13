@@ -64,8 +64,8 @@ int	lexer_build(t_lexer_state *lex_state)
 {
 	t_token	*token;
 
-	if (lex_state->tokens_list == NULL)
-		return (-1);
+	// if (lex_state->tokens_list == NULL)
+	// 	return (-1);
 	if (lex_state->line->size == 0)
 	{
 		lex_state->tokens_nbr = 0;

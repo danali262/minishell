@@ -5,7 +5,7 @@ t_token	*process_others(t_lexer_state *lex_state, t_token *token, t_counters
 {
 	if (count->j > 0)
 	{
-		token->data[count->j] = '\0';
+		// token->data[count->j] = '\0';
 		token->next = ft_calloc(1, sizeof(t_token));
 		if (!token->next)
 			lexer_error(lex_state->tokens_list);

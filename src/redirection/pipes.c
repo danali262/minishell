@@ -63,7 +63,7 @@ pid_t	*loop_through_pipes(t_treenode *node, int **pipes_fd, t_shell *shell,
 	pid_t	pid;
 	int		i;
 
-	pid_array = (int *)malloc(sizeof(int) * pipes_num + 1);
+	pid_array = (int *)malloc(sizeof(int) * (pipes_num + 1));
 	if (!pid_array)
 		return (NULL);
 	shell->redir->pipes_nbr = pipes_num;
