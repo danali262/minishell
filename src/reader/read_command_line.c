@@ -6,6 +6,7 @@
 #include "libft.h"
 
 #include <unistd.h>
+#include <errno.h>
 
 int	read_input(t_shell *shell)
 {
@@ -28,8 +29,12 @@ int	read_command_line(int fd, t_shell *shell)
 	ch = 0;
 	bytes_read = read(fd, &ch, 1);
 	if (bytes_read == -1)
+	{
+		if (errno == EINTR)
+			return (0);
 		return (-1);
-	if (ft_isprint(ch))
+	}
+		if (ft_isprint(ch))
 	{
 		write(STDOUT_FILENO, &ch, 1);
 		shell->cmd_line.buf[shell->cmd_line.size] = ch;
