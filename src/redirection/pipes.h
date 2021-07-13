@@ -23,7 +23,6 @@ void	handle_child_process(t_treenode *node, int **pipes_fd, int i,
 */
 
 void	close_both_pipe_ends(int **pipes_fd, int i);
-// int		**create_pipes_fd_array(t_shell *shell);
 int		**create_pipes_fd_array(int	pipes_num);
 bool	is_last_command(int i, int pipes_num);
 bool	is_first_command(int i);

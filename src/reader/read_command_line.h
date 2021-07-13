@@ -6,8 +6,10 @@
 # include "command_line_state.h"
 # include "../shell_state.h"
 
-//  ANSI escape sequences, which extend the functions available with the control
-// codes:
+/*
+**  ANSI escape sequences, which extend the functions available with the control
+** codes:
+*/
 # define ESC '\x1b'
 # define ENTER '\x0a'
 # define CARRIAGE_RETURN '\x0d'

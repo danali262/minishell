@@ -50,7 +50,8 @@ SRC = \
 	src/executor/environment/env_list_aux.c \
 	src/executor/builtins/builtins.c \
 	src/executor/builtins/echo.c \
-	src/executor/builtins/cd_pwd.c \
+	src/executor/builtins/cd.c \
+	src/executor/builtins/pwd.c \
 	src/executor/builtins/exit.c\
 	src/executor/builtins/env.c\
 	src/executor/builtins/export_unset.c\

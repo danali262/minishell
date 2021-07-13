@@ -35,7 +35,7 @@ int	create_env_list(t_shell *shell)
 	i = 0;
 	while (environ[i] != NULL)
 	{
-		envar_name = create_envar_name(environ[i]);
+		envar_name = create_envar_name(environ[i], NULL);
 		if (is_command(envar_name, "OLDPWD"))
 			free(envar_name);
 		else
