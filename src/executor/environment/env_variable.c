@@ -38,7 +38,7 @@ char	*get_envar_value(char *command, t_shell *shell)
 
 	envar_node = shell->env_list;
 	value = NULL;
-	while (envar_node->next != NULL)
+	while (envar_node != NULL)
 	{
 		if (is_command(envar_node->name, command))
 		{
