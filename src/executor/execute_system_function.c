@@ -2,17 +2,27 @@
 #include "../redirection/redirection.h"
 
 #include <sys/errno.h>
+#include <sys/stat.h>
 #include <string.h>
 
 void	execute_system_function(char **argv, t_shell *shell)
 {
 	extern char	**environ;
+	struct stat	buffer;
 
+	if (stat(argv[0], &buffer) == 0)
+	{
+		if (S_ISDIR(buffer.st_mode))
+		{
+			printf("minishell: %s: is a directory\n\r", argv[0]);
+			exit(126);
+		}
+	}
 	if (execve(argv[0], argv, environ) == -1)
 	{
 		restore_stdio(shell);
 		printf("minishell: %s\n\r", strerror(errno));
-		shell->exit_code = 126;
+		exit(126);
 	}
 }
 
