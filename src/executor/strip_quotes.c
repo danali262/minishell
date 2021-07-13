@@ -20,7 +20,9 @@ static char	*handle_data_with_quote(char *arg, char *temp, int *i, int *j)
 	else
 		between_quotes_len = pairing_quote_pos - (arg + *i) - 1;
 	ft_memcpy(temp + *j, arg + *i + 1, between_quotes_len);
-	*i += between_quotes_len + 2;
+	*i += between_quotes_len + 1;
+	if (pairing_quote_pos)
+		i++;
 	*j += between_quotes_len;
 	return (temp);
 }
