@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-int	has_alpha_char(char *name, int length)
+int	has_alphanum_char(char *name, int length)
 {
 	int	i;
 

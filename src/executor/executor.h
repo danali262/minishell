@@ -25,7 +25,7 @@ char		**fill_args_list(t_treenode *simple_cmd_node, char *executable_path,
 
 t_envlist	*get_node_to_change(t_shell *shell, char *var_name);
 t_envlist	*ft_env_lstnew(char *name, char *value);
-int			has_alpha_char(char *name, int	length);
+int			has_alphanum_char(char *name, int	length);
 void		update_old_pwd(char	*envar_value, t_shell *shell);
 void		ft_env_lstadd_back(t_envlist **lst, t_envlist *new);
 void		ft_env_lstadd_before_last_node(t_envlist **lst, t_envlist *new);
@@ -42,7 +42,7 @@ char		*replace_name_with_value(char *envvar_start, t_shell *shell,
 				size_t *envvar_len);
 char		*replace_dollar_question(t_shell *shell);
 int			change_env_value(t_shell *shell, char *var_name, char *new_value);
-char		*create_envar_name(char *argument);
+char		*create_envar_name(char *argument, bool *invalid_identifier_res);
 char		*update_argument(char *new_arg_value, char *temp);
 char		*create_substring(char *start, size_t len);
 char		*create_new_argument_string(char *search_start, t_shell *shell);

@@ -2,7 +2,7 @@
 
 #include "libft.h"
 
-char	*create_envar_name(char *argument)
+char	*create_envar_name(char *argument, bool *invalid_identifier_res)
 {
 	char	*name;
 	int		i;
@@ -15,8 +15,11 @@ char	*create_envar_name(char *argument)
 			break ;
 		i++;
 	}
-	if (i == 0 || !has_alpha_char(argument, i))
+	if (i == 0 || !has_alphanum_char(argument, i) || ft_isdigit(argument[0]))
+	{
 		printf("minishell: \'%s\': not a valid identifier\n\r", argument);
+		*invalid_identifier_res = true;
+	}
 	else
 	{
 		name = malloc(sizeof(char) * i + 1);
@@ -99,21 +102,3 @@ char	*replace_name_with_value(char *envvar_start, t_shell *shell,
 	}
 	return (value);
 }
-
-// char	*handle_argument_with_envvars(t_treenode *arg_node, t_shell *shell)
-// {
-// 	char	*new_arg_value;
-// 	char	*string_without_quotes;
-// 
-// 	string_without_quotes = NULL;
-// 	if (!is_wrapped_in_single_quotes(arg_node->data)
-// 		|| !is_preceeded_by_single_backslash(arg_node->data))
-// 	{
-// 		new_arg_value = create_new_argument_string(arg_node->data, shell);
-// 		if (new_arg_value != NULL)
-// 			string_without_quotes = strip_quotes(new_arg_value);
-// 	}
-// 	else
-// 		string_without_quotes = strip_quotes(arg_node->data);
-// 	return (string_without_quotes);
-// }

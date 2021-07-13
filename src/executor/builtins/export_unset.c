@@ -6,20 +6,25 @@
 static int	export_envar(t_treenode *arg_node, t_shell *shell)
 {
 	char	*envar_name;
+	bool	invalid_identifier_res;
 
 	envar_name = NULL;
+	invalid_identifier_res = false;
 	while (arg_node != NULL)
 	{
 		arg_node->data = parse_argument_value(arg_node, shell);
 		if (arg_node->data == NULL)
 			return (ERROR);
-		envar_name = create_envar_name(arg_node->data);
-		if (envar_name == NULL)
+		envar_name = create_envar_name(arg_node->data, &invalid_identifier_res);
+		if (envar_name == NULL && !invalid_identifier_res)
 			return (ERROR);
-		if (can_update_env_list(shell, envar_name, arg_node->data) == ERROR)
+		else if (envar_name != NULL)	
 		{
-			free(envar_name);
-			return (ERROR);
+			if (can_update_env_list(shell, envar_name, arg_node->data) == ERROR)
+			{
+				free(envar_name);
+				return (ERROR);
+			}	
 		}
 		arg_node = arg_node->left;
 		free(envar_name);
