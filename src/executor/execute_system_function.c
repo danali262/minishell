@@ -40,7 +40,7 @@ char	**fill_args_list(t_treenode *simple_cmd_node, char *executable_path,
 	int			i;
 
 	arg_counter = count_system_function_arguments(simple_cmd_node);
-	arguments = malloc(sizeof(char *) * arg_counter + 1);
+	arguments = malloc(sizeof(char *) * (arg_counter + 1));
 	if (arguments == NULL)
 		return (NULL);
 	arguments[0] = executable_path;
