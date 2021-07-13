@@ -23,9 +23,10 @@ char	*parse_argument_value(t_treenode *simple_cmd_node, t_shell *shell)
 {
 	char	*command;
 
-	if (simple_cmd_node->data[0] == '~')
+	if (simple_cmd_node->data[0] == '~'
+		&& (simple_cmd_node->data[1] == '\0' || simple_cmd_node->data[1] == '/'))
 		simple_cmd_node->data = append_tilde_value(simple_cmd_node->data);
-	else if (contains_char(simple_cmd_node->data, '$'))
+	if (contains_char(simple_cmd_node->data, '$'))
 	{
 		command = handle_argument_with_envvars(simple_cmd_node, shell);
 		if (command == NULL)
