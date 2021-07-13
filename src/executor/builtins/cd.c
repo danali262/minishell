@@ -7,26 +7,6 @@
 #include <string.h>
 #include <sys/errno.h>
 
-/*
-** bash doesn't care if there are any arguments after pwd,
-** it ignores them and prints the current location
-** we have also removed the check for too many arguments (like in zsh)
-** or invalid option
-** as our pwd is expected to work without options
-*/
-
-int	execute_pwd(t_treenode *simple_cmd_node, t_shell *shell)
-{
-	char	pwd_value[256];
-
-	(void)simple_cmd_node;
-	(void)shell;
-	if (getcwd(pwd_value, sizeof(pwd_value)) == NULL)
-		printf("pwd: %s\n\r", strerror(errno));
-	printf("%s\n\r", pwd_value);
-	return (SUCCESS);
-}
-
 static char	*get_path_to_new_working_directory(char	*path)
 {
 	char		*updated_path;
@@ -59,9 +39,21 @@ static char	*change_to_oldpwd(t_shell *shell)
 	return (updated_cwd);
 }
 
+static char	*append_tilde_value(char	*path)
+{
+	char	*temp;
+
+	temp = NULL;
+	temp = ft_strdup(path + 2);
+	free(path);
+	path = concat_path(getenv("HOME"), temp);
+	free(temp);
+	return (path);
+}
+
 static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 {
-	char		*updated_cwd;
+	char	*updated_cwd;
 
 	updated_cwd = NULL;
 	if (arg_node == NULL || is_command("~", arg_node->data))
@@ -73,6 +65,8 @@ static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 		arg_node->data = parse_argument_value(arg_node, shell);
 		if (arg_node->data == NULL)
 			return (NULL);
+		if (ft_strncmp("~/", arg_node->data, 2) == 0)
+			arg_node->data = append_tilde_value(arg_node->data);
 		updated_cwd = get_path_to_new_working_directory(arg_node->data);
 		if (updated_cwd == NULL)
 			return (NULL);
