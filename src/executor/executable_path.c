@@ -5,7 +5,7 @@
 #include "libft.h"
 
 #include <unistd.h>
-#include<sys/stat.h>
+#include <sys/stat.h>
 #include <stdlib.h>
 
 static char	*append_cmd_to_dir(char *directory, char *cmd_alias)
