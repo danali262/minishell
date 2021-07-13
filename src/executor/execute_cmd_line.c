@@ -43,5 +43,8 @@ void	execute_job(t_treenode *job_node, t_shell *shell)
 	if (job_node->type == NODE_PIPE)
 		handle_pipeline(job_node, shell);
 	else
+	{
+		shell->redir->pipes_nbr = 0;
 		run_simple_command(job_node, shell);
+	}
 }
