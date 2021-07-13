@@ -2,6 +2,8 @@
 
 int	tok_init(t_token *tok, int datasize, t_lexer_state *lex_state)
 {
+	if (datasize < 1)
+		datasize = 1;
 	tok->data = ft_calloc(datasize + 1, sizeof(char));
 	if (!tok->data)
 		return (-1);
