@@ -34,7 +34,7 @@ int	read_command_line(int fd, t_shell *shell)
 			return (0);
 		return (-1);
 	}
-		if (ft_isprint(ch))
+	if (ft_isprint(ch))
 	{
 		write(STDOUT_FILENO, &ch, 1);
 		shell->cmd_line.buf[shell->cmd_line.size] = ch;
