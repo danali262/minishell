@@ -4,9 +4,9 @@
 # include <stddef.h>
 # include <limits.h>
 
-# define BUF_SIZE ARG_MAX
+# define BUF_SIZE 131071
 
-# define PROMPT "minishell-2.4$ "
+# define PROMPT "minishell-2.41$ "
 
 typedef struct s_line
 {
