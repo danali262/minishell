@@ -45,7 +45,7 @@ static char	*change_directory(t_treenode *arg_node, t_shell *shell)
 
 	updated_cwd = NULL;
 	if (arg_node == NULL)
-		updated_cwd = ft_strdup(getenv("HOME"));
+		updated_cwd = get_envar_value("HOME", shell);
 	else if (is_command("-", arg_node->data))
 		updated_cwd = change_to_oldpwd(shell);
 	else
