@@ -55,7 +55,7 @@ void	handle_multiple_append(t_treenode *node, int saved_type, t_shell
 	if (node->type == NODE_REDIRECT_OUT)
 	{
 		fd = open(shell->redir->filename_app, O_WRONLY | O_CREAT,
-				0777);
+				0666);
 		close(fd);
 		shell->redir->redirect_app = 0;
 	}

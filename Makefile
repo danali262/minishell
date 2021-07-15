@@ -55,6 +55,7 @@ SRC = \
 	src/executor/builtins/exit.c\
 	src/executor/builtins/env.c\
 	src/executor/builtins/export_unset.c\
+	src/redirection/redirection_aux.c\
 	src/redirection/simple_redirection.c\
 	src/redirection/multiple_redirection.c\
 	src/redirection/multiple_redirection2.c\

@@ -30,7 +30,8 @@ typedef struct s_redirection
 	char	*filename_in;
 	char	*filename_out;
 	char	*filename_app;
-	int		saved_nodetype;
+	int		first_nodetype;
+	int		last_nodetype;
 	int		fd;
 	int		stdoutfd;
 	int		stdinfd;

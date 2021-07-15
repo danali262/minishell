@@ -6,7 +6,7 @@
 
 # define BUF_SIZE 131071
 
-# define PROMPT "minishell-2.41$ "
+# define PROMPT "minishell-2.5$ "
 
 typedef struct s_line
 {
