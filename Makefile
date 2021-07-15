@@ -78,8 +78,7 @@ all: $(NAME)
 $(NAME):	$(OBJS) $(INCLUDES)
 			make -C libft/
 			cp libft/libft.a .
-			$(CC) -ltermcap -Llibft -lft \
-			-o $(NAME) $(OBJS) $(CFLAGS)
+			$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -ltermcap -Llibft -lft
 
 %.o:	%.c
 			$(CC) $(CFLAGS) -Ilibft/include -Isrc -c $< -o $@
