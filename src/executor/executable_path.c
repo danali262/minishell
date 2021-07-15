@@ -39,17 +39,13 @@ static int	is_valid_path(char *cmd_location)
 
 static char	**get_directories_list(t_shell *shell)
 {
-	int		j;
 	char	*path_str;
 	char	**dir_list;
 
 	path_str = get_envar_value("PATH", shell);
 	if (path_str == NULL)
 		return (NULL);
-	j = 0;
-	while (path_str[j] != '/')
-		j++;
-	dir_list = ft_split(path_str + j, ':');
+	dir_list = ft_split(path_str, ':');
 	free(path_str);
 	return (dir_list);
 }
