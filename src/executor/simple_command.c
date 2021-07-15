@@ -26,7 +26,13 @@ static t_treenode	*simple_cmd_redirection(t_treenode *simple_cmd_node, t_shell
 		shell->redir->redirect_in = 0;
 		shell->redir->redirect_out = 0;
 		shell->redir->redirect_app = 0;
-		simple_redirection(simple_cmd_node, shell);
+		if (shell->redir->redir_nbr == shell->redir->semi_nbr + 1)
+			simple_redirection(simple_cmd_node, shell);
+		else
+		{
+			if (is_redirect_node(simple_cmd_node))
+				multiple_redirection(simple_cmd_node, shell);
+		}
 	}
 	res = implement_redirection(shell);
 	if (res == -1)
